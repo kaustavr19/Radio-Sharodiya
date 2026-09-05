@@ -1,0 +1,843 @@
+{
+  "version": 1,
+  "playlists": {
+    "mahalaya": {
+      "tracks": [
+        {
+          "title": "Mahalaya — Mahishasura Mardini · Full Album",
+          "artist": "Birendra Krishna Bhadra",
+          "duration": "1:29:19",
+          "videoId": "YQyo8QeoYhc"
+        },
+        {
+          "title": "Chandipath · Mahishasura Mardini",
+          "artist": "Birendra Krishna Bhadra",
+          "duration": "30:14",
+          "videoId": "AnrGifI3WHk"
+        },
+        {
+          "title": "Ya Chandi",
+          "artist": "Chorus · Pankaj Kumar Mullick",
+          "duration": "2:03",
+          "videoId": "8FytVk54-dw"
+        },
+        {
+          "title": "Singhastha Sashishekhara",
+          "artist": "Agomoni Creation",
+          "duration": "0:56",
+          "videoId": "dQZrQ-za8Gc"
+        },
+        {
+          "title": "Bajlo Tomar Aalor Benu",
+          "artist": "Supriti Ghosh",
+          "duration": "3:46",
+          "videoId": "mnKcHhCOyT8"
+        },
+        {
+          "title": "Jago Durga Dashapraharanadharinee",
+          "artist": "Dwijen Mukherjee",
+          "duration": "2:11",
+          "videoId": "IfSJy3_Lkuo"
+        },
+        {
+          "title": "Ogo Amar Agamani Alo",
+          "artist": "Sipra Bose",
+          "duration": "3:42",
+          "videoId": "2RZZzJdzGPM"
+        },
+        {
+          "title": "Tabo Achintya Rupa-Charita-Mahima",
+          "artist": "Manabendra Mukherjee",
+          "duration": "4:25",
+          "videoId": "6rwF1iQPVzc"
+        },
+        {
+          "title": "Aham Rudrebhirvasubhischara",
+          "artist": "Chorus",
+          "duration": "4:06",
+          "videoId": "GJccKU4_5wg"
+        },
+        {
+          "title": "Ahang Rudre",
+          "artist": "Sourendro–Soumyojit",
+          "duration": "2:41",
+          "videoId": "zZ4dYYcPxUY"
+        },
+        {
+          "title": "Akhila-Bimane Taba Jaya-Gane",
+          "artist": "Krishna Dasgupta",
+          "duration": "4:09",
+          "videoId": "FrHp3pXxeNU"
+        },
+        {
+          "title": "Jayanti Mangala Kali",
+          "artist": "Birendra Krishna Bhadra & ensemble",
+          "duration": "7:11",
+          "videoId": ""
+        },
+        {
+          "title": "Jatajutasamayuktamardhendukrita-Sekharam",
+          "artist": "Chorus",
+          "duration": "4:32",
+          "videoId": "h5O3igngxCU"
+        },
+        {
+          "title": "Namo Chandi, Namo Chandi",
+          "artist": "Bimal Bhushan",
+          "duration": "3:29",
+          "videoId": "IlerrCPk_0Y"
+        },
+        {
+          "title": "Ma Go Tabu Beene Sangeeta",
+          "artist": "Sumitra Sen",
+          "duration": "3:46",
+          "videoId": "qdx842oMwnA"
+        },
+        {
+          "title": "Bimane Bimane",
+          "artist": "Sandhya Mukherjee",
+          "duration": "3:06",
+          "videoId": "-ZJtci1_Ih0"
+        },
+        {
+          "title": "Jaya Jaya Japyajaye",
+          "artist": "Pankaj Kumar Mullick",
+          "duration": "2:38",
+          "videoId": "AB4IUcvuEXs"
+        },
+        {
+          "title": "He Chinmoyi",
+          "artist": "Tarun Banerjee",
+          "duration": "3:18",
+          "videoId": "zuVw7KFPQnk"
+        },
+        {
+          "title": "Amala Kirane",
+          "artist": "Pratima Bandyopadhyay",
+          "duration": "4:15",
+          "videoId": ""
+        },
+        {
+          "title": "Shanti Dile Bhori",
+          "artist": "Utpala Sen",
+          "duration": "2:26",
+          "videoId": ""
+        }
+      ]
+    },
+    "agomoni": {
+      "tracks": [
+        {
+          "title": "Shishire Shishire Sharodo Akashe",
+          "artist": "Suchitra Music",
+          "duration": "5:17",
+          "videoId": "ZunoBaore6U"
+        },
+        {
+          "title": "Bajlo Tomar Aalor Benu",
+          "artist": "Saregama Bengali",
+          "duration": "5:30",
+          "videoId": "IISWE2RiDBU"
+        },
+        {
+          "title": "Durge Durge Durgatinashini",
+          "artist": "Saregama Bengali",
+          "duration": "5:14",
+          "videoId": "45O8KBhSZ0I"
+        },
+        {
+          "title": "Durge Durge Durgatinashini",
+          "artist": "Saregama Bengali",
+          "duration": "3:55",
+          "videoId": "n1LORkMSIV0"
+        },
+        {
+          "title": "Durga Durge Durgatinashini",
+          "artist": "Saregama Bengali",
+          "duration": "5:44",
+          "videoId": "Ama_2NyGxpg"
+        },
+        {
+          "title": "Bajlo Tomar Aalor Benu",
+          "artist": "Jayati Chakraborty",
+          "duration": "4:05",
+          "videoId": "l3vlgUX0AAo"
+        },
+        {
+          "title": "Jago Durga",
+          "artist": "Debolina Nandy",
+          "duration": "3:23",
+          "videoId": "o1tu9dPZhbM"
+        },
+        {
+          "title": "Jaago Maa",
+          "artist": "Arijit Singh",
+          "duration": "5:41",
+          "videoId": "m-pcgj6y3VI"
+        },
+        {
+          "title": "Agomoni Aalo",
+          "artist": "Jayati Chakraborty",
+          "duration": "5:41",
+          "videoId": "bvij2HdGgv4"
+        },
+        {
+          "title": "Ogo Amar Agomoni Aalo",
+          "artist": "Debolina Nandy",
+          "duration": "5:38",
+          "videoId": "l5cr4IljlVs"
+        },
+        {
+          "title": "Ya Devi Sarbabhuteshu",
+          "artist": "Saregama Bengali",
+          "duration": "3:49",
+          "videoId": "EIpOmPg9EsI"
+        },
+        {
+          "title": "Aji Shankhe Shankhe Mangal Gao",
+          "artist": "Saregama Bengali",
+          "duration": "4:50",
+          "videoId": "jkhj4iz5MdY"
+        },
+        {
+          "title": "Aji Shankhe Shankhe Mangal Gao",
+          "artist": "Saregama Bengali",
+          "duration": "3:28",
+          "videoId": "0K1ESrpcRtw"
+        },
+        {
+          "title": "Jaya Jaya Japaya Jaye",
+          "artist": "Sourendro Soumyojit",
+          "duration": "3:59",
+          "videoId": "BxQWbnXkzsc"
+        },
+        {
+          "title": "Ahang Rudre",
+          "artist": "Sourendro–Soumyojit",
+          "duration": "2:41",
+          "videoId": "zZ4dYYcPxUY"
+        },
+        {
+          "title": "Agomonir Gaan (আগমনীর গান)",
+          "artist": "SVF Music",
+          "duration": "6:04",
+          "videoId": "MsqpjM09MrY"
+        },
+        {
+          "title": "Hero Girirani",
+          "artist": "Sounak Chattopadhyay",
+          "duration": "4:45",
+          "videoId": "GHWZTY6XLzU"
+        },
+        {
+          "title": "Rupang Dehi Jayang Dehi",
+          "artist": "Mukta Creation",
+          "duration": "5:00",
+          "videoId": "tXXwsHeS_T0"
+        },
+        {
+          "title": "Rupong Dehi Joyong Dehi",
+          "artist": "Ajoy Chakrabarty",
+          "duration": "10:43",
+          "videoId": "6IIPuGG7O-Y"
+        },
+        {
+          "title": "Adi Pujito — Ganesh Vandana",
+          "artist": "Ajoy Chakrabarty",
+          "duration": "4:55",
+          "videoId": "KCl_h9BtZ5c"
+        },
+        {
+          "title": "Aji Pronomi Tomare",
+          "artist": "Ajoy Chakrabarty",
+          "duration": "4:30",
+          "videoId": "w5KW6IAirnI"
+        },
+        {
+          "title": "Ekbar Birajo Go Maa",
+          "artist": "Ajoy Chakrabarty",
+          "duration": "6:20",
+          "videoId": "xRVeVvooC7o"
+        },
+        {
+          "title": "Ebar Maa Tui Asbi Jakhan",
+          "artist": "Perennial Records",
+          "duration": "5:06",
+          "videoId": "LUdjaplK5WE"
+        },
+        {
+          "title": "Girirajer Kanya Uma Sara Bochhor Pore",
+          "artist": "Sreeradha Bandopadhyay",
+          "duration": "4:08",
+          "videoId": "aAXL6msyxMQ"
+        },
+        {
+          "title": "Uma Ele",
+          "artist": "Sourendro Soumyojit",
+          "duration": "4:57",
+          "videoId": "huRAR4ghZto"
+        },
+        {
+          "title": "Aji Anando Probhate",
+          "artist": "Manch Production",
+          "duration": "4:47",
+          "videoId": "R9OmR7chFHE"
+        },
+        {
+          "title": "Tomar Agomoni",
+          "artist": "Sourendro Soumyojit",
+          "duration": "4:35",
+          "videoId": "PJjEqs6Lkuo"
+        },
+        {
+          "title": "Aaj Baaje",
+          "artist": "Amara Muzik Bengali",
+          "duration": "3:37",
+          "videoId": "JrcqCpFjE7Q"
+        },
+        {
+          "title": "এসো নব রূপে",
+          "artist": "Times Music Bangla",
+          "duration": "4:23",
+          "videoId": "hqGQgtuGMWI"
+        },
+        {
+          "title": "Maa Go Tumi Sarbojanin",
+          "artist": "SVF",
+          "duration": "3:34",
+          "videoId": "nTDQNqbYWsM"
+        },
+        {
+          "title": "Jago Natun Prabhat Jago",
+          "artist": "Uttam Kumar Bangla Gaan",
+          "duration": "3:26",
+          "videoId": "LVkLW-TBMjA"
+        },
+        {
+          "title": "Bhabani Dayani",
+          "artist": "Saregama Bengali",
+          "duration": "5:38",
+          "videoId": "7_GfdfzBpCE"
+        },
+        {
+          "title": "Girirani Rani Ei Nao",
+          "artist": "Saregama Bengali",
+          "duration": "5:03",
+          "videoId": "MAf8i0YNduM"
+        },
+        {
+          "title": "Agamoni",
+          "artist": "INRECO Bengali",
+          "duration": "42:42",
+          "videoId": "0CCYVkIGgf4"
+        },
+        {
+          "title": "Kobe Jabe Bolo Giriraj",
+          "artist": "Debalina Sinha Roy",
+          "duration": "3:57",
+          "videoId": "kjIM38Af5NM"
+        },
+        {
+          "title": "Bare Bare Kaho Rani",
+          "artist": "Song-e-Meer",
+          "duration": "2:49",
+          "videoId": "slcFyozN2XU"
+        },
+        {
+          "title": "Hara Karo Anumati",
+          "artist": "Saregama Bengali",
+          "duration": "2:10",
+          "videoId": "yEtfJyWSp50"
+        },
+        {
+          "title": "Twang Mayarupini Durge",
+          "artist": "Sanatani Bangla",
+          "duration": "4:59",
+          "videoId": "pMolxkFz4DM"
+        },
+        {
+          "title": "Chanchal Choron Chole",
+          "artist": "Release — Topic",
+          "duration": "4:04",
+          "videoId": "rNy_t7dHTmw"
+        },
+        {
+          "title": "Taba Charan Nimne",
+          "artist": "Srikanto Acharya",
+          "duration": "6:06",
+          "videoId": "kblbJHPK6Xw"
+        },
+        {
+          "title": "Khorer Protima (খড়ের প্রতিমা)",
+          "artist": "Aalo",
+          "duration": "5:59",
+          "videoId": "kPqtxDui9K0"
+        },
+        {
+          "title": "Aaj Mahalaya",
+          "artist": "Release — Topic",
+          "duration": "5:11",
+          "videoId": "56iPSnGuREw"
+        },
+        {
+          "title": "O Maa",
+          "artist": "Release — Topic",
+          "duration": "4:20",
+          "videoId": "xX-Vf6DpEjg"
+        },
+        {
+          "title": "Khorer Protima",
+          "artist": "Rahul Dutta",
+          "duration": "6:06",
+          "videoId": "EuvBGK6pYfg"
+        },
+        {
+          "title": "Jaago Jogomaya",
+          "artist": "Mekhla Dasgupta",
+          "duration": "5:19",
+          "videoId": "CWbcxN95WBE"
+        },
+        {
+          "title": "Aay Maa Uma",
+          "artist": "Rahul Dutta",
+          "duration": "5:08",
+          "videoId": "PnrFR24eZds"
+        },
+        {
+          "title": "Durge Durge Durgatinashini",
+          "artist": "Mekhla Dasgupta",
+          "duration": "6:21",
+          "videoId": "EYalazp2KjE"
+        },
+        {
+          "title": "Bhubonmohini",
+          "artist": "Release — Topic",
+          "duration": "3:33",
+          "videoId": "B2VT_URwL4I"
+        },
+        {
+          "title": "Chinmoyee Rup Dhore",
+          "artist": "Shovan Ganguly",
+          "duration": "4:44",
+          "videoId": "fFtnZD38qrs"
+        },
+        {
+          "title": "Maa Go Tui",
+          "artist": "Shovan Ganguly",
+          "duration": "2:00",
+          "videoId": "8NeUGOEpGh0"
+        },
+        {
+          "title": "Agomoni Sure",
+          "artist": "Perennial Records",
+          "duration": "57:56",
+          "videoId": "_1dA0dk3GfY"
+        },
+        {
+          "title": "O Ma Trinoyoni",
+          "artist": "Jayati Chakraborty",
+          "duration": "6:48",
+          "videoId": ""
+        },
+        {
+          "title": "Sonali Sharode",
+          "artist": "Shelley Music",
+          "duration": "5:39",
+          "videoId": ""
+        },
+        {
+          "title": "Uma Elo Koi",
+          "artist": "The Musiana Collective",
+          "duration": "5:42",
+          "videoId": "051OxdHYTHw"
+        },
+        {
+          "title": "Kemon Kore Horer Ghare",
+          "artist": "Bhavna Records",
+          "duration": "3:09",
+          "videoId": "xX77aXqFlmI"
+        },
+        {
+          "title": "গৌরী এল",
+          "artist": "Bengali Music Directory",
+          "duration": "5:00",
+          "videoId": "tVj93-Aho2s"
+        },
+        {
+          "title": "Maa Go Tui (মা গো তুই)",
+          "artist": "Aalo",
+          "duration": "2:25",
+          "videoId": "HUaZHssUA3A"
+        },
+        {
+          "title": "Amar Maa Twang (আমার মা ত্বং)",
+          "artist": "Aalo",
+          "duration": "4:45",
+          "videoId": "ov2rvvG3oZI"
+        },
+        {
+          "title": "Chinmoyee Rup Dhore (চিন্ময়ী রূপ ধরে)",
+          "artist": "Aalo",
+          "duration": "4:09",
+          "videoId": "u-XNIVqDiiE"
+        },
+        {
+          "title": "Jaago Jogmaya (জাগো যোগমায়া)",
+          "artist": "Aalo",
+          "duration": "4:47",
+          "videoId": "8nsgRMrILdQ"
+        },
+        {
+          "title": "Maa Tor Choron (মা তোর চরণ)",
+          "artist": "Aalo",
+          "duration": "7:15",
+          "videoId": "DiYDu1zs-aY"
+        },
+        {
+          "title": "Ebar Nobin Montre (এবার নবীন মন্ত্রে)",
+          "artist": "Aalo",
+          "duration": "5:35",
+          "videoId": "H_vc0lSfrpo"
+        },
+        {
+          "title": "Maago Anondomoye (মা গো আনন্দময়ী)",
+          "artist": "Aalo",
+          "duration": "4:45",
+          "videoId": "r2uDzVdj9gE"
+        },
+        {
+          "title": "Ebar Amar Uma Ele (এবার আমার উমা এলে)",
+          "artist": "Aalo",
+          "duration": "4:31",
+          "videoId": "qvdXsk41p8M"
+        },
+        {
+          "title": "Aay Maa Uma (আয় মা উমা)",
+          "artist": "Aalo",
+          "duration": "5:01",
+          "videoId": "9kiWQ7eiYbk"
+        },
+        {
+          "title": "O Maa Donujdoluni (ও মা দনুজ-দলনী)",
+          "artist": "Aalo",
+          "duration": "4:16",
+          "videoId": "Da7-Qm0GzkM"
+        },
+        {
+          "title": "Dugga Elo Anginay (দুগ্গা এল আঙিনায়)",
+          "artist": "Aalo",
+          "duration": "5:44",
+          "videoId": "z2_vPTrNXTw"
+        },
+        {
+          "title": "Adhamo Santaner Proti (অধম সন্তানের প্রতি)",
+          "artist": "Aalo",
+          "duration": "5:01",
+          "videoId": "f_tQLMu8VlM"
+        },
+        {
+          "title": "Durga Amar Jagatjanani",
+          "artist": "Perennial Records",
+          "duration": "4:00",
+          "videoId": "s6Rn8mD_fIA"
+        },
+        {
+          "title": "আয়রে ছুটে আয় (Aayre Chute Aay)",
+          "artist": "Bangla Kids",
+          "duration": "10:25",
+          "videoId": "Q9OjQyuTOzI"
+        },
+        {
+          "title": "Megh Naki Kashful",
+          "artist": "Angel Bengali Songs",
+          "duration": "4:46",
+          "videoId": "G4C1LGkhCCA"
+        },
+        {
+          "title": "Megh Diyechhe",
+          "artist": "Angel Bengali Songs",
+          "duration": "4:33",
+          "videoId": "pqXWopC6JWE"
+        },
+        {
+          "title": "Joy Joy Durga Maa",
+          "artist": "Angel Bengali Songs",
+          "duration": "4:46",
+          "videoId": "alZP3NBzLws"
+        },
+        {
+          "title": "Ki Saje Sejechhe Sarat Rani",
+          "artist": "Angel Bengali Songs",
+          "duration": "6:05",
+          "videoId": "l4VQtqiSXb8"
+        },
+        {
+          "title": "Hiyar Majhe Durga Saje",
+          "artist": "Angel Bengali Songs",
+          "duration": "5:52",
+          "videoId": "9QGnTOJNblU"
+        },
+        {
+          "title": "Hajar Rupe Durga",
+          "artist": "Angel Bengali Songs",
+          "duration": "4:46",
+          "videoId": "YrQuxX72RNc"
+        },
+        {
+          "title": "Dhakete Porlo Kathhi",
+          "artist": "Angel Bengali Songs",
+          "duration": "5:04",
+          "videoId": "LLZAc2H-_yQ"
+        },
+        {
+          "title": "Abar Ele Mago",
+          "artist": "Angel Bengali Songs",
+          "duration": "6:06",
+          "videoId": "3LJPfJNEL4w"
+        },
+        {
+          "title": "Maa Asche Maa",
+          "artist": "Angel Bengali Songs",
+          "duration": "4:03",
+          "videoId": "OvKi4FYKyXU"
+        },
+        {
+          "title": "Maa Go Maa",
+          "artist": "Angel Bengali Songs",
+          "duration": "5:48",
+          "videoId": "CkgNU8T-Fas"
+        },
+        {
+          "title": "Amader Nabapally",
+          "artist": "Angel Bengali Songs",
+          "duration": "3:13",
+          "videoId": "9hOvzHKRPaQ"
+        },
+        {
+          "title": "Dhaaker Opor Porlo Kathi",
+          "artist": "Angel Bengali Songs",
+          "duration": "4:03",
+          "videoId": "Q18mptKC08Y"
+        },
+        {
+          "title": "Ya Devi Sarva Bhuteshu",
+          "artist": "Angel Bengali Songs",
+          "duration": "4:58",
+          "videoId": "aZHn9orqk9s"
+        },
+        {
+          "title": "Sharat Esechhe Himel Parashe",
+          "artist": "Angel Bengali Songs",
+          "duration": "5:39",
+          "videoId": "n7V0SoWrk-s"
+        },
+        {
+          "title": "Bejeche Baddi Dhaker",
+          "artist": "Angel Bengali Songs",
+          "duration": "4:34",
+          "videoId": "A4TIt4v7Jq8"
+        },
+        {
+          "title": "Hein Go Ma Durga",
+          "artist": "Saregama Bengali",
+          "duration": "4:01",
+          "videoId": "o_z_4Mg6f6M"
+        },
+        {
+          "title": "Joy Maa Durga",
+          "artist": "Saregama Bengali",
+          "duration": "5:10",
+          "videoId": "l8bgf2zSuIU"
+        },
+        {
+          "title": "Bhoomi — Joy Ma Dugga",
+          "artist": "Universal Music India",
+          "duration": "4:09",
+          "videoId": "u766pLFdcb0"
+        },
+        {
+          "title": "Agamani Gaan Shona Jay (Aashwin)",
+          "artist": "Saregama Bengali",
+          "duration": "4:08",
+          "videoId": "zpPLxp5Snl8"
+        },
+        {
+          "title": "Pujor Kolkata",
+          "artist": "Saregama Bengali",
+          "duration": "5:50",
+          "videoId": "7hZuhNoMRiA"
+        },
+        {
+          "title": "Dekho Sharat Akash Jure",
+          "artist": "Saregama Bengali",
+          "duration": "4:55",
+          "videoId": "Co4hmI11OpU"
+        }
+      ]
+    },
+    "retro": {
+      "tracks": [
+        [
+          "Durge Durge Durgatinashini",
+          "Asha Bhosle",
+          "5:10"
+        ],
+        [
+          "Ogo Amar Agomoni Alo",
+          "Sipra Basu",
+          "3:20"
+        ],
+        [
+          "Bajlo Tomar Aalor Benu",
+          "Supriti Ghosh",
+          "4:24"
+        ],
+        [
+          "Madhukaitava Vidhwangsi",
+          "Tushar Dutta",
+          "9:49"
+        ],
+        [
+          "Raai Jago Go",
+          "Pousali Banerjee",
+          "6:00"
+        ]
+      ]
+    },
+    "modern": {
+      "tracks": [
+        [
+          "Dugga Elo",
+          "Monali Thakur",
+          "2:27"
+        ],
+        [
+          "Dhak Baja Kashor Baja",
+          "Shreya Ghoshal",
+          "4:26"
+        ],
+        [
+          "Bolo Dugga Elo",
+          "Kaushik–Guddu",
+          "3:20"
+        ],
+        [
+          "Aamaar Dugga",
+          "Monali Thakur",
+          "3:20"
+        ],
+        [
+          "Ebar Jeno Onno Rokom Pujo",
+          "Nakash Aziz",
+          "3:33"
+        ]
+      ]
+    },
+    "pandal": {
+      "tracks": [
+        [
+          "Dhaker Taley",
+          "Festival favourite",
+          "4:43"
+        ],
+        [
+          "Dhak Baaja Komor Nacha",
+          "Pandal mix",
+          "3:33"
+        ],
+        [
+          "Shundori Komola",
+          "Folk favourite",
+          "3:14"
+        ],
+        [
+          "Kalo Jole Kuchla Tole",
+          "Iman Chakraborty",
+          "4:23"
+        ],
+        [
+          "Pujor Dhaak Theme",
+          "Surobaibhab",
+          "1:31"
+        ]
+      ]
+    },
+    "biday": {
+      "tracks": [
+        [
+          "Thakur Thakbe Kotokkhon",
+          "Traditional",
+          "4:18"
+        ],
+        [
+          "Bolo Durga Mai Ki Joy",
+          "Traditional chorus",
+          "3:46"
+        ],
+        [
+          "O Maa Biday De",
+          "Traditional",
+          "4:32"
+        ],
+        [
+          "Asche Bochor Abar Hobe",
+          "Bijoya chorus",
+          "4:08"
+        ]
+      ]
+    },
+    "asche-bochor": {
+      "tracks": [
+        [
+          "Abar Elo Maa",
+          "Rahul Dutta",
+          "3:07"
+        ],
+        [
+          "Elo Re Pujo Elo",
+          "Dabbu",
+          "3:13"
+        ],
+        [
+          "Chaarpashe Aalo Hok",
+          "Festival chorus",
+          "5:34"
+        ],
+        [
+          "Agomonir Gaan",
+          "Anupam Roy",
+          "5:47"
+        ]
+      ]
+    },
+    "misc": {
+      "tracks": [
+        [
+          "Aigiri Nandini",
+          "Rajalakshmee Sanjay",
+          "5:53"
+        ],
+        [
+          "Kalo Jole Kuchla Tole",
+          "Iman Chakraborty",
+          "4:23"
+        ],
+        [
+          "Shundori Komola",
+          "Traditional folk",
+          "3:14"
+        ],
+        [
+          "Asatoma Sadgamaya",
+          "Arijit Singh",
+          "3:07"
+        ],
+        [
+          "Gouri Elo",
+          "Dohar",
+          "3:57"
+        ]
+      ]
+    }
+  }
+}

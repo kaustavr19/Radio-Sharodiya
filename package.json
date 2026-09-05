@@ -1,0 +1,21 @@
+{
+  "name": "pujo-vibes",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A cinematic seasonal Bengali listening experience for Durga Pujo.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/build.mjs",
+    "preview": "vite preview",
+    "check:syntax": "node scripts/check-syntax.mjs",
+    "test": "node --test tests/catalogue.test.mjs tests/youtube-sync-core.test.mjs tests/pujo-contract.test.mjs tests/playback-core.test.mjs",
+    "sync:youtube": "node scripts/sync-youtube-playlists.mjs --write",
+    "sync:youtube:check": "node scripts/sync-youtube-playlists.mjs",
+    "audit:build": "node scripts/audit-build.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "devDependencies": {
+    "vite": "^8.2.0"
+  }
+}
