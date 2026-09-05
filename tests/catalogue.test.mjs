@@ -27,11 +27,12 @@ test('full catalogue loads on demand and falls back to its last valid copy', asy
   const fetcher = async (url) => ({ ok: true, json: async () => documents[url] });
   const first = await createCatalogueLoader({ fetcher, storage }).load();
   assert.equal(first.source, 'network');
-  assert.equal(Object.values(first.playlists).reduce((total, playlist) => total + playlist.tracks.length, 0), 139);
+  assert.equal(Object.values(first.playlists).reduce((total, playlist) => total + playlist.tracks.length, 0), 218);
 
   const offline = await createCatalogueLoader({ fetcher: async () => { throw new Error('offline'); }, storage }).load();
   assert.equal(offline.source, 'cache');
   assert.equal(offline.playlists.agomoni.tracks.length, 91);
+  assert.equal(offline.playlists.retro.tracks.length, 84);
 });
 
 test('external catalogue strings are reduced to safe plain text', () => {
