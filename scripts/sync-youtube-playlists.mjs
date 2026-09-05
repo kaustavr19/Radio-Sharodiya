@@ -79,15 +79,16 @@ for (const playlistId of config.order) {
   const items = await fetchPlaylistItems(youtubePlaylistId);
   const sourceIds = items.map((item) => item.contentDetails?.videoId || item.snippet?.resourceId?.videoId).filter(Boolean);
   const videos = await fetchVideos([...new Set(sourceIds)]);
-  const tracks = items.map((item, index) => trackFromYoutube({
+  const resolvedTracks = items.map((item, index) => trackFromYoutube({
     playlistId,
     index,
     item,
     video: videos.get(sourceIds[index]),
     overrides: overrideDocument.overrides || {},
   }));
+  const tracks = resolvedTracks.filter(Boolean);
   candidate.playlists[playlistId] = { tracks };
-  const unavailable = tracks.flatMap((track, index) => track.videoId ? [] : [{
+  const unavailable = resolvedTracks.flatMap((track, index) => !track || track.videoId ? [] : [{
     position: index + 1,
     title: track.title,
     videoId: sourceIds[index] || '',

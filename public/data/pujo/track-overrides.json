@@ -3,7 +3,20 @@
   "overrides": {
     "kvadzdVaTtg": {
       "title": "Coffee Houser Sei Addata Aaj Aar Nei",
-      "artist": "Manna Dey"
+      "artist": "Manna Dey",
+      "exclude": true
+    },
+    "tSFjzi0Jx6A": {
+      "title": "Nayan Sarasi Keno Bhorechhe Jale",
+      "artist": "Kishore Kumar",
+      "duration": "4:44",
+      "videoId": "oI2nq4IDn8A"
+    },
+    "cEBFKxVm1aM": {
+      "title": "Takhon Tomar Ekush Bachhar",
+      "artist": "Aarti Mukherji",
+      "duration": "3:35",
+      "videoId": "p_VqMhn_co0"
     },
     "YQyo8QeoYhc": {
       "title": "Mahalaya — Mahishasura Mardini · Full Album",

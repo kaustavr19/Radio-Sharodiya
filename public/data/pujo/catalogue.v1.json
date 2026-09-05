@@ -678,34 +678,10 @@
     "retro": {
       "tracks": [
         {
-          "title": "Coffee Houser Sei Addata Aaj Aar Nei | কফি হাউসের সেই আড্ডাটা | Manna Dey | বাংলা গান | Bengali Song",
-          "artist": "Saregama Bengali",
-          "duration": "6:48",
-          "videoId": "kvadzdVaTtg"
-        },
-        {
-          "title": "Mone Pore Ruby Roy | মনে পড়ে রুবি রায় | Lyrical Video | R.D.Burman | Sachin Bhowmick | Bangla Gaan",
-          "artist": "Saregama Bengali",
-          "duration": "3:36",
-          "videoId": ""
-        },
-        {
-          "title": "Amay Prashna Kare Neel Dhrubatara with lyric | আমায় প্রশ্ন করে নীল ধ্রুবতারা | Hemanta Mukherjee",
-          "artist": "Saregama Bengali",
-          "duration": "3:26",
-          "videoId": ""
-        },
-        {
-          "title": "Nayan Sarasi Keno Bhorechhe Jale | কিশোর কুমার | বাংলা গান | Lyrical Video | Bengali Modern Song",
-          "artist": "Kishore Kumaar Bangla Gaan",
-          "duration": "3:36",
-          "videoId": "tSFjzi0Jx6A"
-        },
-        {
-          "title": "Takhon Tomar Ekush Bachhar with lyrics | Aarti Mukherji",
-          "artist": "Saregama Bengali",
-          "duration": "3:47",
-          "videoId": "cEBFKxVm1aM"
+          "title": "Takhon Tomar Ekush Bachhar",
+          "artist": "Aarti Mukherji",
+          "duration": "3:35",
+          "videoId": "p_VqMhn_co0"
         },
         {
           "title": "Ami Taar Thikana Rakhini With Lyrics | Manna Dey",
@@ -742,18 +718,6 @@
           "artist": "Saregama Bengali",
           "duration": "3:49",
           "videoId": "13P45vh0CeE"
-        },
-        {
-          "title": "Tare Ami Chokhe Dekhini with lyrics | তারে আমি চোখে দেখিনি | Kishore Kumar",
-          "artist": "Saregama Bengali",
-          "duration": "3:28",
-          "videoId": ""
-        },
-        {
-          "title": "Se To Elo Na with lyrics | সে তো এলো না | Kishore Kumar",
-          "artist": "Saregama Bengali",
-          "duration": "3:20",
-          "videoId": ""
         },
         {
           "title": "Pa Ma Ga Re Sa with lyrics | Lata Mangeshkar | Hits Of Lata Mangeshkar Modern Songs | HD Song",
@@ -888,12 +852,6 @@
           "videoId": "ZoR43pFihMw"
         },
         {
-          "title": "Hay Re Smriti Boro Jwalamoy | Bengali Song | Runa Laila",
-          "artist": "Saregama Bengali",
-          "duration": "2:18",
-          "videoId": ""
-        },
-        {
           "title": "Alta Payer Alto Chhonwa Porechhe",
           "artist": "Tarun Banerjee - Topic",
           "duration": "3:33",
@@ -924,22 +882,10 @@
           "videoId": "rT5DPCn0KHA"
         },
         {
-          "title": "Asha Chhilo Bhalobasa Chhilo Lyrical | আশা ছিল ভালোবাসা ছিল | Kishore Kumar",
-          "artist": "Saregama Bengali",
-          "duration": "4:39",
-          "videoId": ""
-        },
-        {
           "title": "আহা কি দারুন দেখতে | কিশোর কুমার | AHA KI DARUN DEKHTE | KISHORE KUMAR | OLD IS GOLD BENGALI SONG",
           "artist": "RDC Banglar Geeti",
           "duration": "2:41",
           "videoId": "1O59JV7k_hY"
-        },
-        {
-          "title": "Mor Swapneri Saathi lyrical | মোর স্বপ্নেরই সাথী | Kishore Kumar",
-          "artist": "Saregama Bengali",
-          "duration": "4:50",
-          "videoId": ""
         },
         {
           "title": "Hoyto Amake Karo Mone Nei | Pratisodh | Bengali Movie Song | Kishore Kumar",
@@ -1026,12 +972,6 @@
           "videoId": "noGHRgAxtSM"
         },
         {
-          "title": "Ek Din Pakhi Ure Jabe with lyrics | এক দিন পাখি উড়ে যাবে | Kishore Kumar",
-          "artist": "Saregama Bengali",
-          "duration": "3:39",
-          "videoId": ""
-        },
-        {
           "title": "Akash Keno Daake | Audio | Kishore Kumar | R.D.Burman | Gauriprasanna Mazumder",
           "artist": "Saregama Bengali",
           "duration": "3:39",
@@ -1110,12 +1050,6 @@
           "videoId": "3oaVPEiR-Vg"
         },
         {
-          "title": "Naam Amar Kishore Kumar Ganguly with Lyrics | নাম আমার কিশোর কুমার গাঙ্গুলী | Kishore Kumar",
-          "artist": "Saregama Bengali",
-          "duration": "7:05",
-          "videoId": ""
-        },
-        {
           "title": "Jabo Ki Jabo Na with lyrics | Asha Bhosle | R.D.Burman | Gauriprasanna Mazumder",
           "artist": "Saregama Bengali",
           "duration": "3:45",
@@ -1152,12 +1086,6 @@
           "videoId": "1piMF9ZHWUs"
         },
         {
-          "title": "Shono Mon Boli Tomay with lyric | শোনো মন বলি তোমায় | R.D.Burman",
-          "artist": "Saregama Bengali",
-          "duration": "3:21",
-          "videoId": ""
-        },
-        {
           "title": "কিনে দে রেশমি চুড়ি",
           "artist": "Mohammad Hoshain",
           "duration": "3:10",
@@ -1170,16 +1098,76 @@
           "videoId": "g4Z7lV1Posg"
         },
         {
-          "title": "Chokhe Naame Brishti with Lyrics | Asha Bhosle | HD Video",
-          "artist": "Saregama Bengali",
-          "duration": "3:38",
-          "videoId": ""
-        },
-        {
           "title": "Jhilmil Jhilmil Tara",
           "artist": "Asha Bhosle - Topic",
           "duration": "5:32",
           "videoId": "LCPp1lMss1E"
+        },
+        {
+          "title": "Amay Prashna Kare Neel Dhrubatara | আমায় প্রশ্ন করে নীল ধ্রুবতারা | হেমন্ত মুখার্জী | সেরা বাংলা গান",
+          "artist": "Saregama Bengali",
+          "duration": "3:28",
+          "videoId": "Quw_xNFSfik"
+        },
+        {
+          "title": "Mone Pore Ruby Roy | Audio | R.D.Burman | Sachin Bhowmick",
+          "artist": "Saregama Bengali",
+          "duration": "3:48",
+          "videoId": "oARjlN2knzE"
+        },
+        {
+          "title": "Tare Ami Chokhe Dekhini | Audio | Kishore Kumar | Lata Mangeshkar",
+          "artist": "Saregama Bengali",
+          "duration": "3:10",
+          "videoId": "xtE2kRuee3g"
+        },
+        {
+          "title": "Se To Elo Na | Audio | Kishore Kumar | R.D.Burman",
+          "artist": "Saregama Bengali",
+          "duration": "3:13",
+          "videoId": "pT09p4Jg8Go"
+        },
+        {
+          "title": "Hay Re Smriti Baro Jwalamoy",
+          "artist": "Runa Laila - Topic",
+          "duration": "2:21",
+          "videoId": "iOokqe4vl2s"
+        },
+        {
+          "title": "Asha Chhilo Bhalobasa Chhilo | Audio | Kishore Kumar | Shyamal Mitra",
+          "artist": "Saregama Bengali",
+          "duration": "4:15",
+          "videoId": "KigjSXLBorc"
+        },
+        {
+          "title": "Mor Swapneri Saathi | কিশোর কুমার | বাংলা গান | Aradhana | Lyrical Video | Bengali Movie Song",
+          "artist": "Kishore Kumaar Bangla Gaan",
+          "duration": "4:50",
+          "videoId": "ubwsUY7ZYBg"
+        },
+        {
+          "title": "Ek Din Pakhi Ure Jabe | Audio | Kishore Kumar | Bedonar Baluchare Sentimental Hits",
+          "artist": "Saregama Bengali",
+          "duration": "3:22",
+          "videoId": "6HwQl-IK7vg"
+        },
+        {
+          "title": "Naam Amar Kishore Kumar Ganguly | কিশোর কুমার | Lyrical Video | Bengali Modern Song",
+          "artist": "Kishore Kumaar Bangla Gaan",
+          "duration": "6:58",
+          "videoId": "q9Qjvlk-J6k"
+        },
+        {
+          "title": "Shono Mon Boli Tomay | Audio | R.D.Burman | Swapan Chakraborty",
+          "artist": "Saregama Bengali",
+          "duration": "3:34",
+          "videoId": "MDnWFQvZccY"
+        },
+        {
+          "title": "Chokhe Name Bristi | Audio | Asha Bhosle | R.D.Burman",
+          "artist": "Saregama Bengali",
+          "duration": "3:46",
+          "videoId": "DUC00uuV77w"
         }
       ]
     },

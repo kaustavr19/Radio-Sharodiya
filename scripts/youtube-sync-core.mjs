@@ -25,10 +25,13 @@ export const applyTrackOverride = (track, override = {}) => ({
   title: plainMetadata(override.title ?? track.title, 'Untitled programme'),
   artist: plainMetadata(override.artist ?? track.artist, 'Unknown artist'),
   duration: plainMetadata(override.duration ?? track.duration, '0:00'),
+  videoId: plainMetadata(override.videoId ?? track.videoId),
 });
 
 export const trackFromYoutube = ({ playlistId, index, item, video, overrides = {} }) => {
   const sourceId = plainMetadata(item?.contentDetails?.videoId || item?.snippet?.resourceId?.videoId);
+  const override = overrides[sourceId] || overrides[`${playlistId}:${index}`] || {};
+  if (override.exclude === true) return null;
   const privateItem = item?.status?.privacyStatus === 'private' || /^private video$/i.test(item?.snippet?.title || '');
   const missingVideo = !video;
   const unavailable = privateItem || missingVideo || video?.status?.privacyStatus === 'private' || video?.status?.embeddable === false;
@@ -38,7 +41,7 @@ export const trackFromYoutube = ({ playlistId, index, item, video, overrides = {
     duration: isoDurationToClock(video?.contentDetails?.duration),
     videoId: unavailable ? '' : sourceId,
   };
-  return applyTrackOverride(base, overrides[sourceId] || overrides[`${playlistId}:${index}`]);
+  return applyTrackOverride(base, override);
 };
 
 export const validateCandidate = ({ currentDocument, candidateDocument, configuredIds, maximumReductionRatio = 0.35 }) => {

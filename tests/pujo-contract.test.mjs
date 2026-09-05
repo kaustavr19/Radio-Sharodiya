@@ -92,7 +92,7 @@ test('catalogue data is separated, lazy loaded, cached and safe to render', () =
   assert.equal(playlistConfig.version, 1);
   assert.equal(catalogueDocument.version, 1);
   assert.equal(playlistConfig.order.length, 8);
-  assert.equal(Object.values(catalogueDocument.playlists).reduce((total, playlist) => total + playlist.tracks.length, 0), 218);
+  assert.equal(Object.values(catalogueDocument.playlists).reduce((total, playlist) => total + playlist.tracks.length, 0), 216);
   assert.match(catalogueLoader, /const CATALOGUE_URL = '\/data\/pujo\/catalogue\.v1\.json'/);
   assert.match(catalogueLoader, /const OVERRIDES_URL = '\/data\/pujo\/track-overrides\.json'/);
   assert.match(catalogueLoader, /readCachedCatalogue/);

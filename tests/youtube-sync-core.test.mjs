@@ -19,6 +19,8 @@ test('YouTube tracks use safe metadata, overrides and embeddability', () => {
   const video = { snippet: { title: '<b>Agomoni</b>', channelTitle: 'Artist' }, contentDetails: { duration: 'PT4M8S' }, status: { privacyStatus: 'public', embeddable: true } };
   const track = trackFromYoutube({ playlistId: 'agomoni', index: 0, item, video, overrides: { abcdefghijk: { artist: 'Editorial artist' } } });
   assert.deepEqual(track, { title: 'Agomoni', artist: 'Editorial artist', duration: '4:08', videoId: 'abcdefghijk' });
+  assert.equal(trackFromYoutube({ playlistId: 'agomoni', index: 0, item, video, overrides: { abcdefghijk: { videoId: 'ZYXWVUTSRQP' } } }).videoId, 'ZYXWVUTSRQP');
+  assert.equal(trackFromYoutube({ playlistId: 'agomoni', index: 0, item, video, overrides: { abcdefghijk: { exclude: true } } }), null);
   assert.equal(trackFromYoutube({ playlistId: 'agomoni', index: 0, item, video: { ...video, status: { privacyStatus: 'unlisted', embeddable: true } } }).videoId, 'abcdefghijk');
   assert.equal(trackFromYoutube({ playlistId: 'agomoni', index: 0, item, video: { ...video, status: { privacyStatus: 'public', embeddable: false } } }).videoId, '');
 });
