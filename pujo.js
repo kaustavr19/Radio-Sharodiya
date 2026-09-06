@@ -366,6 +366,17 @@ const RECOVERY_DELAYS = [1500, 4000];
 const BUFFERING_TIMEOUT = 12000;
 const LONG_FORM_BUFFERING_TIMEOUT = 22000;
 
+const updatePlaylistOverviewCounts = () => {
+  playlistGrid.querySelectorAll('[data-playlist]').forEach((button) => {
+    const playlist = playlists[button.dataset.playlist];
+    const countLabel = button.querySelector('[data-playlist-count]');
+    if (!playlist || !countLabel) return;
+    const unit = /track/i.test(countLabel.textContent) ? 'tracks' : 'songs';
+    const count = catalogueIsFull ? playlist.tracks.length : playlist.trackCount;
+    countLabel.textContent = `${String(count).padStart(2, '0')} ${unit}`;
+  });
+};
+
 const hydrateCatalogue = (catalogue) => {
   const currentTrackId = currentTrack?.id;
   const queueIds = queue.map((track) => track.id);
@@ -378,6 +389,7 @@ const hydrateCatalogue = (catalogue) => {
   recentlyPlayed = recentlyPlayed.filter((id) => tracksById.has(id));
   catalogueSequence = playlists[activePlaylistId]?.tracks || playlists.mahalaya.tracks;
   catalogueIsFull = true;
+  updatePlaylistOverviewCounts();
   auditCatalogue();
   updateStationGuide();
   renderGuideAction();
