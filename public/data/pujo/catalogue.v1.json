@@ -122,6 +122,12 @@
           "artist": "Utpala Sen",
           "duration": "2:26",
           "videoId": ""
+        },
+        {
+          "title": "Bhavani Dayani | Sourendro - Soumyojit | Sid Sriram | World Music Day 2025 | Durga Puja Special",
+          "artist": "Sourendro Soumyojit",
+          "duration": "7:51",
+          "videoId": "J8Zj45SPtFA"
         }
       ]
     },
@@ -672,6 +678,24 @@
           "artist": "Saregama Bengali",
           "duration": "4:55",
           "videoId": "Co4hmI11OpU"
+        },
+        {
+          "title": "Sharodiya Sur (শারদীয়া সুর) | Anwesshaa | আগমনী গান | New Durga Puja Song 2023",
+          "artist": "Times Music Bangla",
+          "duration": "4:51",
+          "videoId": "27JutTnqgqc"
+        },
+        {
+          "title": "Pujo Asha Mane | Iman | Ankita | Shovan | Trissha | Akash | Latest Durga Puja Song",
+          "artist": "Times Music Bangla",
+          "duration": "5:56",
+          "videoId": "_OGyb5BDIMw"
+        },
+        {
+          "title": "Bhavani Dayani | Sourendro - Soumyojit | Sid Sriram | World Music Day 2025 | Durga Puja Special",
+          "artist": "Sourendro Soumyojit",
+          "duration": "7:51",
+          "videoId": "J8Zj45SPtFA"
         }
       ]
     },
@@ -1173,31 +1197,570 @@
     },
     "modern": {
       "tracks": [
-        [
-          "Dugga Elo",
-          "Monali Thakur",
-          "2:27"
-        ],
-        [
-          "Dhak Baja Kashor Baja",
-          "Shreya Ghoshal",
-          "4:26"
-        ],
-        [
-          "Bolo Dugga Elo",
-          "Kaushik–Guddu",
-          "3:20"
-        ],
-        [
-          "Aamaar Dugga",
-          "Monali Thakur",
-          "3:20"
-        ],
-        [
-          "Ebar Jeno Onno Rokom Pujo",
-          "Nakash Aziz",
-          "3:33"
-        ]
+        {
+          "title": "O Gouri | ও গৌরী | Ankita Bhattacharrya| Mak Mallar |Trending Folk Bengali Song|New Durga Puja Gaan",
+          "artist": "Times Music Bangla",
+          "duration": "4:18",
+          "videoId": "TGehwgtZ6TU"
+        },
+        {
+          "title": "এসো নব রূপে",
+          "artist": "Times Music Bangla",
+          "duration": "4:23",
+          "videoId": "hqGQgtuGMWI"
+        },
+        {
+          "title": "O Menoka O Menoka (Official Video) | Antara Nandy|Ankita Nandy|Aviman Paul |Durga Puja Bengali Song",
+          "artist": "Times Music Bangla",
+          "duration": "3:37",
+          "videoId": "xUMhpMmwAmM"
+        },
+        {
+          "title": "Uma Ashe Notun Saje | Ankita Bhattacharyya | Mak Mallar | Somraj | New Durgo Puja Song | Maa Durga",
+          "artist": "Times Music Bangla",
+          "duration": "3:28",
+          "videoId": "hnkfDCbULxk"
+        },
+        {
+          "title": "Gouri Elo ( Official Video ) | গৌরী এলো | Raktabeej | Tirtha B | Dohar | New Bengali Durga Puja Song",
+          "artist": "Times Music Bangla",
+          "duration": "3:13",
+          "videoId": "asdoVzpUFsE"
+        },
+        {
+          "title": "গৌরী এল | Gouri Elo | Antara Nandy | Ankita Nandy | Nandy Sisters | Bengali Folk | Durga Puja Song",
+          "artist": "Times Music Bangla",
+          "duration": "4:54",
+          "videoId": "ANGfQzvXvSw"
+        },
+        {
+          "title": "Nakku Nakur Na Jao Thakur | Nandy Sisters | Raktabeej | Mimi | Abir | New Bengali Movie Song 2025",
+          "artist": "Times Music Bangla",
+          "duration": "3:55",
+          "videoId": "kC5YcEj10dg"
+        },
+        {
+          "title": "Sharodiya Sur | Anwesshaa | আগমনী গান | Lyrical | New Durga Puja Song | Latest Bengali Song 2024",
+          "artist": "Times Music Bangla",
+          "duration": "4:24",
+          "videoId": "qroM1I6VMeM"
+        },
+        {
+          "title": "TAPA TINI OFFICIAL VIDEO: Belashuru | Iman | Khnyada | Upali | Anindya | New Bengali Song টাপা টিনি",
+          "artist": "Times Music Bangla",
+          "duration": "3:29",
+          "videoId": "xBnc7zN3vLA"
+        },
+        {
+          "title": "Golemale Golemale | Antara Nandy | Ankita Nandy | Surojit Chatterjee | Latest Bengali Folk Song 2023",
+          "artist": "Times Music Bangla",
+          "duration": "5:00",
+          "videoId": "vuHZLbXTY3Y"
+        },
+        {
+          "title": "Komola Sundori Nache | Ankita Bhattacharyya | Ft. Darshana Banik | Atishay Jain | Bengali Folk song",
+          "artist": "Times Music Bangla",
+          "duration": "3:33",
+          "videoId": "0c9ltGyLYFA"
+        },
+        {
+          "title": "Age Ki Sundor Din Kataitam | Iman | Surojit | Shah Abdul Karim | New Bengali Folk Song 2023",
+          "artist": "Times Music Bangla",
+          "duration": "4:44",
+          "videoId": "3Quu5hohHmI"
+        },
+        {
+          "title": "লীলাবালি | Iman Chakraborty | Atishay Jain | Lyrical | বিয়ের গান | Best Bengali Folk Song",
+          "artist": "Times Music Bangla",
+          "duration": "4:06",
+          "videoId": "pEpWDKn2OYs"
+        },
+        {
+          "title": "RANGABATI | GOTRO | SUROJIT | IMAN | OM | MANALI | DEVLINA | NIGEL | Bengali Film Song 2019",
+          "artist": "Times Music Bangla",
+          "duration": "4:29",
+          "videoId": "IU340-JBKA4"
+        },
+        {
+          "title": "O Thakur: Official Video Full Song | Upal Sengupta | Prashmita Paul | Belaseshe",
+          "artist": "Times Music Bangla",
+          "duration": "2:50",
+          "videoId": "7GYJcXSLwYo"
+        },
+        {
+          "title": "বাদ্যি বাজে | Baddi Baje | Anushka Patra | Debrup Raha | Arindam | Amit-Ishan | New Durga Puja Song",
+          "artist": "Times Music Bangla",
+          "duration": "3:42",
+          "videoId": "0GqpqGV6lGU"
+        },
+        {
+          "title": "Kaash Phool Hawa Je Shuru - Surojit- Iman- Om - Leeja -Baba Yadav -Latest Durga Puja Song 2021",
+          "artist": "Times Music Bangla",
+          "duration": "5:08",
+          "videoId": "-_AA2QbVXfw"
+        },
+        {
+          "title": "পড়লো ঢাকে কাঠি | Iman Chakraborty | Priyo Chattopadhyay | Utsav | JBS Film | Durga #pujo Song 2022",
+          "artist": "Times Music Bangla",
+          "duration": "3:27",
+          "videoId": "2l1mgEiLfhE"
+        },
+        {
+          "title": "Baddi Baje |Anushka Patra |Debrup R |Amit-Ishaan |Arindam |Lyrical |New Durga Puja Bengali Song 2023",
+          "artist": "Times Music Bangla",
+          "duration": "3:15",
+          "videoId": "HTAPBUfe9R0"
+        },
+        {
+          "title": "Dakatiya Banshi (Official Video) | Bohurupi | Shiboprosad | Koushani M | New Bengali Movie Song 2024",
+          "artist": "Times Music Bangla",
+          "duration": "4:04",
+          "videoId": "wF9oo8dJ5t4"
+        },
+        {
+          "title": "O Babur Maa (Official Video) | Raktabeej 2 | Surojit | Iman | Victor Banerjee | New Movie Song 2025",
+          "artist": "Times Music Bangla",
+          "duration": "3:31",
+          "videoId": "8BvknsNiQg8"
+        },
+        {
+          "title": "Maa Esheche | Projapati 2 | Dev | Mithun C | Kumar Sanu | Jeet Gannguli | Bengali Movie Song 2025",
+          "artist": "Times Music Bangla",
+          "duration": "4:05",
+          "videoId": "08RR4i24fBQ"
+        },
+        {
+          "title": "Ebar Jeno Onno Rokom Pujo | Yoddha | Dev | Mimi | Raj Chakraborty | SVF",
+          "artist": "SVF",
+          "duration": "3:44",
+          "videoId": "E2zfQEo7Q_M"
+        },
+        {
+          "title": "Pujo Song 2019: Ashey Maa Durga Shey | Mimi, Subhashree, Nusrat | Raj Chakraborty",
+          "artist": "Captain Steel India Limited",
+          "duration": "3:25",
+          "videoId": "OjopH641Q3Q"
+        },
+        {
+          "title": "DHAK BAJA KASHOR BAJA Video Song || Shreya Ghoshal || Jeet Gannguli || Durga Puja Special Songs",
+          "artist": "T-Series",
+          "duration": "4:23",
+          "videoId": "id5_3dKvEBg"
+        },
+        {
+          "title": "Bajlo tomar alor benu | By DEBOLINA | SM studio DURGA DURGATINASHINI - Mahalaya",
+          "artist": "Sm STUDIO FILM & MUSIC",
+          "duration": "5:24",
+          "videoId": "yzEbF55ywtM"
+        },
+        {
+          "title": "Elo Je Maa (এলো যে মা) | Challenge 2 | Dev | Puja | Abhijeet | Shreya Ghoshal | Jeet Gannguli | SVF",
+          "artist": "SVF",
+          "duration": "4:51",
+          "videoId": "2U416kTo0as"
+        },
+        {
+          "title": "Dugga Ma (দুগ্গা মা) | Arijit Singh | Bolo Dugga Maiki | Ankush | Nusrat | Arindom | Raj Chakraborty",
+          "artist": "SVF",
+          "duration": "2:53",
+          "videoId": "sPuZ0Q3KDWo"
+        },
+        {
+          "title": "Joy Joy Durga Maa - The Pujo Song | Sourav, Raj, Jeet Gannguli | Nusrat, Mimi, Subhashree, Bonny",
+          "artist": "Captain Steel India Limited",
+          "duration": "3:30",
+          "videoId": "3E_qefwPA0E"
+        },
+        {
+          "title": "Dhaker Taley | Poran Jai Jolia Re | Dev | Subhashree |Abhijeet|Parinita|Sudipto | Jeet Gannguli |SVF",
+          "artist": "SVF",
+          "duration": "4:23",
+          "videoId": "hbXuXt7gkFY"
+        },
+        {
+          "title": "Suruchi Sangha Theme Song 2018 | Durga Puja | Mamata Banerjee | Indranil | Lopamudra | SVF Music",
+          "artist": "SVF Music",
+          "duration": "4:01",
+          "videoId": "1OQ0cyM3QKw"
+        },
+        {
+          "title": "Maa Go Tui | Durgeshgorer Guptodhon| Abir, Ishaa, Arjun| Manomay, Somchanda| Bickram Ghosh|SVF Music",
+          "artist": "SVF Music",
+          "duration": "2:09",
+          "videoId": "60tSbJWJCr0"
+        },
+        {
+          "title": "দুগ্গা মাইকী জয় | Ankush | Nussrat | Shree Pritam | Jolly Das | Jay Dugga Thakur | Eskay Movies",
+          "artist": "Eskay Movies",
+          "duration": "4:28",
+          "videoId": "80OX5xMvJP4"
+        },
+        {
+          "title": "দুগ্গি এলো ঘরে | Duggi Elo Ghore | Rajkumar Roy | Durga Puja Song | Bangla Folk Song",
+          "artist": "Times Music Bangla",
+          "duration": "4:11",
+          "videoId": "ayZUGy7816g"
+        },
+        {
+          "title": "Durga Maa | Pujo Special Song | Akassh | Haimanti | Puja 2018",
+          "artist": "Eskay Movies",
+          "duration": "4:03",
+          "videoId": "9OkzYV4R9nc"
+        },
+        {
+          "title": "Joy Dugga Bol | Shaan, Ashu & Rajib | Durga Puja Song | Official Video | Asha Audio",
+          "artist": "Asha Audio",
+          "duration": "4:32",
+          "videoId": ""
+        },
+        {
+          "title": "Agomonir Gaan (আগমনীর গান)",
+          "artist": "SVF Music",
+          "duration": "6:04",
+          "videoId": "MsqpjM09MrY"
+        },
+        {
+          "title": "Sharodiya Sur (শারদীয়া সুর) | Anwesshaa | আগমনী গান | New Durga Puja Song 2023",
+          "artist": "Times Music Bangla",
+          "duration": "4:51",
+          "videoId": "27JutTnqgqc"
+        },
+        {
+          "title": "Porlo Dhake Kathi (Lyrical) | Iman Chakraborty | Durga Puja Songs | Latest Bengali Songs 2023",
+          "artist": "Times Music Bangla",
+          "duration": "3:07",
+          "videoId": "_dR2oCpvKtY"
+        },
+        {
+          "title": "এলো যে মা | Elo Je Maa | M Ram | Soumya | Debrup | Aywan | Durga Puja Song 2022",
+          "artist": "Times Music Bangla",
+          "duration": "7:40",
+          "videoId": "Ih8ZmuV3Hp4"
+        },
+        {
+          "title": "Pujo Asha Mane | Iman | Ankita | Shovan | Trissha | Akash | Latest Durga Puja Song",
+          "artist": "Times Music Bangla",
+          "duration": "5:56",
+          "videoId": "_OGyb5BDIMw"
+        },
+        {
+          "title": "Somarohe | Ramesh & Sourav ft. Ishan Mitra , Argha Banerjee and Ikkshita | Durga Puja Song 2020",
+          "artist": "Times Music Bangla",
+          "duration": "4:14",
+          "videoId": "RhrwEViVeMQ"
+        },
+        {
+          "title": "Bajchhe Kansor Bajchhe Dhaak | Somchanda Bhattacharya | Soham Acharya | Pujor Gaan 2019",
+          "artist": "Times Music Bangla",
+          "duration": "4:43",
+          "videoId": "9VF-_GwIISI"
+        },
+        {
+          "title": "Menoka Mathaye Dilo | BHOOMI | Lyrical Video | Bengali Folk Song 2018",
+          "artist": "Times Music Bangla",
+          "duration": "3:43",
+          "videoId": "o-B8jW72l5I"
+        },
+        {
+          "title": "Pujo Elo - Kumar Sanu - Tapas Das - Gautam Susmit- Pujor Gaan 2021",
+          "artist": "Times Music Bangla",
+          "duration": "5:16",
+          "videoId": "Dy_1ZxCABn0"
+        },
+        {
+          "title": "আমার দুগ্গা | Aamaar Dugga - Official Music Video | Monali Thakur | Durga Puja Song",
+          "artist": "Monali Thakur",
+          "duration": "3:20",
+          "videoId": "4h5DXcN6cd4"
+        },
+        {
+          "title": "আইলো উমা বাড়িতে | Ailo Uma Barite | Monami Ghosh | Best Durga Puja Song | 4K",
+          "artist": "MONAMI GHOSH",
+          "duration": "4:21",
+          "videoId": "4zyCkmAS1Oo"
+        },
+        {
+          "title": "Sunrise Dashabhuja | Monali Thakur & Jeet Gannguli ft. Abir, Trina Saha",
+          "artist": "Sunrise Pure",
+          "duration": "4:06",
+          "videoId": "G9DnRI1J2wo"
+        },
+        {
+          "title": "Pujoye Asha | Asha Bhosle | Full Video Song | Shiladitya-Raj | Durga Puja Special 2025",
+          "artist": "Asha Audio",
+          "duration": "3:33",
+          "videoId": "3bLRGgp-D04"
+        },
+        {
+          "title": "ঢাকের বোলে বাংলা দোলে | দোহার | Dhaker Bole Bangla Dole | Dohar Pujor Gaan |Bengali Music Directory",
+          "artist": "Bengali Music Directory | BMD",
+          "duration": "3:48",
+          "videoId": "2-xpFWZX51Y"
+        },
+        {
+          "title": "Sonali Sharode",
+          "artist": "Shelley Music",
+          "duration": "5:39",
+          "videoId": ""
+        },
+        {
+          "title": "Dugga Elo - Official Video | Monali Thakur | Guddu | Indranil Das",
+          "artist": "Zee Music Bangla",
+          "duration": "2:31",
+          "videoId": "xlElO06nQy8"
+        },
+        {
+          "title": "Aaj Baaje",
+          "artist": "Amara Muzik Bengali",
+          "duration": "3:37",
+          "videoId": "JrcqCpFjE7Q"
+        },
+        {
+          "title": "Classi - Folk Medley | Durga Sohay | বাংলা ফোক গান |Timir | Iman | Bickram Ghosh I Tonushree",
+          "artist": "Amara Muzik Bengali",
+          "duration": "4:32",
+          "videoId": "8PaCWoL31Yg"
+        },
+        {
+          "title": "The Revolutionaries: Jai Durga (Song) | Bhuvan Bam,Rohit Saraf,Pratibha R | Shreyas,Siddharth-Garima",
+          "artist": "T-Series",
+          "duration": "2:49",
+          "videoId": "RNnZ8HGhJLM"
+        },
+        {
+          "title": "Durga Tumi Ma Go II Matri Aradhona II JAYATI CHAKRABORTY II Bengali Song",
+          "artist": "RUDRAKSH CREATIONS",
+          "duration": "5:09",
+          "videoId": "9F8J9jKlbIY"
+        },
+        {
+          "title": "Nache Mon Dhaker Bol E - Dugga Pujor Song | Subhashree Jena, Priyanshu P | Barenya Saha, Subhasree D",
+          "artist": "Zee Music Bangla",
+          "duration": "3:07",
+          "videoId": "oU7xfp5Uk2E"
+        },
+        {
+          "title": "Ma Dugga Elo - Music Video | Barenya Saha & Pousali Banerjee | Sudipa Das | Dugga Pujo Song",
+          "artist": "Zee Music Bangla",
+          "duration": "3:40",
+          "videoId": "QtnD10k7P8g"
+        },
+        {
+          "title": "Ebar Pujoy | Oindrila Bose, Rahul Dev Bose | Indranil Aich, Madhuraa Bhattacharya | New Bangla Song",
+          "artist": "Zee Music Bangla",
+          "duration": "5:09",
+          "videoId": "eEet3L3REa8"
+        },
+        {
+          "title": "Tumi Kothay Full Song || Pantaloons || Motion Lyrics",
+          "artist": "Neel Mukherjee Music",
+          "duration": "4:30",
+          "videoId": "OHr_kS68h8s"
+        },
+        {
+          "title": "Agomonir Gaan (আগমনীর গান) | Durga Pujo Special | Anupam Roy | SVF Classics",
+          "artist": "SVF Classics",
+          "duration": "5:56",
+          "videoId": "1dzyJ3xOVtQ"
+        },
+        {
+          "title": "Jaago Uma",
+          "artist": "Anupam Roy - Topic",
+          "duration": "5:18",
+          "videoId": "fpuadv59iYw"
+        },
+        {
+          "title": "Pujo Pujo Gondho (পুজো পুজো গন্ধ)| Anupam Roy | Gourab | Priyanka | Ushasi | Ranojoy | Raymond x SVF",
+          "artist": "SVF",
+          "duration": "3:08",
+          "videoId": "V5rSZgw0xfk"
+        },
+        {
+          "title": "Missing Stars Of Pujo | Anupam Roy | Harano Tara | Airtel TV",
+          "artist": "Anupam Roy Songs",
+          "duration": "3:03",
+          "videoId": "yEoj6wY_yJw"
+        },
+        {
+          "title": "Mithye Kotha (মিথ্যে কথা) | Official Music Video | Anupam | John | Sanjana | SVF Music Originals",
+          "artist": "SVF Music",
+          "duration": "4:44",
+          "videoId": "7T9THjZ-X1Q"
+        },
+        {
+          "title": "Hariye Jawar Gaan (হারিয়ে যাওয়ার গান) | Uma | Jisshu | Sara | Anupam Roy | Srijit Mukherji | SVF",
+          "artist": "SVF",
+          "duration": "3:49",
+          "videoId": "9s7_dnARi6o"
+        },
+        {
+          "title": "Pujar Gaan (পূজার গান)| @HooliGaanism | Anirban, Subhadeep, Debraj, Gopinath | SVF Music | Puja 2025",
+          "artist": "SVF Music",
+          "duration": "6:44",
+          "videoId": "cYt_pENoKvA"
+        },
+        {
+          "title": "Doob De Re Mon | Durgeshgorer Guptodhon | Abir, Arjun, Ishaa | Bickram Ghosh | Dhrubo | SVF Music",
+          "artist": "SVF Music",
+          "duration": "2:35",
+          "videoId": "4nC72K3Eihc"
+        },
+        {
+          "title": "Kolabou Gaan | Durgeshgorer Guptodhon | Abir, Arjun, Ishaa | Bickram Ghosh | Dhrubo Banerjee | SVF",
+          "artist": "SVF Music",
+          "duration": "2:16",
+          "videoId": "z3fXqpgVYFg"
+        },
+        {
+          "title": "Dugga Maa Asche Official Video - দুগ্গা মা আসছে | Kiran Mazumder | Pujo Song Ft. Soumya Mukherjee",
+          "artist": "Kiran Mazumder",
+          "duration": "4:09",
+          "videoId": "sf6usUybi3k"
+        },
+        {
+          "title": "Bolo Dugga Elo 8K Video | Sunidhi Chauhan | Kaushik | Guddu | Indranil Das | Pujor Gaan | SVF Music",
+          "artist": "SVF Music",
+          "duration": "3:32",
+          "videoId": "avHnTk8lzzg"
+        },
+        {
+          "title": "Sreebhumi Pujor Gaan | Dulbe Komor Paray Paray | Theme Song 2019",
+          "artist": "Sreebhumi Sporting Club",
+          "duration": "7:20",
+          "videoId": "v0NtpcHEa_w"
+        },
+        {
+          "title": "KOLKI | এলো রে গৌরী | Durga Puja Song | Monami Ghosh | 4K | A Musical Film",
+          "artist": "MONAMI GHOSH",
+          "duration": "4:31",
+          "videoId": "R4eFnxOibPs"
+        },
+        {
+          "title": "Aaj Baaja Tui Dhaak | New Song | Bickram, Amit, Hariharan, Shaan, Sona, Zubeen, Mahalakshmi,Kaushiki",
+          "artist": "Bickram Ghosh",
+          "duration": "4:12",
+          "videoId": "X12ac5C_YfU"
+        },
+        {
+          "title": "Ashtamite Tomar Paray | অষ্টমীতে তোমার পাড়ায় | Soumya | Arunima | Chirkut | Bawalfather | Jyoti",
+          "artist": "Chirkut Official",
+          "duration": "4:14",
+          "videoId": "yD0dpeS1eak"
+        },
+        {
+          "title": "Sobar Durga Maa | Official Video | Kumar Sanu | Kharaj | Shovan | Durga Pujo Song",
+          "artist": "Asha Audio",
+          "duration": "3:16",
+          "videoId": ""
+        },
+        {
+          "title": "Joy Dugga Thakur(জয় দুগ্গা ঠাকুর)4K | AnkushH | NussratJ | ShreeP | JollyD | Pujo2025 | Eskay Music",
+          "artist": "Eskay Music",
+          "duration": "4:54",
+          "videoId": "Xv9JcvNqmRM"
+        },
+        {
+          "title": "DUGGA (দুগ্গা) - Rahul Dutta, Anushka P, Abir B, Mausam M, Sneha B | New Durga Puja Song 2025",
+          "artist": "Rahul Dutta",
+          "duration": "3:18",
+          "videoId": "rW4LMaA58P0"
+        },
+        {
+          "title": "Debi Sajer Gaan | Durga Puja song 2025 | Jewellery Khazana | QpidIndia | Joy Joy Dugga Ma #durgapuja",
+          "artist": "Jewellery Khazana",
+          "duration": "3:34",
+          "videoId": "iBAwSUu30XQ"
+        },
+        {
+          "title": "Debayan Das – Ashilo Thakur (Durga Puja Song | Official Music Video)",
+          "artist": "Debayan Das",
+          "duration": "3:02",
+          "videoId": "Xc9-W2gK9rE"
+        },
+        {
+          "title": "Bhavani Dayani | Sourendro - Soumyojit | Sid Sriram | World Music Day 2025 | Durga Puja Special",
+          "artist": "Sourendro Soumyojit",
+          "duration": "7:51",
+          "videoId": "J8Zj45SPtFA"
+        },
+        {
+          "title": "Dugga Elo (দুগ্গা এল)| Priyanka Sarkar | Akriti Kakar | Ajay S | Baba Yadav | Joy Personal Care |SVF",
+          "artist": "SVF",
+          "duration": "4:26",
+          "videoId": "xytF80lvSV8"
+        },
+        {
+          "title": "Sreebhumi Pujor Gaan | PUJO ELO ELO PUJO | ANKUSH OINDRILA ABHIJEET AND DIPANWITA | Theme Song 2020",
+          "artist": "Sreebhumi Sporting Club",
+          "duration": "5:13",
+          "videoId": "MKWbOp2g43U"
+        },
+        {
+          "title": "Elo Maa Elo Full Video | Soumi Saha | Subhankar Dey | MS Entertainment | Durga Pujo Song 2025",
+          "artist": "MS Entertainment",
+          "duration": "4:21",
+          "videoId": "V4_B9E8240Y"
+        },
+        {
+          "title": "Amader Pujor Gaan | Mimi Chakraborty | Durga Pujo Song 2022 | Lincon | Captain TMT",
+          "artist": "Mimi Chakraborty Creations",
+          "duration": "3:17",
+          "videoId": "4c_EZMco1w8"
+        },
+        {
+          "title": "Maa Ebar Firbe Barite - Bengali Durga Puja Song | Anushka Patra | Niharika Nath | Shalini Mukherjee",
+          "artist": "T-Series Bangla",
+          "duration": "2:58",
+          "videoId": "evPFlJ3rfXY"
+        },
+        {
+          "title": "Elo Maa Dugga Thakur | Sonu Nigam | Monali Thakur | Jeet Gannguli | Raj Chakraborty | Baba Yadav",
+          "artist": "RAJ CHAKRABORTY ENTERTAINMENT",
+          "duration": "3:23",
+          "videoId": "wpKThi5dZN0"
+        },
+        {
+          "title": "Shalimar Puja Ad",
+          "artist": "Shalimar India",
+          "duration": "1:02",
+          "videoId": "akdLUy0aIa4"
+        },
+        {
+          "title": "Dugga Ma | Bolo Dugga Maiki | Full Video Song | Arijit Singh | Ankush H | Nusrat J | SVF Music",
+          "artist": "SVF Music",
+          "duration": "4:31",
+          "videoId": "3Gg0GP8DxhU"
+        },
+        {
+          "title": "Maa Eseche | Durga puja song | Papan Anik ,Arpita,Sneha ,Prosenjit,Dipanwita | Pujor gan | sm studio",
+          "artist": "Sm STUDIO FILM & MUSIC",
+          "duration": "4:05",
+          "videoId": "beWdeAyXt6k"
+        },
+        {
+          "title": "Durga Elo Sreebhumi te | Sreebhumi Sporting Club Theme Song 2025",
+          "artist": "Sreebhumi Sporting Club",
+          "duration": "4:41",
+          "videoId": "EZo59edmO2o"
+        },
+        {
+          "title": "ELO MAA DUGGA ( এলো মা দুগ্গা ) | ESO BONDHU ( এসো বন্ধু ) | NEW DURGA PUJA SONG 2020 | ROOH MUSIC",
+          "artist": "Rooh Music",
+          "duration": "6:21",
+          "videoId": "JUzvmHYvMqI"
+        },
+        {
+          "title": "Eseche Maa Durga Maa | এসেছে মা | Ankush | Puja | Raj Choco | Keshab | Ankita | Durga Puja Song 2023",
+          "artist": "Keshab Dey",
+          "duration": "2:45",
+          "videoId": "jyXKjDOANq0"
+        },
+        {
+          "title": "Dhak Baaja Komor Nacha | Switzerland | Jeet | Abir | Rukmini | Sauvik | Savvy | Jayesh Pradhan",
+          "artist": "Grassroot Entertainment",
+          "duration": "3:41",
+          "videoId": "G7CdEseBpwc"
+        }
       ]
     },
     "pandal": {
