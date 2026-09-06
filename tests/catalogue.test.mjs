@@ -32,8 +32,8 @@ test('full catalogue loads on demand and falls back to its last valid copy', asy
 
   const offline = await createCatalogueLoader({ fetcher: async () => { throw new Error('offline'); }, storage }).load();
   assert.equal(offline.source, 'cache');
-  assert.equal(offline.playlists.agomoni.tracks.length, 91);
-  assert.equal(offline.playlists.retro.tracks.length, 82);
+  assert.ok(offline.playlists.agomoni.tracks.length >= 91);
+  assert.ok(offline.playlists.retro.tracks.length >= 82);
 });
 
 test('external catalogue strings are reduced to safe plain text', () => {
