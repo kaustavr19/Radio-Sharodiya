@@ -6,15 +6,14 @@
     "retro",
     "modern",
     "pandal",
-    "biday",
-    "asche-bochor",
-    "misc"
+    "biday"
   ],
   "playlists": {
     "mahalaya": {
       "code": "PV-01",
       "title": "মহালয়া",
       "english": "Mahalaya",
+      "cover": "/assets/playlist-covers/mahalaya.jpg",
       "kicker": "Invocation · Before sunrise",
       "duration": "3 hr 10 min",
       "description": "The complete 20-part Mahalaya transmission—from Birendra Krishna Bhadra’s Mahishasura Mardini to the invocations and songs that have travelled through generations of early-morning radios.",
@@ -31,6 +30,7 @@
       "code": "PV-02",
       "title": "আগমনী",
       "english": "Agomoni",
+      "cover": "/assets/playlist-covers/agomoni.jpg",
       "kicker": "Arrival · The anticipation",
       "duration": "9 hr 13 min",
       "sourceUrl": "https://www.youtube.com/playlist?list=PLSRUMs1BCKj4",
@@ -47,6 +47,7 @@
       "code": "PV-03",
       "title": "ফিরে দেখা পুজো",
       "english": "Retro Pujo",
+      "cover": "/assets/playlist-covers/retro.jpg",
       "kicker": "Archive · Records and cassettes",
       "duration": "5 hr 25 min",
       "sourceUrl": "https://www.youtube.com/playlist?list=PLXgg61IfsTnY",
@@ -63,11 +64,12 @@
       "code": "PV-04",
       "title": "নতুন পুজোর গান",
       "english": "Modern Pujo",
+      "cover": "/assets/playlist-covers/modern.jpg",
       "kicker": "New signal · Contemporary Pujo",
-      "duration": "6 hr 31 min",
+      "duration": "6 hr 18 min",
       "sourceUrl": "https://www.youtube.com/playlist?list=PLeA5XtLyAORI",
       "description": "The songs defining Pujo now—new releases, familiar voices and modern arrangements built for the season’s newest memories.",
-      "trackCount": 94,
+      "trackCount": 91,
       "featuredTrack": [
         "O Gouri",
         "Times Music Bangla",
@@ -79,56 +81,32 @@
       "code": "PV-05",
       "title": "প্যান্ডেলের সুর",
       "english": "Pandal Favourites",
+      "cover": "/assets/playlist-covers/pandal.jpg",
       "kicker": "Crowd · Lights after dark",
-      "duration": "19 min",
+      "duration": "3 hr 34 min",
       "description": "The big choruses and rhythmic favourites that follow you from one pandal to the next, through crowds, lights and late-night streets.",
-      "trackCount": 5,
+      "trackCount": 48,
       "featuredTrack": [
-        "Dhaker Taley",
-        "Festival favourite",
-        "4:43"
+        "Dhaker Taley | Poran Jai Jolia Re | Dev | Subhashree |Abhijeet|Parinita|Sudipto | Jeet Gannguli |SVF",
+        "SVF",
+        "4:23",
+        "hbXuXt7gkFY"
       ]
     },
     "biday": {
       "code": "PV-06",
       "title": "বিদায়বেলা",
       "english": "Biday Bela",
+      "cover": "/assets/playlist-covers/biday.jpg",
       "kicker": "Farewell · The road to immersion",
-      "duration": "17 min",
+      "duration": "1 hr 6 min",
       "description": "A quieter Dashami frequency for sindoor, embraces and the long procession home—celebration held together with the ache of goodbye.",
-      "trackCount": 4,
+      "trackCount": 11,
       "featuredTrack": [
-        "Thakur Thakbe Kotokkhon",
-        "Traditional",
-        "4:18"
-      ]
-    },
-    "asche-bochor": {
-      "code": "PV-07",
-      "title": "আসছে বছর আবার হবে",
-      "english": "Asche Bochor Abar Hobe",
-      "kicker": "Return · The promise of next year",
-      "duration": "18 min",
-      "description": "The farewell turns forward. A hopeful closing broadcast built around reunion, renewal and the promise that Pujo always returns.",
-      "trackCount": 4,
-      "featuredTrack": [
-        "Abar Elo Maa",
-        "Rahul Dutta",
-        "3:07"
-      ]
-    },
-    "misc": {
-      "code": "PV-08",
-      "title": "এদিক–ওদিক",
-      "english": "Miscellaneous",
-      "kicker": "Open frequency · Folk, fusion and beyond",
-      "duration": "27 min",
-      "description": "The songs that refuse one neat shelf: folk, fusion, devotional pieces, film music and unexpected selections that still feel like Pujo.",
-      "trackCount": 5,
-      "featuredTrack": [
-        "Aigiri Nandini",
-        "Rajalakshmee Sanjay",
-        "5:53"
+        "Joyo Joyo Bijoyagaman | Video Song |Dohar|Iman Chakraborty |Raktabeej |Nandita |Shiboprosad|Windows",
+        "WINDOWS",
+        "4:24",
+        "zu07LXoyxro"
       ]
     }
   }

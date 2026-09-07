@@ -5,7 +5,7 @@ export const DAILY_PROGRAMMES = Object.freeze([
   { startHour: 11, playlistId: 'retro', title: 'Retro Pujo · Afternoon archive' },
   { startHour: 15, playlistId: 'modern', title: 'Modern Pujo · New signal' },
   { startHour: 18, playlistId: 'pandal', title: 'Pandal Favourites · After dark' },
-  { startHour: 22, playlistId: 'misc', title: 'Miscellaneous · Open frequency' },
+  { startHour: 22, playlistId: 'biday', title: 'Biday Bela · Quiet night' },
 ]);
 
 export const getKolkataParts = (date = new Date()) => {

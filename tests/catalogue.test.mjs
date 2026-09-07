@@ -18,8 +18,8 @@ const createStorage = () => {
 
 test('bootstrap catalogue keeps initial station data lightweight', () => {
   const bootstrap = createBootstrapCatalogue();
-  assert.equal(bootstrap.order.length, 8);
-  assert.equal(Object.values(bootstrap.playlists).reduce((total, playlist) => total + playlist.tracks.length, 0), 8);
+  assert.equal(bootstrap.order.length, 6);
+  assert.equal(Object.values(bootstrap.playlists).reduce((total, playlist) => total + playlist.tracks.length, 0), 6);
   assert.equal(bootstrap.playlists.mahalaya.tracks[0].videoId, 'YQyo8QeoYhc');
 });
 test('full catalogue loads on demand and falls back to its last valid copy', async () => {
@@ -29,6 +29,8 @@ test('full catalogue loads on demand and falls back to its last valid copy', asy
   assert.equal(first.source, 'network');
   assert.ok(Object.values(first.playlists).reduce((total, playlist) => total + playlist.tracks.length, 0) >= 216);
   assert.ok(first.playlists.modern.tracks.length >= 5);
+  assert.equal(first.playlists.modern.tracks[0].videoId, 'x03f_1rmGuM');
+  assert.equal(first.playlists.modern.tracks.find((track) => track.title.includes('TAPA TINI')).videoId, 'TsAVDemO1tQ');
 
   const offline = await createCatalogueLoader({ fetcher: async () => { throw new Error('offline'); }, storage }).load();
   assert.equal(offline.source, 'cache');

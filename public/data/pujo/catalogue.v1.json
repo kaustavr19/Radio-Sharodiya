@@ -1408,12 +1408,6 @@
           "videoId": "9OkzYV4R9nc"
         },
         {
-          "title": "Joy Dugga Bol | Shaan, Ashu & Rajib | Durga Puja Song | Official Video | Asha Audio",
-          "artist": "Asha Audio",
-          "duration": "4:32",
-          "videoId": ""
-        },
-        {
           "title": "Agomonir Gaan (আগমনীর গান)",
           "artist": "SVF Music",
           "duration": "6:04",
@@ -1496,12 +1490,6 @@
           "artist": "Bengali Music Directory | BMD",
           "duration": "3:48",
           "videoId": "2-xpFWZX51Y"
-        },
-        {
-          "title": "Sonali Sharode",
-          "artist": "Shelley Music",
-          "duration": "5:39",
-          "videoId": ""
         },
         {
           "title": "Dugga Elo - Official Video | Monali Thakur | Guddu | Indranil Das",
@@ -1648,12 +1636,6 @@
           "videoId": "yD0dpeS1eak"
         },
         {
-          "title": "Sobar Durga Maa | Official Video | Kumar Sanu | Kharaj | Shovan | Durga Pujo Song",
-          "artist": "Asha Audio",
-          "duration": "3:16",
-          "videoId": ""
-        },
-        {
           "title": "Joy Dugga Thakur(জয় দুগ্গা ঠাকুর)4K | AnkushH | NussratJ | ShreeP | JollyD | Pujo2025 | Eskay Music",
           "artist": "Eskay Music",
           "duration": "4:54",
@@ -1765,108 +1747,364 @@
     },
     "pandal": {
       "tracks": [
-        [
-          "Dhaker Taley",
-          "Festival favourite",
-          "4:43"
-        ],
-        [
-          "Dhak Baaja Komor Nacha",
-          "Pandal mix",
-          "3:33"
-        ],
-        [
-          "Shundori Komola",
-          "Folk favourite",
-          "3:14"
-        ],
-        [
-          "Kalo Jole Kuchla Tole",
-          "Iman Chakraborty",
-          "4:23"
-        ],
-        [
-          "Pujor Dhaak Theme",
-          "Surobaibhab",
-          "1:31"
-        ]
+        {
+          "title": "Dhaker Taley | Poran Jai Jolia Re | Dev | Subhashree |Abhijeet|Parinita|Sudipto | Jeet Gannguli |SVF",
+          "artist": "SVF",
+          "duration": "4:23",
+          "videoId": "hbXuXt7gkFY"
+        },
+        {
+          "title": "O Bondhu | Sathi | Jeet | Priyanka Trivedi | Haranath Chakraborty | SVF | 2002",
+          "artist": "SVF",
+          "duration": "6:09",
+          "videoId": "c_dVSmcjQuU"
+        },
+        {
+          "title": "Pante Taali | Chirodini Tumi Je Amar | Dev | Rahul | Priyanka |Jeet Gannguli | Raj Chakraborty | SVF",
+          "artist": "SVF",
+          "duration": "3:51",
+          "videoId": "G0Q1a_NKytM"
+        },
+        {
+          "title": "Khokababu ( খোকাবাবু  ) | Shedin Dekha Hoyechilo | Dev | Samidh | Rishi | SVF",
+          "artist": "SVF",
+          "duration": "4:30",
+          "videoId": "7SuDNW0m3TU"
+        },
+        {
+          "title": "Mala Re ( মালা রে ) | Romeo | Dev | Subhashree | Jeet Gannguli | Sujit Mondol | SVF",
+          "artist": "SVF",
+          "duration": "4:39",
+          "videoId": "fDCTCydDvMw"
+        },
+        {
+          "title": "Rimjhim E Dhara Te | Premer Kahini | Dev | Koel | Shaan |Jeet Gannguli | SVF",
+          "artist": "SVF",
+          "duration": "4:55",
+          "videoId": "2-244sTF7Iw"
+        },
+        {
+          "title": "Mon Raage Anuraage (মন রাগে অনুরাগে)-Lyrical |Subho Drishti |Sonu Nigam | Shreya |Jeet G | SVF",
+          "artist": "SVF",
+          "duration": "4:01",
+          "videoId": "Aa-LfqBFwPA"
+        },
+        {
+          "title": "Police Chorer Preme Poreche(পুলিশ চোরের প্রেমে পড়েছে) | Lyrical | Challenge 2 | Dev| Puja| Raja |SVF",
+          "artist": "SVF",
+          "duration": "4:04",
+          "videoId": "TduWn57J0xk"
+        },
+        {
+          "title": "Ami Jantam Tumi Ashbe (আমি জানতাম তুমি আসবে)| Tumi Ele Tai | Prasenjit | Tapas Pal | Rituparna | SVF",
+          "artist": "SVF",
+          "duration": "4:19",
+          "videoId": "x75Pp7ffUwk"
+        },
+        {
+          "title": "Ebar Jeno Onno Rokom Pujo | Yoddha | Dev | Mimi | Raj Chakraborty | SVF",
+          "artist": "SVF",
+          "duration": "3:44",
+          "videoId": "E2zfQEo7Q_M"
+        },
+        {
+          "title": "Ami MLA Fatakeshto | MLA ফাটাকেষ্ট | Mithun | Amit Kumar | Jeet Gannguli | Swapan Saha | SVF",
+          "artist": "SVF",
+          "duration": "4:58",
+          "videoId": "_4vDFmas86o"
+        },
+        {
+          "title": "Batashey Gungun (বাতাসে গুনগুন) | Chirodini Tumi Je Amar | Rahul | Priyanka | June | Jeet G | SVF",
+          "artist": "SVF",
+          "duration": "5:00",
+          "videoId": "5fY7B8Jv1Ss"
+        },
+        {
+          "title": "Poran Jai Jolia Re (পরাণ যায় জ্বলিয়া রে) | Title Track | Dev | Subhashree | Jeet Gannguli | SVF",
+          "artist": "SVF",
+          "duration": "4:58",
+          "videoId": "yIheiiGVhgU"
+        },
+        {
+          "title": "Sharatadin | Yoddha | Dev | Mimi | Arijit | Anwesshaa | Indraadip | Raj Chakraborty | SVF",
+          "artist": "SVF",
+          "duration": "5:10",
+          "videoId": "DbXP1TqLwrs"
+        },
+        {
+          "title": "Mon Bojhe Naa (মন বোঝে না) | Chirodini Tumi Je Amar 2 | Arjun Chakraborty | Arijit Singh | SVF",
+          "artist": "SVF",
+          "duration": "3:46",
+          "videoId": "6SkQ-srIJVM"
+        },
+        {
+          "title": "U La La | Chirodini Tumi Je Amar Movie Song | Rahul | Priyanka | June Banerjee | Jeet Gannguli | SVF",
+          "artist": "SVF",
+          "duration": "2:18",
+          "videoId": "UlrJxzDswoY"
+        },
+        {
+          "title": "Jage Re Jage Re (Male) | Nachiketa Chakraborty",
+          "artist": "SVF Music",
+          "duration": "4:01",
+          "videoId": "31q-JD3YAng"
+        },
+        {
+          "title": "Chokher Jole (চোখের জলে) | Poran Jai Jolia Re | Dev | Subhashree | Zubeen Garg | Jeet Gannguli | SVF",
+          "artist": "SVF",
+          "duration": "5:11",
+          "videoId": "AeOZB95DOhA"
+        },
+        {
+          "title": "Ami Je Ke Tomar Title Track | Lyrical Video | Ankush | Nusrat | Armaan Malik | Indraadip | SVF Music",
+          "artist": "SVF Music",
+          "duration": "3:06",
+          "videoId": "LeBMKCWBFDk"
+        },
+        {
+          "title": "Koka Kola (কোকা কোলা ) | Lyrical |Srabanti | Soham | Samidh | Kalpona Patoary | SVF Music",
+          "artist": "SVF Music",
+          "duration": "5:14",
+          "videoId": "8TLO00wqQgk"
+        },
+        {
+          "title": "Dushtu Kokil (দুষ্টু কোকিল) | Toofan | Shakib Khan, Mimi, Kona, Akassh, Raihan |Alpha-i|Chorki | SVF",
+          "artist": "Chorki",
+          "duration": "3:39",
+          "videoId": "5zU1qNYR2cw"
+        },
+        {
+          "title": "Shundori Komola (সুন্দরী কমলা) | Villain | Ankush, Mimi | Armaan, Antara | Subho JAM8| SVF Music",
+          "artist": "SVF Music",
+          "duration": "3:25",
+          "videoId": "E_6K3no0PD0"
+        },
+        {
+          "title": "Mone Rekho Amar E Gaan (মনে রেখো আমার এ গান) | Premi | Jeet | Chandana | Sonu | Shreya | Jeet G |SVF",
+          "artist": "SVF",
+          "duration": "5:07",
+          "videoId": "6tSA5l_XS7c"
+        },
+        {
+          "title": "Chokhe Lage Nesha | Champion | Jeet | Srabanti | Babul Supriyo | Kavita Krishnamurthy | SVF",
+          "artist": "SVF",
+          "duration": "5:20",
+          "videoId": "i-xeXREebbA"
+        },
+        {
+          "title": "Sadher Lighty | Obhishopto Nighty | Parambrata | Paoli | Indraneil | Tanusree | Birsa | SVF",
+          "artist": "SVF",
+          "duration": "3:16",
+          "videoId": "HBNOU6kblac"
+        },
+        {
+          "title": "Monta Kore Uru Uru ( মনটা করে উড়ু উড়ু ) | Amanush | Soham | Srabanti | Jeet Gannguli | SVF",
+          "artist": "SVF",
+          "duration": "4:37",
+          "videoId": "tTVet6wmPBg"
+        },
+        {
+          "title": "Bose Bose Bhabi (বসে বসে ভবি) | Lyrical | Bandhan | Jeet | Koel | Raghav | Shreya |Jeet G |SVF Music",
+          "artist": "SVF Music",
+          "duration": "5:11",
+          "videoId": "n3GC3SB2c_A"
+        },
+        {
+          "title": "Shey Chilo Boroi Anmona | Bandhan | Jeet | Koel | Shaan | Sweta | Jeet Gannguli | SVF",
+          "artist": "SVF",
+          "duration": "4:42",
+          "videoId": "-dauLSmMPBg"
+        },
+        {
+          "title": "Baisakhete Pratham Dekha(বৈশাখেতে প্রথম দেখা)-Lyrical | Yuddho | Jeet | Koel | Sonu | Shreya G | SVF",
+          "artist": "SVF",
+          "duration": "4:11",
+          "videoId": "QzaykzSNMzM"
+        },
+        {
+          "title": "Khujechi Toke Raat Berate ( খুঁজেছি তোকে রাত বেরাতে ) | Josh | Jeet | Srabanti | Jeet Gannguli | SVF",
+          "artist": "SVF",
+          "duration": "4:22",
+          "videoId": "XpTKk_IA0ig"
+        },
+        {
+          "title": "Mon Bebagi | Paglu | Dev | Koel | Kunal Ganjawala | Akriti Kakkar | Rana Majumder | Jeet Gannguli",
+          "artist": "Surinder  Films",
+          "duration": "4:05",
+          "videoId": "3bfoPeSLYXQ"
+        },
+        {
+          "title": "Aar Koto Raat Eka Thakbo | Chokher Aloye | Bengali Movie Song | Asha Bhosle",
+          "artist": "Angel Bengali Songs",
+          "duration": "5:53",
+          "videoId": "NNaRjh_Xrsc"
+        },
+        {
+          "title": "Gold Printer Sari Pore | Mita Chatterjee | Bengali Songs | Debjit Sanku | Bangla Gaan | FFR Bengali",
+          "artist": "Sanatani Bangla",
+          "duration": "5:44",
+          "videoId": "zoAIg8_5Cto"
+        },
+        {
+          "title": "এবার পূজায় চাই আমার | Ebar Pujoy Chai Amar | Alka Yagnik Songs |  bengali old songs | Romantic Song",
+          "artist": "Golden Music",
+          "duration": "4:59",
+          "videoId": "TCgjJmEY0wI"
+        },
+        {
+          "title": "Emon Madhur Sandhyay with lyrics | Asha Bhosle | Ekanta Apan | HD Song",
+          "artist": "Saregama Bengali",
+          "duration": "6:08",
+          "videoId": "uBNSBgO-Imw"
+        },
+        {
+          "title": "Ek Jhank Pakhi | এক ঝাঁক পাখি  - শ্রীকান্ত  আচার্য  | Bengali modern songs by srikanto acharya",
+          "artist": "Shemaroo Bengali Music",
+          "duration": "4:33",
+          "videoId": "z9yP6z_pwb8"
+        },
+        {
+          "title": "Tomari Chalar Pathe | Audio | Asha Bhosle | R.D.Burman",
+          "artist": "Saregama Bengali",
+          "duration": "5:59",
+          "videoId": "2Q0u8z8CsFk"
+        },
+        {
+          "title": "আমি খোলা জানালা - Ami Khola Janala | Lyrical | Srikanto Acharya | New Bengali Song 2022 | Shemaroo",
+          "artist": "Shemaroo Bengali Music",
+          "duration": "4:17",
+          "videoId": "oAmQ5XIE2RI"
+        },
+        {
+          "title": "ভাল লাগছে ভাল লাগছে -শ্রীকান্ত  আচার্য | Bhalo Lagche Bhalo Lagche - Srikanto Acharya Ek Jhank Pakhi",
+          "artist": "Shemaroo Bengali Music",
+          "duration": "3:55",
+          "videoId": "vG7sbVFMxwQ"
+        },
+        {
+          "title": "Latai Video Song Ft. Subhashree | 'Bachchan' Bengali Movie 2014 | Vinod Rathod, Akriti Kakkar",
+          "artist": "T-Series Bangla",
+          "duration": "2:23",
+          "videoId": "cabCddE_dLI"
+        },
+        {
+          "title": "আমায় প্রশ্ন করে নীল ধ্রুবতারা | Amay Prashna Kare Neel Dhrubatara | Srikanto Acharya Bangla Song",
+          "artist": "Golden Music",
+          "duration": "3:17",
+          "videoId": "6aoNvYh7Zy4"
+        },
+        {
+          "title": "HITMATIKA VIDEO SONGS TOTAN MONDAL 9830773215",
+          "artist": "Totan Mondal",
+          "duration": "3:59",
+          "videoId": "z5BcZFWls3w"
+        },
+        {
+          "title": "Phoole Gandha Nei",
+          "artist": "Asha Bhosle - Topic",
+          "duration": "3:23",
+          "videoId": "rvRjlAx9Izg"
+        },
+        {
+          "title": "Koto je sagor nodi | Kumar Sanu | Music director Arup Pranay | Jukebox Upload",
+          "artist": "SPD Musical Audio",
+          "duration": "6:06",
+          "videoId": "GZ46dJ03cFY"
+        },
+        {
+          "title": "Tumpa | Official Video | Rest in প্রেম by Arijit Sorkar | Sayan,Sumana,Dipangshu | CONFUSED Picture",
+          "artist": "CONFUSED Picture.",
+          "duration": "3:13",
+          "videoId": "oh-btKnbTpY"
+        },
+        {
+          "title": "|| দাদা আমার যেমন তেমন বৌদি আমার মর্ডান || কুমার কমল ||",
+          "artist": "kumar kamal",
+          "duration": "4:50",
+          "videoId": "Y4JiiobzmmQ"
+        },
+        {
+          "title": "কিনে দে রেশমি চুড়ি",
+          "artist": "Mohammad Hoshain",
+          "duration": "3:10",
+          "videoId": "yzh_haK8EqE"
+        },
+        {
+          "title": "tunir maa",
+          "artist": "shayqat",
+          "duration": "6:02",
+          "videoId": "uGLr7BTH0CE"
+        }
       ]
     },
     "biday": {
       "tracks": [
-        [
-          "Thakur Thakbe Kotokkhon",
-          "Traditional",
-          "4:18"
-        ],
-        [
-          "Bolo Durga Mai Ki Joy",
-          "Traditional chorus",
-          "3:46"
-        ],
-        [
-          "O Maa Biday De",
-          "Traditional",
-          "4:32"
-        ],
-        [
-          "Asche Bochor Abar Hobe",
-          "Bijoya chorus",
-          "4:08"
-        ]
-      ]
-    },
-    "asche-bochor": {
-      "tracks": [
-        [
-          "Abar Elo Maa",
-          "Rahul Dutta",
-          "3:07"
-        ],
-        [
-          "Elo Re Pujo Elo",
-          "Dabbu",
-          "3:13"
-        ],
-        [
-          "Chaarpashe Aalo Hok",
-          "Festival chorus",
-          "5:34"
-        ],
-        [
-          "Agomonir Gaan",
-          "Anupam Roy",
-          "5:47"
-        ]
-      ]
-    },
-    "misc": {
-      "tracks": [
-        [
-          "Aigiri Nandini",
-          "Rajalakshmee Sanjay",
-          "5:53"
-        ],
-        [
-          "Kalo Jole Kuchla Tole",
-          "Iman Chakraborty",
-          "4:23"
-        ],
-        [
-          "Shundori Komola",
-          "Traditional folk",
-          "3:14"
-        ],
-        [
-          "Asatoma Sadgamaya",
-          "Arijit Singh",
-          "3:07"
-        ],
-        [
-          "Gouri Elo",
-          "Dohar",
-          "3:57"
-        ]
+        {
+          "title": "Joyo Joyo Bijoyagaman | Video Song |Dohar|Iman Chakraborty |Raktabeej |Nandita |Shiboprosad|Windows",
+          "artist": "WINDOWS",
+          "duration": "4:24",
+          "videoId": "zu07LXoyxro"
+        },
+        {
+          "title": "Maa Go Tui | Durgeshgorer Guptodhon| Abir, Ishaa, Arjun| Manomay, Somchanda| Bickram Ghosh|SVF Music",
+          "artist": "SVF Music",
+          "duration": "2:09",
+          "videoId": "60tSbJWJCr0"
+        },
+        {
+          "title": "Maa Ebar Firbe Barite - Bengali Durga Puja Song | Anushka Patra | Niharika Nath | Shalini Mukherjee",
+          "artist": "T-Series Bangla",
+          "duration": "2:58",
+          "videoId": "evPFlJ3rfXY"
+        },
+        {
+          "title": "Dhaker Taley | Poran Jai Jolia Re | Dev | Subhashree |Abhijeet|Parinita|Sudipto | Jeet Gannguli |SVF",
+          "artist": "SVF",
+          "duration": "4:23",
+          "videoId": "hbXuXt7gkFY"
+        },
+        {
+          "title": "Durga Puja Mega Mashup | Subha Ka Muzik | দুর্গা পূজা | Durga Puja Song | Bangla Durga Puja Mashup",
+          "artist": "Subha Ka Muzik",
+          "duration": "4:11",
+          "videoId": "oSf2joz8Z-E"
+        },
+        {
+          "title": "Bijoyar Gaan (বিজয়ার গান) | Gourab Sarkar | Surodeep Hazra | Aalo",
+          "artist": "Aalo | আলো 🪔",
+          "duration": "4:53",
+          "videoId": "LkMKhgD5C6Q"
+        },
+        {
+          "title": "Durga Puja Bijoya Dashami Sindur Khela bengali Song. ঢাকে কাঠী বিসসর্জনে বিজয়ির সুর।দূর্গা পুজোর",
+          "artist": "Arup Bar",
+          "duration": "2:24",
+          "videoId": "QSOxBdFXAAA"
+        },
+        {
+          "title": "বিজয়া দশমী | Bijoya Song | Pujo Song | Debottam Majumder vlogs",
+          "artist": "Debottam Diaries",
+          "duration": "6:23",
+          "videoId": "2T9zJ7ubHCc"
+        },
+        {
+          "title": "Bochor Bochor Aste Hobe Tomay Durga Maa I বছর বছর আসতে হবে I Akassh I Haimanti I Puja Song  2018",
+          "artist": "Akassh",
+          "duration": "3:41",
+          "videoId": "Ez44dZdXDRk"
+        },
+        {
+          "title": "Shubho Bijoya",
+          "artist": "Sayan Bhattacharya - Topic",
+          "duration": "2:38",
+          "videoId": "RUYoFjz661w"
+        },
+        {
+          "title": "দূর্গা পূজা বিজয়ার ঢাকের বাজনা  | Durga Puja Bijoya Dashami Dhaker Bajna |  দূর্গা পুজোর ঢাকের বাজনা",
+          "artist": "Unique Bisu",
+          "duration": "27:58",
+          "videoId": "74Ib1p80qO4"
+        }
       ]
     }
   }

@@ -307,18 +307,16 @@ body.room-open .console-controls .console-play { width: 3rem; height: 3rem; }
 .calendar-room .calendar-heading { margin-top: clamp(4rem,8vw,7rem); }
 .archive-room .archive-title-block, .archive-room .cassette-stack { margin-top: 3rem; }
 
-.playlist-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); border-top: 1px solid var(--catalogue-line); border-left: 1px solid var(--catalogue-line); background: rgba(4,10,9,.12); box-shadow: 0 1.2rem 4rem rgba(3,8,7,.18); }
-.playlist-grid button { position: relative; min-height: 11rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 1.2rem; border: 0; border-right: 1px solid var(--catalogue-line); border-bottom: 1px solid var(--catalogue-line); background: rgba(8,14,13,.16); color: var(--catalogue-ink); text-align: left; cursor: pointer; backdrop-filter: blur(5px); }
-.playlist-grid button:hover { background: var(--marigold); color: var(--ink); }
-.playlist-grid button:nth-child(3n+2):hover { background: #3e6d68; }
-.playlist-grid button:nth-child(3n):hover { background: #d18b24; color: var(--ink); }
+.playlist-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1px; background: var(--catalogue-line); box-shadow: 0 1.2rem 4rem rgba(3,8,7,.18); }
+.playlist-grid button { position: relative; isolation: isolate; min-height: 17rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; overflow: hidden; padding: 1.2rem; border: 0; background: linear-gradient(180deg,rgba(4,10,9,.16) 25%,rgba(4,10,9,.92) 100%), var(--playlist-cover) center / cover no-repeat; color: var(--shiuli); text-align: left; cursor: pointer; }
+.playlist-grid button::after { content: ''; position: absolute; z-index: -1; inset: 0; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); transition: background .25s ease, box-shadow .25s ease; }
+.playlist-grid button:hover::after { background: rgba(238,163,35,.16); box-shadow: inset 0 0 0 2px var(--marigold); }
 .playlist-grid span, .playlist-grid i { font: normal .66rem "Space Mono", monospace; letter-spacing: .04em; text-transform: uppercase; }
-.playlist-grid span { color: var(--marigold); }
-.playlist-grid button:hover span { color: inherit; }
+.playlist-grid span { color: #ffd88f; text-shadow: 0 1px 8px rgba(0,0,0,.75); }
 .playlist-grid strong { margin-top: auto; font: 500 1.55rem var(--font-display-bn); }
-.playlist-grid small { margin-top: .4rem; color: var(--catalogue-muted); }
-.playlist-grid i { position: absolute; top: 1.2rem; right: 1.2rem; color: var(--catalogue-muted); }
-.playlist-grid button:hover small, .playlist-grid button:hover i { color: inherit; opacity: .7; }
+.playlist-grid small { margin-top: .4rem; color: rgba(255,245,220,.78); }
+.playlist-grid i { position: absolute; top: 1.2rem; right: 1.2rem; color: rgba(255,245,220,.72); }
+.playlist-grid strong, .playlist-grid small, .playlist-grid i { text-shadow: 0 2px 10px rgba(0,0,0,.85); }
 .personal-listening { margin-top: 2rem; padding: 1.25rem; border: 1px solid var(--catalogue-line); background: rgba(5,12,11,.18); backdrop-filter: blur(8px); }
 .personal-listening > header { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-bottom: .9rem; border-bottom: 1px solid var(--catalogue-line); }
 .personal-listening > header span { color: var(--marigold); font: .66rem "Space Mono",monospace; letter-spacing: .06em; text-transform: uppercase; }
@@ -335,7 +333,7 @@ body.room-open .console-controls .console-play { width: 3rem; height: 3rem; }
 .playlist-detail { padding-top: 2rem; }
 .detail-back { margin-bottom: 2.5rem; padding: .5rem 0; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: var(--catalogue-ink); cursor: pointer; }
 .detail-heading { display: grid; grid-template-columns: 12rem minmax(0,1fr); gap: 2.5rem; align-items: end; max-width: 65rem; }
-.detail-art { aspect-ratio: 1; display: grid; place-items: center; background: var(--marigold); color: var(--ink); font: 700 1rem "Space Mono", monospace; box-shadow: inset 0 0 0 1px rgba(255,255,255,.28); }
+.detail-art { aspect-ratio: 1; display: grid; place-items: center; overflow: hidden; background: var(--playlist-cover, var(--marigold)) center / cover no-repeat; color: var(--ink); font: 700 1rem "Space Mono", monospace; box-shadow: inset 0 0 0 1px rgba(255,255,255,.28), 0 1rem 2.5rem rgba(0,0,0,.24); }
 .detail-kicker { margin: 0 0 .8rem; color: var(--marigold); font: .68rem "Space Mono", monospace; letter-spacing: .07em; text-transform: uppercase; }
 .detail-heading h2 { margin: 0; font: 500 clamp(3rem,7vw,6rem) var(--font-display-bn); letter-spacing: -.05em; }
 .detail-heading > div:last-child > p:last-child { max-width: 42rem; margin: .8rem 0 0; color: var(--catalogue-muted); font: 1rem/1.6 var(--font-reading-en); }

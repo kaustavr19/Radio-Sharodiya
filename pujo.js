@@ -139,7 +139,7 @@ let installPrompt;
 const defaultHeroPresentation = {
   eyebrow: 'A seasonal transmission from Calcutta',
   title: 'শহর জুড়ে<br />পুজোর সুর',
-  intro: 'Eight broadcasts. One season. Every way Pujo sounds.',
+  intro: 'Six broadcasts. One season. Every way Pujo sounds.',
 };
 
 const playlistPresentations = {
@@ -149,8 +149,6 @@ const playlistPresentations = {
   modern: { eyebrow: 'Now transmitting · Modern Pujo', title: 'এই সময়ের<br />পুজোর নতুন সুর', intro: 'New voices for the memories being made right now.', scenes: [scenes.afternoon, scenes.goldenRooftop, scenes.nightGates], rotationSpan: 2 },
   pandal: { eyebrow: 'Now transmitting · Pandal Favourites', title: 'আলোয় ভরা পথে<br />প্যান্ডেল থেকে প্যান্ডেলে', intro: 'Crowds, city lights and the songs that follow every route.', scenes: [scenes.nightPandal, scenes.nightGates], rotationSpan: 2 },
   biday: { eyebrow: 'Now transmitting · Biday Bela', title: 'ফিরে যাওয়ার সুর<br />থেকে যাওয়ার স্মৃতি', intro: 'Farewell begins, while the season lingers a little longer.', scenes: [scenes.dashami], rotationSpan: 2 },
-  'asche-bochor': { eyebrow: 'Now transmitting · Asche Bochor Abar Hobe', title: 'শেষ নয়<br />আবার দেখা হবে', intro: 'Every farewell carries the promise of another Pujo.', scenes: [scenes.dashami, scenes.goldenField, scenes.morning], rotationSpan: 1 },
-  misc: { eyebrow: 'Now transmitting · Open Frequency', title: 'এক ফ্রিকোয়েন্সিতে<br />পুজোর সব রং', intro: 'Folk, film, devotion and every sound between them.', scenes: [scenes.morning, scenes.afternoon, scenes.goldenRooftop, scenes.nightPandal], rotationSpan: 2 },
 };
 
 const calendarPresentations = {
@@ -188,15 +186,15 @@ const calendarPresentations = {
   },
   dashami: {
     eyebrow: 'Dashami · Farewell begins', title: 'ফিরে যাওয়ার সুর<br />থেকে যাওয়ার স্মৃতি', intro: 'Sindoor, embraces and the long procession towards the river.',
-    programmes: ['biday', 'asche-bochor', 'retro'], label: 'Dashami', targetLabel: 'Bijoya',
+    programmes: ['biday', 'retro', 'modern'], label: 'Dashami', targetLabel: 'Bijoya',
   },
   bijoya: {
     eyebrow: 'Bijoya · The promise remains', title: 'শেষ নয়<br />আবার দেখা হবে', intro: 'Every farewell carries next year inside it.',
-    programmes: ['asche-bochor', 'biday', 'retro'], label: 'Bijoya', targetLabel: 'Season archive',
+    programmes: ['biday', 'retro', 'agomoni'], label: 'Bijoya', targetLabel: 'Season archive',
   },
   'off-season': {
     eyebrow: 'Pujo Vibes · Season archive', title: 'পুজো থাকে<br />গানের ভিতরে', intro: 'The lights rest. The music keeps the season within reach.',
-    programmes: ['retro', 'misc', 'agomoni'], label: 'Season archive', targetLabel: 'Next calendar soon',
+    programmes: ['retro', 'modern', 'agomoni'], label: 'Season archive', targetLabel: 'Next calendar soon',
   },
 };
 
@@ -603,15 +601,19 @@ const renderPersonalListening = () => {
   const recentTracks = recentlyPlayed.map((id) => tracksById.get(id)).filter(Boolean).slice(0, 6);
   recentShelf.hidden = recentTracks.length === 0;
   personalListening.hidden = recentTracks.length === 0;
-  recentList.innerHTML = recentTracks.map((track) => personalTrackMarkup(track, 'recent', playlists[track.playlistId]?.english)).join('');
+  recentList.innerHTML = recentTracks.map((track) => {
+    const playlist = playlists[track.playlistId];
+    return personalTrackMarkup(track, 'recent', playlist?.english, playlist?.cover);
+  }).join('');
 };
 
 const updateMediaMetadata = (track) => {
   if (!('mediaSession' in navigator) || !('MediaMetadata' in window) || !track) return;
+  const playlistCover = playlists[track.playlistId]?.cover;
   const artwork = track.videoId ? [
     { src: `https://img.youtube.com/vi/${track.videoId}/mqdefault.jpg`, sizes: '320x180', type: 'image/jpeg' },
     { src: `https://img.youtube.com/vi/${track.videoId}/hqdefault.jpg`, sizes: '480x360', type: 'image/jpeg' },
-  ] : [];
+  ] : playlistCover ? [{ src: playlistCover, sizes: '640x640', type: 'image/jpeg' }] : [];
   try { navigator.mediaSession.metadata = new MediaMetadata({ title: track.title, artist: track.artist, album: `Pujo Vibes · ${playlists[track.playlistId]?.english || 'Seasonal Radio'}`, artwork }); } catch { /* Metadata support varies across embedded browsers. */ }
 };
 
@@ -619,9 +621,16 @@ const renderCurrentTrack = (track) => {
   playerTitle.textContent = track.title;
   playerDescription.textContent = `${track.artist} · ${playlists[track.playlistId]?.english || 'Queue'}${track.isLongForm ? ' · Long listen' : ''}`;
   playerSource.href = track.videoId ? `https://www.youtube.com/watch?v=${track.videoId}` : 'https://www.youtube.com/';
+  const playlistCover = playlists[track.playlistId]?.cover;
+  playerArtImage.dataset.playlistCover = playlistCover || '';
   if (track.videoId) {
     playerArtImage.dataset.videoId = track.videoId;
     playerArtImage.src = `https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`;
+    playerArtImage.hidden = false;
+    playerArtFallback.hidden = true;
+  } else if (playlistCover) {
+    playerArtImage.dataset.videoId = '';
+    playerArtImage.src = playlistCover;
     playerArtImage.hidden = false;
     playerArtFallback.hidden = true;
   } else {
@@ -946,7 +955,9 @@ const queuePaneIsOpen = () => document.body.classList.contains('queue-open');
 
 const queueThumbnail = (track) => track.videoId
   ? `<img class="queue-thumb" src="https://img.youtube.com/vi/${escapeMarkup(track.videoId)}/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" decoding="async" />`
-  : '<span class="queue-thumb" aria-hidden="true">PV</span>';
+  : playlists[track.playlistId]?.cover
+    ? `<img class="queue-thumb" src="${escapeMarkup(playlists[track.playlistId].cover)}" alt="" width="640" height="640" loading="lazy" decoding="async" />`
+    : '<span class="queue-thumb" aria-hidden="true">PV</span>';
 
 const renderQueuePanel = () => {
   if (!queuePaneIsOpen()) return;
@@ -1114,7 +1125,8 @@ const showPlaylist = async (playlistId) => {
   catalogueSequence = playlist.tracks;
   overview.hidden = true;
   detail.hidden = false;
-  detailArt.textContent = playlist.code;
+  detailArt.textContent = '';
+  detailArt.style.setProperty('--playlist-cover', `url("${playlist.cover}")`);
   detailKicker.textContent = playlist.kicker;
   detailTitle.textContent = playlist.title;
   detailDescription.textContent = playlist.description;
@@ -1688,8 +1700,13 @@ signalWaveform.addEventListener('keydown', (event) => {
 
 playerArtImage.addEventListener('error', () => {
   const fallback = `https://img.youtube.com/vi/${playerArtImage.dataset.videoId}/hqdefault.jpg`;
-  if (playerArtImage.src !== fallback) {
+  const playlistCover = playerArtImage.dataset.playlistCover;
+  if (playerArtImage.dataset.videoId && playerArtImage.src !== fallback) {
     playerArtImage.src = fallback;
+    return;
+  }
+  if (playlistCover && playerArtImage.src !== new URL(playlistCover, window.location.href).href) {
+    playerArtImage.src = playlistCover;
     return;
   }
   playerArtImage.hidden = true;

@@ -1,6 +1,6 @@
 # Pujo Vibes
 
-A cinematic seasonal Bengali listening experience for Durga Pujo. Pujo Vibes combines eight editorial playlists, time-aware artwork, a persistent queue, an optional para atmosphere, and a lightweight YouTube-backed player.
+A cinematic seasonal Bengali listening experience for Durga Pujo. Pujo Vibes combines six editorial playlists, time-aware artwork, a persistent queue, an optional para atmosphere, and a lightweight YouTube-backed player.
 
 Pujo Vibes is a standalone station in The Radio Project family. It is intentionally silent on arrival: playback and atmosphere begin only after a listener chooses them.
 

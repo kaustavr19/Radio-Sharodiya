@@ -30,7 +30,7 @@ const normalizeTrack = (playlistId, track, index, overrides = {}) => {
     title: plainText(override.title ?? source[0], 'Untitled programme'),
     artist: plainText(override.artist ?? source[1], 'Unknown artist'),
     duration,
-    videoId,
+    videoId: plainText(override.videoId ?? videoId),
     isLongForm: durationToSeconds(duration) >= LONG_FORM_SECONDS,
   };
 };
@@ -39,6 +39,7 @@ const normalizePlaylist = (playlistId, metadata, tracks, overrides) => ({
   code: plainText(metadata.code, playlistId.toUpperCase()),
   title: plainText(metadata.title, playlistId),
   english: plainText(metadata.english, playlistId),
+  cover: plainText(metadata.cover),
   kicker: plainText(metadata.kicker),
   duration: plainText(metadata.duration),
   description: plainText(metadata.description),
