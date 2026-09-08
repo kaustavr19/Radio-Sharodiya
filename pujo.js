@@ -1326,6 +1326,7 @@ trackList.addEventListener('click', (event) => {
     const selectedIndex = Math.max(0, catalogueSequence.findIndex((item) => item.id === track.id));
     replaceQueue(availableTracks(catalogueSequence.slice(selectedIndex)));
     setCurrentTrack(track, true);
+    if (mobileShellQuery.matches) closeRoom();
   }
   if (button.dataset.trackAction === 'add') addToQueue([track]);
 });
@@ -1336,6 +1337,7 @@ playAllButton.addEventListener('click', () => {
   setPlaybackOrigin('manual');
   replaceQueue(playableTracks);
   setCurrentTrack(queue[0], true);
+  if (mobileShellQuery.matches) closeRoom();
 });
 shuffleAllButton.addEventListener('click', () => {
   const playableTracks = availableTracks(catalogueSequence);
@@ -1343,6 +1345,7 @@ shuffleAllButton.addEventListener('click', () => {
   setPlaybackOrigin('manual');
   replaceQueue(shuffledTracks(playableTracks));
   setCurrentTrack(queue[0], true);
+  if (mobileShellQuery.matches) closeRoom();
 });
 addAllButton.addEventListener('click', () => {
   addToQueue(availableTracks(playlists[activePlaylistId].tracks));

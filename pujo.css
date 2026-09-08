@@ -909,10 +909,8 @@ body.live-radio-active:not(.live-room-open) .broadcast-console > .console-main {
   .broadcast-console .console-controls .queue-inline { display: none; }
   .broadcast-console .console-controls .console-play { width: 3.15rem; height: 3.15rem; margin: 0; }
   body.live-room-open .broadcast-console,
+  body.room-open .broadcast-console,
   body.queue-open .broadcast-console { display: none; }
-  body.room-open:not(.live-room-open) .hero { z-index: 80; pointer-events: none; }
-  body.room-open:not(.live-room-open) .hero > :not(.broadcast-console) { visibility: hidden; }
-  body.room-open:not(.live-room-open) .broadcast-console { pointer-events: auto; }
 
   .broadcast-console .live-broadcast-player { height: 100%; }
   .broadcast-console .live-broadcast-main { height: 100%; min-height: 0; grid-template-columns: minmax(0,1fr) auto; grid-template-rows: 1fr; gap: .45rem; padding: .55rem; }
@@ -1026,7 +1024,7 @@ body.live-radio-active:not(.live-room-open) .broadcast-console > .console-main {
     min-height: 0 !important;
     height: auto;
     max-height: none;
-    padding: 0 1rem calc(var(--mobile-player-height) + 1.5rem) !important;
+    padding: 0 1rem 1.5rem !important;
     scroll-padding-top: 4.75rem;
   }
   body.live-room-open .station-room { padding-bottom: 1rem !important; }
