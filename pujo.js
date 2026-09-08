@@ -78,6 +78,8 @@ const mobileTabButtons = [...document.querySelectorAll('[data-mobile-tab]')];
 const mobileHomeButton = document.querySelector('[data-mobile-tab="home"]');
 const mobilePlayerExpand = document.querySelector('#mobile-player-expand');
 const mobilePlayerDismiss = document.querySelector('#mobile-player-dismiss');
+const mobilePlayerContextLabel = document.querySelector('#mobile-player-context-label');
+const mobilePlayerContext = document.querySelector('#mobile-player-context');
 const queuePane = document.querySelector('#queue-pane');
 const queuePaneList = document.querySelector('#queue-pane-list');
 const queuePaneMeta = document.querySelector('#queue-pane-meta');
@@ -674,6 +676,8 @@ const updateMediaMetadata = (track) => {
 };
 
 const renderCurrentTrack = (track) => {
+  mobilePlayerContextLabel.textContent = 'Playing from playlist';
+  mobilePlayerContext.textContent = playlists[track.playlistId]?.english || 'Pujo Vibes';
   playerTitle.textContent = track.title;
   playerDescription.textContent = `${track.artist} · ${playlists[track.playlistId]?.english || 'Queue'}${track.isLongForm ? ' · Long listen' : ''}`;
   playerSource.href = track.videoId ? `https://www.youtube.com/watch?v=${track.videoId}` : 'https://www.youtube.com/';
@@ -1228,6 +1232,8 @@ const renderLiveRadioConsole = ({ station, message, state, playing, volume }) =>
   liveBroadcastPlayer.style.setProperty('--dial-position', `${9 + ((Number(station.code.slice(-2)) - 1) * 27.25)}%`);
   document.body.classList.add('live-radio-active');
   liveConsolePreset.textContent = `Preset · ${station.code}`;
+  mobilePlayerContextLabel.textContent = 'Live from Akashvani';
+  mobilePlayerContext.textContent = station.name;
   liveConsoleTitle.textContent = station.name;
   liveConsoleDescription.textContent = station.detail;
   liveConsoleStatus.textContent = message;
