@@ -9,6 +9,7 @@ import {
   uniqueTracks,
 } from './playback-core.js';
 import { createYoutubePlaybackAdapter } from './pujo-youtube-adapter.js';
+import { createLiveRadioController } from './pujo-live-radio.js';
 import {
   createBootstrapCatalogue,
   createCatalogueLoader,
@@ -78,6 +79,24 @@ const queuePaneClose = document.querySelector('#queue-pane-close');
 const queueScrim = document.querySelector('#queue-scrim');
 const clearUpNextButton = document.querySelector('#clear-up-next');
 const room = document.querySelector('#catalogue-room');
+const liveRadioRoom = document.querySelector('#live-radio-room');
+const liveRadioAudio = document.querySelector('#live-radio-audio');
+const liveRadioPlay = document.querySelector('#live-radio-play');
+const liveRadioVolume = document.querySelector('#live-radio-volume');
+const liveRadioTitle = document.querySelector('#live-radio-title');
+const liveRadioDescription = document.querySelector('#live-radio-description');
+const liveRadioStatus = document.querySelector('#live-radio-status');
+const liveStationButtons = [...document.querySelectorAll('[data-live-station]')];
+const liveBroadcastPlayer = document.querySelector('#live-broadcast-player');
+const liveConsolePreset = document.querySelector('#live-console-preset');
+const liveConsoleTitle = document.querySelector('#live-console-title');
+const liveConsoleDescription = document.querySelector('#live-console-description');
+const liveConsoleStatus = document.querySelector('#live-console-status');
+const liveConsolePlay = document.querySelector('#live-console-play');
+const liveConsolePrevious = document.querySelector('#live-console-previous');
+const liveConsoleNext = document.querySelector('#live-console-next');
+const liveConsoleVolume = document.querySelector('#live-console-volume');
+const returnToPujo = document.querySelector('#return-to-pujo');
 const overview = document.querySelector('#catalogue-overview');
 const detail = document.querySelector('#playlist-detail');
 const playlistGrid = document.querySelector('#playlist-grid');
@@ -135,6 +154,9 @@ const defaultPreferences = defaultExperiencePreferences({ reducedMotion: reduced
 let experiencePreferences = { ...defaultPreferences };
 const sceneDelivery = createSceneDelivery({ lowData: () => experiencePreferences.lowData });
 let installPrompt;
+let liveRadioReturnTarget;
+let liveRadioIsActive = false;
+let liveRadioController;
 
 const defaultHeroPresentation = {
   eyebrow: 'A seasonal transmission from Calcutta',
@@ -1011,6 +1033,7 @@ const renderTracks = (tracks) => {
 };
 
 const setCurrentTrack = (track, autoplay = false, startSeconds = 0, { preserveRecovery = false } = {}) => {
+  if (liveRadioIsActive) deactivateLiveRadio();
   if (!track) return;
   clearBufferingWatchdog();
   clearRecoveryTimer();
@@ -1152,7 +1175,73 @@ const closeRoom = () => {
   roomReturnTarget?.focus();
 };
 
+const renderLiveRadioConsole = ({ station, message, state, playing, volume }) => {
+  if (!liveRadioIsActive && state !== 'live') return;
+  if (state === 'live') liveRadioIsActive = true;
+  liveBroadcastPlayer.hidden = false;
+  liveBroadcastPlayer.style.setProperty('--dial-position', `${9 + ((Number(station.code.slice(-2)) - 1) * 27.25)}%`);
+  document.body.classList.add('live-radio-active');
+  liveConsolePreset.textContent = `Preset · ${station.code}`;
+  liveConsoleTitle.textContent = station.name;
+  liveConsoleDescription.textContent = station.detail;
+  liveConsoleStatus.textContent = message;
+  liveConsoleStatus.dataset.state = state;
+  liveConsolePlay.dataset.playing = String(playing);
+  liveConsolePlay.setAttribute('aria-label', `${playing ? 'Pause' : 'Play'} ${station.name}`);
+  liveConsoleVolume.value = String(Math.round(volume * 100));
+  if (state === 'live' && !liveRadioRoom.hidden) closeLiveRadio({ stop: false });
+};
+
+liveRadioController = createLiveRadioController({
+  audio: liveRadioAudio,
+  stationButtons: liveStationButtons,
+  title: liveRadioTitle,
+  description: liveRadioDescription,
+  status: liveRadioStatus,
+  playButton: liveRadioPlay,
+  volume: liveRadioVolume,
+  beforePlay: () => { if (isPlaying) playButton.click(); },
+  onUpdate: renderLiveRadioConsole,
+});
+
+const closeLiveRadio = ({ stop = !liveRadioIsActive } = {}) => {
+  if (stop) liveRadioController.stop();
+  liveRadioRoom.hidden = true;
+  liveRadioRoom.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('room-open', 'live-room-open');
+  liveRadioReturnTarget?.focus();
+};
+
+const deactivateLiveRadio = () => {
+  liveRadioIsActive = false;
+  liveRadioController.stop();
+  liveBroadcastPlayer.hidden = true;
+  document.body.classList.remove('live-radio-active');
+};
+
+const openLiveRadio = (opener) => {
+  if (document.body.classList.contains('room-open') && !liveRadioRoom.hidden) return;
+  if (!room.hidden) {
+    room.hidden = true;
+    room.setAttribute('aria-hidden', 'true');
+  }
+  liveRadioReturnTarget = opener;
+  liveRadioRoom.hidden = false;
+  liveRadioRoom.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('room-open', 'live-room-open');
+  liveRadioController.warm();
+  liveRadioRoom.scrollTop = 0;
+  window.requestAnimationFrame(() => liveRadioRoom.querySelector('[data-close-live-radio]').focus());
+};
+
+liveConsolePlay.addEventListener('click', () => liveRadioController.toggle());
+liveConsolePrevious.addEventListener('click', () => liveRadioController.playAdjacent(-1));
+liveConsoleNext.addEventListener('click', () => liveRadioController.playAdjacent(1));
+liveConsoleVolume.addEventListener('input', () => liveRadioController.setVolume(liveConsoleVolume.value));
+returnToPujo.addEventListener('click', deactivateLiveRadio);
+
 const openCatalogue = (opener) => {
+  if (!liveRadioRoom.hidden) closeLiveRadio();
   if (!document.body.classList.contains('room-open')) roomReturnTarget = opener;
   room.hidden = false;
   room.setAttribute('aria-hidden', 'false');
@@ -1166,6 +1255,9 @@ const openCatalogue = (opener) => {
 document.addEventListener('click', (event) => {
   const opener = event.target.closest('[data-open-room="catalogue"]');
   if (opener) { openCatalogue(opener); return; }
+  const liveOpener = event.target.closest('[data-open-room="live-radio"]');
+  if (liveOpener) { openLiveRadio(liveOpener); return; }
+  if (event.target.closest('[data-close-live-radio]')) { closeLiveRadio(); return; }
   if (event.target.closest('[data-close-room]')) closeRoom();
 });
 
@@ -1477,7 +1569,21 @@ const handleOnline = () => {
 };
 
 const setupServiceWorker = async () => {
-  if (!('serviceWorker' in navigator) || !import.meta.env.PROD) return;
+  if (!('serviceWorker' in navigator)) return;
+
+  // A production worker from an older localhost build can otherwise keep
+  // serving the retired /pujo/ app while Vite is running the current source.
+  if (import.meta.env.DEV) {
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(registrations.map((registration) => registration.unregister()));
+    if ('caches' in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys
+        .filter((key) => key.startsWith('pujo-vibes-'))
+        .map((key) => caches.delete(key)));
+    }
+    return;
+  }
 
   try {
     const legacyScript = `${window.location.origin}/sw.js`;
@@ -1788,8 +1894,9 @@ const setupMediaSession = () => {
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && !experiencePanel.hidden) { setExperiencePanel(false); experienceButton.focus(); return; }
   if (event.key === 'Escape' && document.body.classList.contains('queue-open')) { closeQueuePane(); return; }
+  if (event.key === 'Escape' && document.body.classList.contains('live-room-open')) { closeLiveRadio(); return; }
   if (event.key === 'Escape' && document.body.classList.contains('room-open')) { closeRoom(); return; }
-  const openDialog = document.body.classList.contains('queue-open') ? queuePane : document.body.classList.contains('room-open') ? room : undefined;
+  const openDialog = document.body.classList.contains('queue-open') ? queuePane : document.body.classList.contains('live-room-open') ? liveRadioRoom : document.body.classList.contains('room-open') ? room : undefined;
   if (event.key === 'Tab' && openDialog) {
     const focusable = [...openDialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter((element) => !element.hidden && element.getClientRects().length);
     if (focusable.length) {

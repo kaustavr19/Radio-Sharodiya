@@ -54,6 +54,8 @@ button { color: inherit; }
 .update-toast button:focus-visible { outline: 2px solid var(--shiuli); outline-offset: 2px; }
 
 .station-nav { position: absolute; z-index: 40; inset: 0 0 auto; display: flex; align-items: center; gap: .65rem; padding: 1.1rem clamp(1.25rem, 4vw, 4.5rem); font-family: "Space Mono", monospace; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; }
+.station-brand { display: flex; flex: 0 1 15rem; align-items: center; width: 15rem; min-width: 9rem; height: 3.5rem; color: var(--shiuli); text-decoration: none; }
+.station-brand img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: left center; }
 .nav-pill { min-height: 2.75rem; display: flex; align-items: center; gap: .65rem; padding: .65rem 1rem; border: 1px solid rgba(255,245,220,.24); border-radius: 99px; background: rgba(12,20,18,.38); color: var(--shiuli); box-shadow: 0 .7rem 2rem rgba(0,0,0,.12); backdrop-filter: blur(18px) saturate(1.08); }
 .back-link { text-decoration: none; width: max-content; }
 .back-link span:first-child { font-size: 1rem; transition: transform .2s ease; }
@@ -61,6 +63,9 @@ button { color: inherit; }
 .station-id { display: flex; align-items: center; gap: .7rem; }
 .live-pip, .button-pip { display: inline-block; width: .45rem; height: .45rem; border-radius: 50%; background: #8ed65f; box-shadow: 0 0 0 .3rem rgba(142,214,95,.12); }
 .nav-catalogue { margin-left: auto; border-color: rgba(238,163,35,.7); background: rgba(238,163,35,.88); color: var(--ink); cursor: pointer; font-weight: 700; text-transform: uppercase; transition: background .2s ease, transform .2s ease; }
+.nav-live { border-color: rgba(158,227,110,.42); cursor: pointer; font-weight: 700; text-transform: uppercase; }
+.nav-live:hover { border-color: #9ee36e; background: rgba(158,227,110,.12); }
+.nav-live strong { color: #b9ee96; }
 .nav-experience { border-color: rgba(255,245,220,.3); cursor: pointer; font-weight: 700; text-transform: uppercase; }
 .nav-experience:hover, .nav-experience[aria-expanded="true"] { border-color: var(--marigold); background: rgba(238,163,35,.16); }
 .nav-experience i { color: var(--marigold); font-style: normal; }
@@ -282,6 +287,44 @@ body.room-open .programme-art { width: 3.45rem; }
 body.room-open .console-track small { margin-top: .2rem; }
 body.room-open .signal-waveform { height: 2rem; }
 body.room-open .console-controls .console-play { width: 3rem; height: 3rem; }
+body.live-room-open .broadcast-console { display: none; }
+body.live-room-open .station-room { padding-bottom: 3rem !important; }
+body.live-radio-active:not(.live-room-open) .broadcast-console > .continue-listening,
+body.live-radio-active:not(.live-room-open) .broadcast-console > .station-guide,
+body.live-radio-active:not(.live-room-open) .broadcast-console > .console-topline,
+body.live-radio-active:not(.live-room-open) .broadcast-console > .console-main { display: none; }
+.live-broadcast-player { --dial-position: 9%; background: linear-gradient(110deg,rgba(10,18,17,.96),rgba(55,34,30,.9)); }
+.live-console-topline { background: rgba(0,0,0,.18); }
+.live-broadcast-main { min-height: 6rem; display: grid; grid-template-columns: minmax(13rem,1.15fr) minmax(12rem,1fr) auto; align-items: center; gap: 1.5rem; padding: .75rem 1rem .75rem .8rem; }
+.live-radio-now-playing { min-width: 0; display: flex; align-items: center; gap: .85rem; }
+.live-broadcast-art { position: relative; flex: 0 0 auto; width: 5.1rem; aspect-ratio: 1; display: grid; place-items: center; overflow: hidden; border: 1px solid rgba(255,245,220,.18); border-radius: .75rem; background: radial-gradient(circle,rgba(238,163,35,.2),transparent 48%),repeating-radial-gradient(circle,rgba(255,245,220,.13) 0 1px,transparent 1px 7px),rgba(4,10,9,.58); box-shadow: inset 0 0 0 1px rgba(255,255,255,.04); }
+.live-broadcast-art span { z-index: 1; font: 700 .68rem var(--font-signal); letter-spacing: .14em; }
+.live-broadcast-art i { position: absolute; right: .55rem; bottom: .55rem; width: .38rem; height: .38rem; border-radius: 50%; background: #9ee36e; box-shadow: 0 0 .5rem rgba(158,227,110,.7); }
+.live-broadcast-copy { min-width: 0; display: grid; gap: .18rem; }
+.live-broadcast-copy small { color: var(--marigold); font: .56rem var(--font-signal); letter-spacing: .07em; text-transform: uppercase; }
+.live-broadcast-copy strong,.live-broadcast-copy span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.live-broadcast-copy strong { font: 500 1.05rem var(--font-reading-en); }
+.live-broadcast-copy span { color: var(--marigold); font: .62rem var(--font-signal); text-transform: uppercase; }
+.live-broadcast-copy em { color: var(--mist); font: normal .6rem var(--font-signal); }
+.live-broadcast-copy em[data-state="live"] { color: #b9ee96; }
+.live-broadcast-copy em[data-state="error"] { color: #ffb19f; }
+.radio-tuner { min-width: 0; }
+.radio-tuner-window { position: relative; height: 3.45rem; overflow: hidden; padding: .45rem .65rem; border: 1px solid rgba(238,163,35,.32); border-radius: .45rem; background: linear-gradient(180deg,rgba(238,163,35,.18),rgba(238,163,35,.06)); color: rgba(255,245,220,.7); box-shadow: inset 0 0 .9rem rgba(0,0,0,.2); }
+.radio-band-label { display: block; color: var(--marigold); font: 600 .5rem var(--font-signal); letter-spacing: .12em; text-transform: uppercase; }
+.radio-frequency-scale { position: absolute; right: .65rem; bottom: .48rem; left: .65rem; display: grid; grid-template-columns: auto repeat(3,1fr) auto repeat(3,1fr) auto repeat(3,1fr) auto; align-items: end; gap: .2rem; font: .48rem var(--font-signal); }
+.radio-frequency-scale i { height: .42rem; border-left: 1px solid rgba(255,245,220,.22); }
+.radio-tuning-needle { position: absolute; top: 0; bottom: 0; left: var(--dial-position); width: 1px; background: #ffd58b; box-shadow: 0 0 .45rem var(--marigold); transition: left .45s cubic-bezier(.2,.8,.2,1); }
+.live-broadcast-actions { display: grid; grid-template-columns: auto minmax(6rem,8rem); align-items: center; gap: .3rem .65rem; }
+.live-broadcast-controls { display: flex; align-items: center; gap: .15rem; }
+.live-broadcast-controls button { width: 2.2rem; height: 2.2rem; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #e9e1d6; font-size: .9rem; cursor: pointer; }
+.live-broadcast-controls button:hover { background: rgba(255,255,255,.08); color: var(--marigold); }
+.live-broadcast-controls .console-play { width: 3.6rem; height: 3.6rem; border: 1px solid rgba(255,245,220,.7); background: var(--shiuli); color: var(--ink); }
+.live-broadcast-controls .console-play i { width: 0; height: 0; margin-left: .15rem; border-top: .38rem solid transparent; border-bottom: .38rem solid transparent; border-left: .62rem solid currentColor; }
+.live-broadcast-controls .console-play[data-playing="true"] i { width: .65rem; height: .78rem; margin: 0; border: 0; border-right: .2rem solid currentColor; border-left: .2rem solid currentColor; }
+.live-console-volume { display: grid; gap: .3rem; color: rgba(255,245,220,.58); font: .52rem var(--font-signal); letter-spacing: .05em; text-transform: uppercase; }
+.live-console-volume input { width: 100%; accent-color: var(--marigold); }
+.return-to-pujo { grid-column: 1 / -1; justify-self: end; min-height: 1.7rem; padding: 0 .55rem; border: 0; border-bottom: 1px solid rgba(255,245,220,.24); background: transparent; color: rgba(255,245,220,.65); cursor: pointer; font: 600 .5rem var(--font-signal); text-transform: uppercase; white-space: nowrap; }
+.return-to-pujo:hover { border-color: var(--marigold); color: var(--marigold); }
 
 .station-room { --catalogue-ink: #fff5dc; --catalogue-muted: rgba(255,245,220,.68); --catalogue-line: rgba(255,245,220,.22); position: fixed !important; z-index: 50; inset: 0; width: 100%; min-height: 100dvh !important; max-height: 100dvh; overflow-y: auto !important; overscroll-behavior: contain; padding-top: 0 !important; padding-bottom: 10rem !important; background: transparent !important; color: var(--catalogue-ink); isolation: isolate; }
 .station-room::before, .station-room::after { content: ""; position: fixed; z-index: -2; inset: -2rem; pointer-events: none; }
@@ -317,6 +360,39 @@ body.room-open .console-controls .console-play { width: 3rem; height: 3rem; }
 .playlist-grid small { margin-top: .4rem; color: rgba(255,245,220,.78); }
 .playlist-grid i { position: absolute; top: 1.2rem; right: 1.2rem; color: rgba(255,245,220,.72); }
 .playlist-grid strong, .playlist-grid small, .playlist-grid i { text-shadow: 0 2px 10px rgba(0,0,0,.85); }
+.live-radio-overview { padding-top: clamp(2.5rem,5vw,4rem); }
+.live-radio-overview > h2 { margin: 0; font: 500 clamp(3.5rem,5.5vw,5.5rem)/.92 var(--font-display-en); letter-spacing: -.055em; }
+.live-radio-overview > .section-intro { margin: 1rem 0 2rem; }
+.live-station-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1px; background: var(--catalogue-line); box-shadow: 0 1.2rem 4rem rgba(3,8,7,.2); }
+.live-station-grid button { position: relative; min-height: 14rem; display: flex; flex-direction: column; align-items: flex-start; padding: 1.2rem; border: 0; background: linear-gradient(145deg,rgba(23,39,35,.96),rgba(57,39,28,.92)); color: var(--shiuli); text-align: left; cursor: pointer; }
+.live-station-grid button:nth-child(2) { background: linear-gradient(145deg,rgba(29,52,48,.96),rgba(74,44,35,.9)); }
+.live-station-grid button:nth-child(3) { background: linear-gradient(145deg,rgba(54,42,27,.96),rgba(24,35,32,.94)); }
+.live-station-grid button:nth-child(4) { background: linear-gradient(145deg,rgba(53,35,31,.96),rgba(25,38,37,.94)); }
+.live-station-grid button::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(255,255,255,.07); transition: box-shadow .2s,background .2s; }
+.live-station-grid button:hover::after, .live-station-grid button.is-selected::after { background: rgba(238,163,35,.08); box-shadow: inset 0 0 0 2px var(--marigold); }
+.live-station-grid button > span, .live-station-grid button > i { font: normal .62rem var(--font-signal); letter-spacing: .05em; text-transform: uppercase; }
+.live-station-grid button > span { color: var(--marigold); }
+.live-station-grid button > strong { margin-top: auto; font: 500 1.35rem var(--font-display-bn); }
+.live-station-grid button > small { margin-top: .35rem; color: rgba(255,245,220,.76); }
+.live-station-grid button > i { margin-top: .85rem; color: var(--mist); }
+.live-radio-console { display: grid; grid-template-columns: auto minmax(0,1fr) auto minmax(8rem,12rem); align-items: center; gap: 1.2rem; margin-top: 1px; padding: 1.2rem; border: 1px solid var(--catalogue-line); background: rgba(7,13,12,.72); backdrop-filter: blur(18px); }
+.live-radio-mark { position: relative; width: 5rem; aspect-ratio: 1; display: grid; place-items: center; border: 1px solid rgba(255,245,220,.2); border-radius: 50%; background: radial-gradient(circle,rgba(238,163,35,.2),rgba(0,0,0,.2)); }
+.live-radio-mark span { font: 700 .8rem var(--font-signal); letter-spacing: .12em; }
+.live-radio-mark i { position: absolute; inset: -.35rem; border: 1px dashed rgba(238,163,35,.35); border-radius: 50%; }
+.live-radio-copy { min-width: 0; }
+.live-radio-copy > span { color: var(--marigold); font: .62rem var(--font-signal); letter-spacing: .06em; text-transform: uppercase; }
+.live-radio-copy h3 { margin: .25rem 0 0; font: 500 1.6rem var(--font-display-en); }
+.live-radio-copy p { margin: .2rem 0 .55rem; color: rgba(255,245,220,.67); font-size: .72rem; }
+.live-radio-copy small { color: var(--mist); font: .62rem var(--font-signal); }
+.live-radio-copy small[data-state="live"] { color: #b9ee96; }
+.live-radio-copy small[data-state="error"] { color: #ffb19f; }
+.live-radio-play { min-height: 3rem; display: flex; align-items: center; gap: .65rem; padding: 0 1rem; border: 1px solid var(--marigold); border-radius: 99px; background: var(--marigold); color: var(--ink); cursor: pointer; font: 700 .68rem var(--font-signal); text-transform: uppercase; }
+.live-radio-play i { width: 0; height: 0; border-top: .36rem solid transparent; border-bottom: .36rem solid transparent; border-left: .58rem solid currentColor; }
+.live-radio-play[data-playing="true"] i { width: .58rem; height: .72rem; border: 0; border-right: .2rem solid currentColor; border-left: .2rem solid currentColor; }
+.live-radio-volume { display: grid; gap: .5rem; color: rgba(255,245,220,.62); font: .6rem var(--font-signal); letter-spacing: .05em; text-transform: uppercase; }
+.live-radio-volume input { width: 100%; accent-color: var(--marigold); }
+.live-radio-source { margin: 1rem 0 0; color: rgba(255,245,220,.58); font-size: .7rem; }
+.live-radio-source a { color: var(--marigold); text-underline-offset: .25rem; }
 .personal-listening { margin-top: 2rem; padding: 1.25rem; border: 1px solid var(--catalogue-line); background: rgba(5,12,11,.18); backdrop-filter: blur(8px); }
 .personal-listening > header { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-bottom: .9rem; border-bottom: 1px solid var(--catalogue-line); }
 .personal-listening > header span { color: var(--marigold); font: .66rem "Space Mono",monospace; letter-spacing: .06em; text-transform: uppercase; }
@@ -491,6 +567,12 @@ body.room-open .console-controls .console-play { width: 3rem; height: 3rem; }
   .room-toolbar { grid-template-columns: 1fr auto; }
   .room-toolbar > p { display: none; }
   .playlist-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .live-station-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .live-radio-console { grid-template-columns: auto minmax(0,1fr) auto; }
+  .live-radio-volume { grid-column: 2 / -1; }
+  .live-broadcast-main { grid-template-columns: minmax(15rem,1fr) auto; }
+  .radio-tuner { grid-column: 1 / -1; grid-row: 2; }
+  .live-broadcast-actions { grid-column: 2; grid-row: 1; }
   .detail-heading { grid-template-columns: 9rem minmax(0,1fr); }
 }
 
@@ -502,6 +584,7 @@ body.room-open .console-controls .console-play { width: 3rem; height: 3rem; }
     --golper-scene-image: image-set(url("/assets/optimized/golper-asor-night/golper-asor-night-mobile.avif") type("image/avif"), url("/assets/optimized/golper-asor-night/golper-asor-night-mobile.webp") type("image/webp"));
   }
   .station-nav { gap: .4rem; padding: .8rem .8rem; }
+  .station-brand { flex-basis: 9.25rem; width: 9.25rem; min-width: 6.75rem; height: 2.8rem; }
   .network-status { top: 4.25rem; width: max-content; font-size: .66rem; }
   .update-toast { grid-template-columns: minmax(0,1fr) auto; }
   .update-toast .update-later { grid-column: 2; }
@@ -511,6 +594,8 @@ body.room-open .console-controls .console-play { width: 3rem; height: 3rem; }
   .nav-experience { width: 2.55rem; justify-content: center; padding: 0; }
   .nav-experience span { display: none; }
   .nav-catalogue i { display: none; }
+  .nav-live { gap: .35rem; padding-inline: .58rem; }
+  .nav-live span { display: none; }
   .hero { height: 100svh; min-height: 100svh; padding: 6.5rem 1.2rem 20.5rem; align-items: center; }
   .hero-art { background-position: 62% center; }
   .hero-wash { background: linear-gradient(180deg, rgba(15,22,20,.65), rgba(15,22,20,.2) 40%, rgba(15,22,20,.94) 82%); }
@@ -573,6 +658,27 @@ body.room-open .console-controls .console-play { width: 3rem; height: 3rem; }
   .playlist-grid button { min-height: 9.5rem; padding: .9rem; }
   .playlist-grid strong { font-size: 1.15rem; }
   .playlist-grid i { display: none; }
+  .live-radio-overview { padding-top: 2rem; }
+  .live-radio-overview > h2 { font-size: 3.2rem; }
+  .live-station-grid button { min-height: 9.5rem; padding: .9rem; }
+  .live-station-grid button > strong { font-size: 1.05rem; }
+  .live-station-grid button > i { display: none; }
+  .live-radio-console { grid-template-columns: 3.5rem minmax(0,1fr); gap: .8rem; padding: .9rem; }
+  .live-radio-mark { width: 3.5rem; }
+  .live-radio-play { grid-column: 1 / -1; justify-content: center; }
+  .live-radio-volume { grid-column: 1 / -1; }
+  .live-broadcast-main { min-height: 0; grid-template-columns: minmax(0,1fr) auto; gap: .6rem .75rem; padding: .65rem .7rem .7rem; }
+  .live-broadcast-art { width: 3.55rem; border-radius: .55rem; }
+  .live-radio-now-playing { gap: .65rem; }
+  .radio-tuner { display: block; grid-column: 1 / -1; grid-row: 2; }
+  .radio-tuner-window { height: 2.75rem; }
+  .radio-frequency-scale { font-size: .42rem; }
+  .live-broadcast-copy strong { font-size: 1rem; }
+  .live-broadcast-controls button:not(.console-play) { display: none; }
+  .live-broadcast-controls .console-play { width: 2.95rem; height: 2.95rem; }
+  .live-broadcast-actions { grid-column: 2; grid-row: 1; grid-template-columns: auto; justify-items: end; }
+  .live-console-volume { display: none; }
+  .return-to-pujo { grid-column: 1; min-height: 1.3rem; padding-inline: .25rem; }
   .playlist-detail { padding-top: 1.5rem; }
   .detail-back { margin-bottom: 1.5rem; }
   .detail-heading { grid-template-columns: 6rem 1fr; gap: 1rem; align-items: center; }

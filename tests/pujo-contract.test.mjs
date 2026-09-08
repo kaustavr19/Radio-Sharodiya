@@ -12,6 +12,7 @@ const manifest = readFileSync('public/manifest.webmanifest', 'utf8');
 const viteConfig = readFileSync('vite.config.js', 'utf8');
 const pujoCss = readFileSync('pujo.css', 'utf8');
 const catalogueLoader = readFileSync('pujo-catalogue.js', 'utf8');
+const liveRadio = readFileSync('pujo-live-radio.js', 'utf8');
 const persistence = readFileSync('pujo-persistence.js', 'utf8');
 const sceneManager = readFileSync('pujo-scenes.js', 'utf8');
 const playlistConfig = JSON.parse(readFileSync('public/data/pujo/playlist-config.json', 'utf8'));
@@ -46,6 +47,28 @@ test('catalogue opens as an accessible modal without invoking playback', () => {
   assert.match(openCatalogue, /room\.hidden = false/);
   assert.match(openCatalogue, /aria-hidden', 'false'/);
   assert.doesNotMatch(openCatalogue, /setCurrentTrack|playVideo|loadVideoById/);
+});
+
+test('live radio is a separate four-station Akashvani room with explicit playback', () => {
+  for (const id of ['live-radio-room', 'live-radio-audio', 'live-radio-play', 'live-radio-volume', 'live-broadcast-player', 'live-console-play', 'return-to-pujo']) {
+    assert.match(html, new RegExp(`id=["']${id}["']`));
+  }
+  assert.match(html, /data-open-room="live-radio"/);
+  assert.equal((html.match(/data-live-station=/g) || []).length, 4);
+  assert.match(liveRadio, /Akashvani Bangla/);
+  assert.match(liveRadio, /FM Rainbow Kolkata/);
+  assert.match(liveRadio, /FM Gold Kolkata/);
+  assert.match(liveRadio, /Akashvani Delhi Indraprastha/);
+  assert.match(liveRadio, /application\/vnd\.apple\.mpegurl/);
+  assert.match(liveRadio, /Hls\.isSupported\(\)/);
+  assert.doesNotMatch(liveRadio, /autoplay/);
+  assert.match(player, /document\.body\.classList\.add\('live-radio-active'\)/);
+  assert.match(player, /liveRadioController\.playAdjacent/);
+  assert.match(player, /if \(liveRadioIsActive\) deactivateLiveRadio\(\)/);
+  assert.match(html, /class="live-broadcast-art"/);
+  assert.match(html, /class="radio-tuner-window"/);
+  assert.match(html, /id="live-console-preset"/);
+  assert.match(player, /--dial-position/);
 });
 
 test('Play all keeps playable playlist order and starts at the first queued track', () => {

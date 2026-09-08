@@ -32,19 +32,13 @@
     </aside>
 
     <header class="station-nav">
-      <div class="back-link nav-pill" aria-label="A station from The Radio Project">
-        <span aria-hidden="true">◉</span>
-        <span>The Radio Project</span>
-      </div>
-      <div class="station-id nav-pill">
-        <span class="live-pip" aria-hidden="true"></span>
-        <span>Station 02</span>
-        <span aria-hidden="true">/</span>
-        <span>95.8 FM</span>
-      </div>
-      <button class="nav-experience nav-pill" id="experience-toggle" type="button" aria-label="Station experience" aria-expanded="false" aria-controls="experience-panel"><i aria-hidden="true">✦</i><span>Experience</span></button>
+      <a class="station-brand" href="/" aria-label="Radio Sharodiya home">
+        <img src="/assets/radio-sharodiya-logo.png" alt="রেডিও শারদীয়া" />
+      </a>
       <button class="nav-catalogue nav-pill" type="button" data-open-room="catalogue"><span>Catalogue</span><strong>06</strong><i aria-hidden="true">↗</i></button>
+      <button class="nav-live nav-pill" type="button" data-open-room="live-radio"><i class="live-pip" aria-hidden="true"></i><span>Live Radio</span><strong>04</strong></button>
       <time class="kolkata-time nav-pill" id="kolkata-time">--:-- IST</time>
+      <button class="nav-experience nav-pill" id="experience-toggle" type="button" aria-label="Station experience" aria-expanded="false" aria-controls="experience-panel"><i aria-hidden="true">✦</i><span>Experience</span></button>
     </header>
 
     <section class="experience-panel" id="experience-panel" aria-label="Station experience controls" hidden>
@@ -154,6 +148,41 @@
               <button class="queue-inline" id="open-queue" type="button" aria-label="Open current queue"><span aria-hidden="true">≡</span><strong id="queue-count">00</strong></button>
             </div>
           </div>
+          <section class="live-broadcast-player" id="live-broadcast-player" aria-label="Akashvani live radio player" hidden>
+            <div class="console-topline live-console-topline">
+              <span>Radio Sharodiya · Akashvani receiver</span>
+              <span><i aria-hidden="true"></i> On air · Official stream</span>
+            </div>
+            <div class="live-broadcast-main">
+              <div class="live-radio-now-playing">
+                <div class="live-broadcast-art" aria-hidden="true"><span>AIR</span><i></i></div>
+                <div class="live-broadcast-copy">
+                  <small id="live-console-preset">Preset · AIR-01</small>
+                  <strong id="live-console-title">Akashvani Bangla</strong>
+                  <span id="live-console-description">West Bengal · Bengali</span>
+                  <em id="live-console-status">Live now</em>
+                </div>
+              </div>
+              <div class="radio-tuner">
+                <div class="radio-tuner-window" aria-hidden="true">
+                  <span class="radio-band-label">Akashvani band</span>
+                  <div class="radio-frequency-scale">
+                    <span>01</span><i></i><i></i><i></i><span>02</span><i></i><i></i><i></i><span>03</span><i></i><i></i><i></i><span>04</span>
+                  </div>
+                  <b class="radio-tuning-needle"></b>
+                </div>
+              </div>
+              <div class="live-broadcast-actions">
+                <div class="live-broadcast-controls">
+                  <button id="live-console-previous" type="button" aria-label="Previous Akashvani station">‹</button>
+                  <button class="console-play" id="live-console-play" type="button" aria-label="Pause live radio"><i aria-hidden="true"></i></button>
+                  <button id="live-console-next" type="button" aria-label="Next Akashvani station">›</button>
+                </div>
+                <label class="live-console-volume" for="live-console-volume"><span>Volume</span><input id="live-console-volume" type="range" min="0" max="100" value="80" aria-label="Live radio volume" /></label>
+                <button class="return-to-pujo" id="return-to-pujo" type="button">Return to Pujo</button>
+              </div>
+            </div>
+          </section>
         </section>
       </section>
 
@@ -199,6 +228,41 @@
           </div>
           <div class="track-list" id="track-list" aria-live="polite"></div>
         </div>
+      </section>
+
+      <section class="station-room programme-room live-radio-room" id="live-radio-room" role="dialog" aria-modal="true" aria-labelledby="live-radio-heading" aria-hidden="true" hidden>
+        <header class="room-toolbar">
+          <div><span>Akashvani · Official live streams</span><strong>Radio Sharodiya Live</strong></div>
+          <p>Four channels · One live dial</p>
+          <button class="room-close" type="button" data-close-live-radio aria-label="Close live radio"><span>Close</span> ×</button>
+        </header>
+        <div class="live-radio-overview">
+          <p class="section-kicker">Broadcasting now</p>
+          <h2 id="live-radio-heading">Turn the dial<br />to Akashvani.</h2>
+          <p class="section-intro">Four public-service frequencies, carried live from the official Akashvani network. Choose a channel, then connect.</p>
+
+          <div class="live-station-grid" id="live-station-grid" aria-label="Akashvani live stations">
+            <button type="button" data-live-station="akashvani-bangla" aria-pressed="true"><span>AIR-01 · West Bengal</span><strong lang="bn">আকাশবাণী বাংলা</strong><small>Akashvani Bangla</small><i>Bengali</i></button>
+            <button type="button" data-live-station="fm-rainbow-kolkata" aria-pressed="false"><span>AIR-02 · Kolkata</span><strong lang="bn">এফ এম রেনবো</strong><small>FM Rainbow Kolkata</small><i>Regional mix</i></button>
+            <button type="button" data-live-station="fm-gold-kolkata" aria-pressed="false"><span>AIR-03 · Kolkata</span><strong lang="bn">এফ এম গোল্ড</strong><small>FM Gold Kolkata</small><i>Multi-language</i></button>
+            <button type="button" data-live-station="indraprastha" aria-pressed="false"><span>AIR-04 · Delhi</span><strong lang="bn">ইন্দ্রপ্রস্থ</strong><small>Akashvani Delhi Indraprastha</small><i>Regional specials</i></button>
+          </div>
+
+          <section class="live-radio-console" aria-label="Selected live radio station">
+            <div class="live-radio-mark" aria-hidden="true"><span>AIR</span><i></i></div>
+            <div class="live-radio-copy">
+              <span>Selected frequency</span>
+              <h3 id="live-radio-title">Akashvani Bangla</h3>
+              <p id="live-radio-description">West Bengal · Bengali</p>
+              <small id="live-radio-status" role="status" aria-live="polite">Ready · Press play to connect</small>
+            </div>
+            <button class="live-radio-play" id="live-radio-play" type="button" data-playing="false" aria-label="Play Akashvani Bangla live"><i aria-hidden="true"></i><span>Play live</span></button>
+            <label class="live-radio-volume" for="live-radio-volume"><span>Volume</span><input id="live-radio-volume" type="range" min="0" max="100" value="80" aria-label="Live radio volume" /></label>
+          </section>
+
+          <p class="live-radio-source">Streams are provided by Akashvani and may occasionally be offline. <a href="https://akashvani.gov.in/radio/live.php" target="_blank" rel="noopener noreferrer">Open the official player ↗</a></p>
+        </div>
+        <audio class="media-engine" id="live-radio-audio" preload="none"></audio>
       </section>
 
       <button class="queue-scrim" id="queue-scrim" type="button" aria-label="Close current queue" hidden></button>
