@@ -97,6 +97,20 @@ test('queue remains a side pane with explicit open and close state', () => {
   assert.match(queueControls, /queuePane\.setAttribute\('aria-hidden', 'true'\)/);
 });
 
+test('mobile shell provides app navigation, a mini player, and full-screen surfaces', () => {
+  assert.equal((html.match(/data-mobile-tab=/g) || []).length, 4);
+  for (const id of ['mobile-player-expand', 'mobile-player-dismiss', 'mobile-queue-count', 'experience-close']) {
+    assert.match(html, new RegExp(`id=["']${id}["']`));
+  }
+  assert.match(player, /const setMobileTab =/);
+  assert.match(player, /classList\.toggle\('mobile-player-open'/);
+  assert.match(player, /matchMedia\('\(max-width: 620px\), \(max-width: 900px\) and \(max-height: 500px\)'\)/);
+  assert.match(pujoCss, /--mobile-tab-height/);
+  assert.match(pujoCss, /overflow-x: clip/);
+  assert.match(pujoCss, /env\(safe-area-inset-bottom\)/);
+  assert.match(pujoCss, /body\.mobile-player-open \.broadcast-console/);
+});
+
 test('continuity saves and restores queue, position, volume, shuffle and origin without autoplay', () => {
   const save = extractBlock(player, 'const saveContinuity =', 'const scheduleContinuitySave');
   const restore = extractBlock(player, 'const restoreContinuity =', 'const setupMediaSession');

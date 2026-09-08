@@ -42,7 +42,7 @@
     </header>
 
     <section class="experience-panel" id="experience-panel" aria-label="Station experience controls" hidden>
-      <header><span>Station atmosphere</span><strong>Make the frequency yours</strong></header>
+      <header><span>Station atmosphere</span><strong>Make the frequency yours</strong><button class="mobile-sheet-close" id="experience-close" type="button" aria-label="Close station experience">×</button></header>
       <button class="experience-option" id="atmosphere-toggle" type="button" role="switch" aria-checked="false"><span><strong>Para atmosphere</strong><small>Pujar Badya Dhak · Saregama Bengali</small></span><i aria-hidden="true"></i></button>
       <div class="atmosphere-volume">
         <label for="atmosphere-volume"><span>Atmosphere volume</span><output id="atmosphere-volume-value" for="atmosphere-volume">14%</output></label>
@@ -91,6 +91,11 @@
         </div>
 
         <section class="broadcast-console" id="broadcast-console" aria-label="Pujo Vibes audio player" aria-busy="false">
+          <header class="mobile-player-header">
+            <div><span>Now playing</span><strong>Radio Sharodiya</strong></div>
+            <button id="mobile-player-dismiss" type="button" aria-label="Collapse full player">⌄</button>
+          </header>
+          <button class="mobile-player-expand" id="mobile-player-expand" type="button" aria-label="Open full player" aria-expanded="false"><span>Open full player</span></button>
           <div class="continue-listening" id="continue-listening" hidden>
             <div><span>Continue listening</span><strong id="continue-title">Your last broadcast</strong></div>
             <button id="resume-listening" type="button">Resume <span id="resume-time">0:00</span></button>
@@ -280,6 +285,21 @@
           <button id="clear-up-next" type="button">Clear up next</button>
         </footer>
       </aside>
+
+      <nav class="mobile-tabbar" aria-label="Primary navigation">
+        <button class="is-current" type="button" data-mobile-tab="home" aria-current="page">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20h-5v-6H9v6H4z"></path></svg><span>Home</span>
+        </button>
+        <button type="button" data-mobile-tab="catalogue" data-open-room="catalogue">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h5v7H5zm9 0h5v7h-5zM5 15h5v5H5zm9 0h5v5h-5z"></path></svg><span>Catalogue</span>
+        </button>
+        <button type="button" data-mobile-tab="radio" data-open-room="live-radio">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14v11H5zM8 5l8-2M8 12h5m-5 3h3"></path><circle cx="16.5" cy="14" r="2.2"></circle></svg><span>Live</span>
+        </button>
+        <button type="button" data-mobile-tab="queue" data-mobile-queue>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h11M5 12h11M5 17h8"></path><path d="m17 15 3 2-3 2z"></path></svg><span>Queue</span><strong id="mobile-queue-count">00</strong>
+        </button>
+      </nav>
 
       <section class="across-frequency" aria-labelledby="frequency-title">
         <p class="section-kicker">Across the frequency · Station 01</p>

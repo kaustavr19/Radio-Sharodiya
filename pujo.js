@@ -72,6 +72,12 @@ const joinBroadcastLabel = document.querySelector('#join-broadcast-label');
 const joinBroadcastStatus = document.querySelector('#join-broadcast-status');
 const queueButton = document.querySelector('#open-queue');
 const queueCount = document.querySelector('#queue-count');
+const mobileQueueCount = document.querySelector('#mobile-queue-count');
+const mobileQueueButton = document.querySelector('[data-mobile-queue]');
+const mobileTabButtons = [...document.querySelectorAll('[data-mobile-tab]')];
+const mobileHomeButton = document.querySelector('[data-mobile-tab="home"]');
+const mobilePlayerExpand = document.querySelector('#mobile-player-expand');
+const mobilePlayerDismiss = document.querySelector('#mobile-player-dismiss');
 const queuePane = document.querySelector('#queue-pane');
 const queuePaneList = document.querySelector('#queue-pane-list');
 const queuePaneMeta = document.querySelector('#queue-pane-meta');
@@ -121,6 +127,7 @@ const heroTitle = document.querySelector('#hero-title');
 const heroIntro = document.querySelector('#hero-intro');
 const experienceButton = document.querySelector('#experience-toggle');
 const experiencePanel = document.querySelector('#experience-panel');
+const experienceCloseButton = document.querySelector('#experience-close');
 const atmosphereButton = document.querySelector('#atmosphere-toggle');
 const motionButton = document.querySelector('#motion-toggle');
 const lowDataButton = document.querySelector('#low-data-toggle');
@@ -150,6 +157,7 @@ let activePresentationPlaylistId;
 let currentCalendarState;
 let activeCalendarPresentationId;
 const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+const mobileShellQuery = window.matchMedia('(max-width: 620px), (max-width: 900px) and (max-height: 500px)');
 const defaultPreferences = defaultExperiencePreferences({ reducedMotion: reducedMotionQuery.matches, saveData: navigator.connection?.saveData });
 let experiencePreferences = { ...defaultPreferences };
 const sceneDelivery = createSceneDelivery({ lowData: () => experiencePreferences.lowData });
@@ -157,6 +165,23 @@ let installPrompt;
 let liveRadioReturnTarget;
 let liveRadioIsActive = false;
 let liveRadioController;
+
+const setMobileTab = (name) => {
+  mobileTabButtons.forEach((button) => {
+    const isCurrent = button.dataset.mobileTab === name;
+    button.classList.toggle('is-current', isCurrent);
+    if (isCurrent) button.setAttribute('aria-current', 'page');
+    else button.removeAttribute('aria-current');
+  });
+};
+
+const setMobilePlayerExpanded = (open, { restoreFocus = true } = {}) => {
+  if (open && !mobileShellQuery.matches) return;
+  document.body.classList.toggle('mobile-player-open', open);
+  mobilePlayerExpand.setAttribute('aria-expanded', String(open));
+  if (open) mobilePlayerDismiss.focus();
+  else if (restoreFocus) mobilePlayerExpand.focus();
+};
 
 const defaultHeroPresentation = {
   eyebrow: 'A seasonal transmission from Calcutta',
@@ -1016,8 +1041,11 @@ const renderQueuePanel = () => {
 const updateQueueCount = () => {
   const currentIndex = queueCurrentIndex();
   const upNextCount = currentIndex >= 0 ? Math.max(0, queue.length - currentIndex - 1) : queue.length;
-  queueCount.textContent = String(upNextCount).padStart(2, '0');
+  const formattedCount = String(upNextCount).padStart(2, '0');
+  queueCount.textContent = formattedCount;
+  mobileQueueCount.textContent = formattedCount;
   queueButton.setAttribute('aria-label', `Open current queue, ${upNextCount} ${upNextCount === 1 ? 'song' : 'songs'} up next`);
+  mobileQueueButton.setAttribute('aria-label', `Open current queue, ${upNextCount} ${upNextCount === 1 ? 'song' : 'songs'} up next`);
   if (queuePaneIsOpen()) renderQueuePanel();
   scheduleContinuitySave();
 };
@@ -1104,6 +1132,8 @@ const shuffledTracks = (tracks) => {
 };
 
 const openQueuePane = (opener = queueButton) => {
+  if (!liveRadioRoom.hidden) closeLiveRadio({ stop: false });
+  if (!room.hidden) closeRoom();
   window.clearTimeout(queueCloseTimer);
   queueReturnTarget = opener;
   queueRenderLimit = QUEUE_RENDER_BATCH;
@@ -1111,6 +1141,8 @@ const openQueuePane = (opener = queueButton) => {
   queueScrim.hidden = false;
   queuePane.setAttribute('aria-hidden', 'false');
   document.body.classList.add('queue-open');
+  setMobilePlayerExpanded(false, { restoreFocus: false });
+  setMobileTab('queue');
   renderQueuePanel();
   window.requestAnimationFrame(() => {
     queuePane.classList.add('is-open');
@@ -1125,6 +1157,7 @@ const closeQueuePane = () => {
   queueScrim.classList.remove('is-open');
   queuePane.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('queue-open');
+  if (mobileShellQuery.matches) setMobileTab('home');
   queueCloseTimer = window.setTimeout(() => {
     if (queuePaneIsOpen()) return;
     queuePane.hidden = true;
@@ -1172,12 +1205,16 @@ const closeRoom = () => {
   room.hidden = true;
   room.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('room-open');
+  if (mobileShellQuery.matches) setMobileTab('home');
   roomReturnTarget?.focus();
 };
 
 const renderLiveRadioConsole = ({ station, message, state, playing, volume }) => {
   if (!liveRadioIsActive && state !== 'live') return;
-  if (state === 'live') liveRadioIsActive = true;
+  if (state === 'live') {
+    liveRadioIsActive = true;
+    setMobileTab('radio');
+  }
   liveBroadcastPlayer.hidden = false;
   liveBroadcastPlayer.style.setProperty('--dial-position', `${9 + ((Number(station.code.slice(-2)) - 1) * 27.25)}%`);
   document.body.classList.add('live-radio-active');
@@ -1209,6 +1246,7 @@ const closeLiveRadio = ({ stop = !liveRadioIsActive } = {}) => {
   liveRadioRoom.hidden = true;
   liveRadioRoom.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('room-open', 'live-room-open');
+  if (mobileShellQuery.matches) setMobileTab(liveRadioIsActive ? 'radio' : 'home');
   liveRadioReturnTarget?.focus();
 };
 
@@ -1217,9 +1255,11 @@ const deactivateLiveRadio = () => {
   liveRadioController.stop();
   liveBroadcastPlayer.hidden = true;
   document.body.classList.remove('live-radio-active');
+  if (mobileShellQuery.matches) setMobileTab('home');
 };
 
 const openLiveRadio = (opener) => {
+  if (queuePaneIsOpen()) closeQueuePane();
   if (document.body.classList.contains('room-open') && !liveRadioRoom.hidden) return;
   if (!room.hidden) {
     room.hidden = true;
@@ -1229,6 +1269,8 @@ const openLiveRadio = (opener) => {
   liveRadioRoom.hidden = false;
   liveRadioRoom.setAttribute('aria-hidden', 'false');
   document.body.classList.add('room-open', 'live-room-open');
+  setMobilePlayerExpanded(false, { restoreFocus: false });
+  setMobileTab('radio');
   liveRadioController.warm();
   liveRadioRoom.scrollTop = 0;
   window.requestAnimationFrame(() => liveRadioRoom.querySelector('[data-close-live-radio]').focus());
@@ -1241,11 +1283,14 @@ liveConsoleVolume.addEventListener('input', () => liveRadioController.setVolume(
 returnToPujo.addEventListener('click', deactivateLiveRadio);
 
 const openCatalogue = (opener) => {
+  if (queuePaneIsOpen()) closeQueuePane();
   if (!liveRadioRoom.hidden) closeLiveRadio();
   if (!document.body.classList.contains('room-open')) roomReturnTarget = opener;
   room.hidden = false;
   room.setAttribute('aria-hidden', 'false');
   document.body.classList.add('room-open');
+  setMobilePlayerExpanded(false, { restoreFocus: false });
+  setMobileTab('catalogue');
   showOverview();
   room.setAttribute('aria-busy', 'true');
   ensureFullCatalogue().finally(() => room.setAttribute('aria-busy', 'false'));
@@ -1264,6 +1309,9 @@ document.addEventListener('click', (event) => {
 playlistGrid.addEventListener('click', (event) => { const button = event.target.closest('[data-playlist]'); if (button) void showPlaylist(button.dataset.playlist); });
 detailBack.addEventListener('click', showOverview);
 queueButton.addEventListener('click', () => openQueuePane(queueButton));
+mobileQueueButton.addEventListener('click', () => openQueuePane(mobileQueueButton));
+mobilePlayerExpand.addEventListener('click', () => setMobilePlayerExpanded(true));
+mobilePlayerDismiss.addEventListener('click', () => setMobilePlayerExpanded(false));
 joinBroadcastButton.addEventListener('click', () => void joinScheduledBroadcast());
 queuePaneClose.addEventListener('click', closeQueuePane);
 queueScrim.addEventListener('click', closeQueuePane);
@@ -1461,6 +1509,10 @@ const setExperiencePanel = (open) => {
 };
 
 experienceButton.addEventListener('click', () => setExperiencePanel(experiencePanel.hidden));
+experienceCloseButton.addEventListener('click', () => {
+  setExperiencePanel(false);
+  experienceButton.focus();
+});
 atmosphereButton.addEventListener('click', async () => {
   experiencePreferences.atmosphere = !experiencePreferences.atmosphere;
   renderExperiencePreferences();
@@ -1894,6 +1946,7 @@ const setupMediaSession = () => {
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && !experiencePanel.hidden) { setExperiencePanel(false); experienceButton.focus(); return; }
   if (event.key === 'Escape' && document.body.classList.contains('queue-open')) { closeQueuePane(); return; }
+  if (event.key === 'Escape' && document.body.classList.contains('mobile-player-open')) { setMobilePlayerExpanded(false); return; }
   if (event.key === 'Escape' && document.body.classList.contains('live-room-open')) { closeLiveRadio(); return; }
   if (event.key === 'Escape' && document.body.classList.contains('room-open')) { closeRoom(); return; }
   const openDialog = document.body.classList.contains('queue-open') ? queuePane : document.body.classList.contains('live-room-open') ? liveRadioRoom : document.body.classList.contains('room-open') ? room : undefined;
@@ -1918,6 +1971,20 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('click', (event) => {
   if (!experiencePanel.hidden && !experiencePanel.contains(event.target) && !experienceButton.contains(event.target)) setExperiencePanel(false);
+});
+
+mobileHomeButton.addEventListener('click', () => {
+  if (document.body.classList.contains('queue-open')) closeQueuePane();
+  if (!room.hidden) closeRoom();
+  if (!liveRadioRoom.hidden) closeLiveRadio({ stop: false });
+  if (!experiencePanel.hidden) setExperiencePanel(false);
+  setMobilePlayerExpanded(false, { restoreFocus: false });
+  setMobileTab('home');
+  window.scrollTo({ top: 0, behavior: reducedMotionQuery.matches ? 'auto' : 'smooth' });
+});
+
+mobileShellQuery.addEventListener?.('change', (event) => {
+  if (!event.matches) setMobilePlayerExpanded(false, { restoreFocus: false });
 });
 
 reducedMotionQuery.addEventListener?.('change', (event) => {
