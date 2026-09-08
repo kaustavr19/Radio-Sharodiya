@@ -174,9 +174,26 @@ test('offline and version states remain quiet and user-controlled', () => {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
   assert.match(player, /register\('\/sw\.js', \{ scope: '\/' \}\)/);
-  assert.match(player, /registration\.waiting\?\.postMessage\(\{ type: 'SKIP_WAITING' \}\)/);
+  assert.match(player, /waitingWorker\.postMessage\(\{ type: 'SKIP_WAITING' \}\)/);
   assert.match(player, /updateToast\.hidden = true/);
   assert.match(player, /networkStatus\.hidden = !offline/);
+});
+
+test('service worker updates cannot create a reload loop', () => {
+  const setup = extractBlock(player, 'const setupServiceWorker =', "window.addEventListener('online'");
+  assert.match(setup, /new URL\('\/pujo\/sw\.js'/);
+  assert.doesNotMatch(setup, /legacyScript = `\$\{window\.location\.origin\}\/sw\.js`/);
+  assert.match(setup, /let refreshRequested = false/);
+  assert.match(setup, /if \(!refreshRequested \|\| reloading\) return/);
+  assert.ok(setup.indexOf('refreshRequested = true') < setup.indexOf("postMessage({ type: 'SKIP_WAITING' })"));
+});
+
+test('scene delivery ignores height-only resize noise and waits for a stable width', () => {
+  const resizeHandling = extractBlock(player, "window.addEventListener('resize'", 'const applyHeroPresentation');
+  assert.match(resizeHandling, /settledSceneViewportWidth/);
+  assert.match(resizeHandling, /Math\.abs\(nextWidth - settledSceneViewportWidth\) < 12/);
+  assert.match(resizeHandling, /}, 480\)/);
+  assert.match(player, /viewportWidth: \(\) => document\.documentElement\.clientWidth \|\| window\.innerWidth/);
 });
 
 test('closed queues avoid hidden rendering and open queues use bounded lazy thumbnails', () => {

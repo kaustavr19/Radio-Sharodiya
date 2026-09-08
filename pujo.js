@@ -148,6 +148,7 @@ let activeScene;
 let activeSceneVariant;
 let sceneRequestToken = 0;
 let sceneResizeTimer;
+let settledSceneViewportWidth = document.documentElement.clientWidth || window.innerWidth;
 const loadedSceneAssets = new Map();
 let playbackPresentationActive = false;
 let heroCopyTimer;
@@ -160,7 +161,10 @@ const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 const mobileShellQuery = window.matchMedia('(max-width: 620px), (max-width: 900px) and (max-height: 500px)');
 const defaultPreferences = defaultExperiencePreferences({ reducedMotion: reducedMotionQuery.matches, saveData: navigator.connection?.saveData });
 let experiencePreferences = { ...defaultPreferences };
-const sceneDelivery = createSceneDelivery({ lowData: () => experiencePreferences.lowData });
+const sceneDelivery = createSceneDelivery({
+  lowData: () => experiencePreferences.lowData,
+  viewportWidth: () => document.documentElement.clientWidth || window.innerWidth,
+});
 let installPrompt;
 let liveRadioReturnTarget;
 let liveRadioIsActive = false;
@@ -274,12 +278,17 @@ const applyScene = (scene, immediate = false) => {
 };
 
 window.addEventListener('resize', () => {
+  const nextWidth = document.documentElement.clientWidth || window.innerWidth;
+  if (Math.abs(nextWidth - settledSceneViewportWidth) < 12) return;
   window.clearTimeout(sceneResizeTimer);
   sceneResizeTimer = window.setTimeout(() => {
+    const stableWidth = document.documentElement.clientWidth || window.innerWidth;
+    if (Math.abs(stableWidth - settledSceneViewportWidth) < 12) return;
+    settledSceneViewportWidth = stableWidth;
     if (!activeScene || sceneDelivery.variantForViewport() === activeSceneVariant) return;
     activeSceneId = undefined;
     applyScene(activeScene, true);
-  }, 180);
+  }, 480);
 });
 
 const applyHeroPresentation = (presentation) => {
@@ -1641,15 +1650,18 @@ const setupServiceWorker = async () => {
   }
 
   try {
-    const legacyScript = `${window.location.origin}/sw.js`;
+    const legacyScope = new URL('/pujo/', window.location.origin).href;
+    const legacyScript = new URL('/pujo/sw.js', window.location.origin).href;
     const registrations = await navigator.serviceWorker.getRegistrations();
     await Promise.all(registrations
-      .filter((registration) => [registration.active, registration.waiting, registration.installing]
-        .some((worker) => worker?.scriptURL === legacyScript))
+      .filter((registration) => registration.scope === legacyScope
+        || [registration.active, registration.waiting, registration.installing]
+          .some((worker) => worker?.scriptURL === legacyScript))
       .map((registration) => registration.unregister()));
 
     const registration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
     let reloading = false;
+    let refreshRequested = false;
 
     const offerUpdate = () => {
       if (registration.waiting && navigator.serviceWorker.controller) updateToast.hidden = false;
@@ -1665,11 +1677,14 @@ const setupServiceWorker = async () => {
 
     updateRefreshButton.addEventListener('click', () => {
       updateToast.hidden = true;
-      registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
+      const waitingWorker = registration.waiting;
+      if (!waitingWorker) return;
+      refreshRequested = true;
+      waitingWorker.postMessage({ type: 'SKIP_WAITING' });
     });
     updateLaterButton.addEventListener('click', () => { updateToast.hidden = true; });
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (reloading) return;
+      if (!refreshRequested || reloading) return;
       reloading = true;
       window.location.reload();
     });
