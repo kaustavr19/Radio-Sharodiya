@@ -289,3 +289,23 @@ test('the delivered atmosphere is a compact lazy-loaded loop and no full master 
   assert.match(player, /const paraAtmosphereUrl = '\/assets\/audio\/para-atmosphere-loop\.mp3'/);
   assert.match(player, /atmosphereAudio\.src \|\|= paraAtmosphereUrl/);
 });
+
+test('hero typography protects the transmitting label at changing viewport proportions', () => {
+  assert.match(pujoCss, /\.hero-copy \.eyebrow \{ margin-bottom: clamp\(2rem,3vh,2\.75rem\); \}/);
+  assert.match(pujoCss, /h1 \{[^}]*padding-top: \.12em;[^}]*font-size: clamp\(4rem, min\(8\.5vw,13vh\), 8rem\);[^}]*line-height: \.88;/);
+});
+
+test('starting programme or live-radio playback switches para atmosphere off', () => {
+  const stopAtmosphere = extractBlock(player, 'const stopParaAtmosphereForPlayback = () => {', 'atmosphereAudio.addEventListener');
+  const setTrack = extractBlock(player, 'const setCurrentTrack = (track, autoplay = false', 'const addToQueue');
+  const liveController = extractBlock(player, 'liveRadioController = createLiveRadioController({', 'const closeLiveRadio');
+  const mainPlay = extractBlock(player, "playButton.addEventListener('click'", "muteButton.addEventListener('click'");
+  assert.match(stopAtmosphere, /experiencePreferences\.atmosphere = false/);
+  assert.match(stopAtmosphere, /stopAmbientLayer\(\)/);
+  assert.match(stopAtmosphere, /atmosphereAudio\.currentTime = 0/);
+  assert.match(stopAtmosphere, /renderExperiencePreferences\(\)/);
+  assert.match(setTrack, /if \(autoplay\) stopParaAtmosphereForPlayback\(\)/);
+  assert.match(liveController, /beforePlay:[\s\S]*stopParaAtmosphereForPlayback\(\)/);
+  assert.match(mainPlay, /if \(!isPlaying\) stopParaAtmosphereForPlayback\(\)/);
+  assert.match(mainPlay, /if \(shouldPlay\) stopParaAtmosphereForPlayback\(\)/);
+});

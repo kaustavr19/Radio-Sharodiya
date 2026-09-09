@@ -1076,6 +1076,7 @@ const renderTracks = (tracks) => {
 const setCurrentTrack = (track, autoplay = false, startSeconds = 0, { preserveRecovery = false } = {}) => {
   if (liveRadioIsActive) deactivateLiveRadio();
   if (!track) return;
+  if (autoplay) stopParaAtmosphereForPlayback();
   clearBufferingWatchdog();
   clearRecoveryTimer();
   const playbackRequest = playbackRequestGate.begin(track.id);
@@ -1252,7 +1253,10 @@ liveRadioController = createLiveRadioController({
   status: liveRadioStatus,
   playButton: liveRadioPlay,
   volume: liveRadioVolume,
-  beforePlay: () => { if (isPlaying) playButton.click(); },
+  beforePlay: () => {
+    stopParaAtmosphereForPlayback();
+    if (isPlaying) playButton.click();
+  },
   onUpdate: renderLiveRadioConsole,
 });
 
@@ -1477,6 +1481,15 @@ const startAmbientLayer = async () => {
 };
 
 const stopAmbientLayer = () => atmosphereAudio.pause();
+
+const stopParaAtmosphereForPlayback = () => {
+  if (!experiencePreferences.atmosphere) return;
+  experiencePreferences.atmosphere = false;
+  stopAmbientLayer();
+  atmosphereAudio.currentTime = 0;
+  renderExperiencePreferences();
+  experienceStatus.textContent = 'Para atmosphere stopped for playback.';
+};
 
 atmosphereAudio.addEventListener('error', () => {
   experiencePreferences.atmosphere = false;
@@ -1729,6 +1742,7 @@ playButton.addEventListener('click', async () => {
   if (playbackOrigin === 'idle') setPlaybackOrigin('manual');
   if (currentTrack?.videoId) {
     try {
+      if (!isPlaying) stopParaAtmosphereForPlayback();
       const playbackRequest = activePlaybackRequest;
       const trackId = currentTrack.id;
       const source = getPlaybackSource();
@@ -1753,6 +1767,7 @@ playButton.addEventListener('click', async () => {
     return;
   }
   const shouldPlay = !isPlaying;
+  if (shouldPlay) stopParaAtmosphereForPlayback();
   setPlayerState(shouldPlay, shouldPlay ? 'Dhak pulse live' : 'Atmosphere paused');
   if (shouldPlay) startRhythm(); else stopRhythm();
 });
