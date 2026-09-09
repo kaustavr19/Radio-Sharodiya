@@ -55,6 +55,8 @@ test('live radio is a separate four-station Akashvani room with explicit playbac
   }
   assert.match(html, /data-open-room="live-radio"/);
   assert.equal((html.match(/data-live-station=/g) || []).length, 4);
+  assert.match(html, /class="live-radio-console"[^>]+hidden/);
+  assert.match(liveRadio, /stationButtons\.forEach[\s\S]+selectStation[\s\S]+void connect\(\)/);
   assert.match(liveRadio, /Akashvani Bangla/);
   assert.match(liveRadio, /FM Rainbow Kolkata/);
   assert.match(liveRadio, /FM Gold Kolkata/);

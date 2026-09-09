@@ -166,6 +166,7 @@ export const createLiveRadioController = ({
 
   stationButtons.forEach((button) => button.addEventListener('click', () => {
     selectStation(liveStations.find((candidate) => candidate.id === button.dataset.liveStation));
+    void connect();
   }));
 
   playButton.addEventListener('click', togglePlayback);
