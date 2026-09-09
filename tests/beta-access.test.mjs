@@ -60,6 +60,7 @@ test('beta cookies are HTTP-only, same-site and explicitly clearable', () => {
 test('beta UI, admin actions and private server boundary stay connected', () => {
   const html = readFileSync('index.html', 'utf8');
   const gate = readFileSync('beta-access.js', 'utf8');
+  const styles = readFileSync('pujo.css', 'utf8');
   const adminHtml = readFileSync('beta-admin.html', 'utf8');
   const admin = readFileSync('beta-admin.js', 'utf8');
   const schema = readFileSync('supabase/migrations/20260909_beta_access.sql', 'utf8');
@@ -71,6 +72,8 @@ test('beta UI, admin actions and private server boundary stay connected', () => 
   assert.match(gate, /VITE_BETA_GATE_ENABLED === 'true'/);
   assert.match(gate, /\/api\/beta\/session/);
   assert.match(gate, /\/api\/beta\/verify/);
+  assert.match(styles, /\.beta-gate \{ grid-template-rows: auto auto auto; align-content: start;/);
+  assert.match(styles, /env\(safe-area-inset-top\)/);
   assert.match(adminHtml, /id="desk-dashboard"/);
   for (const action of ['approve', 'resend', 'reject', 'revoke']) assert.match(admin, new RegExp(action));
   assert.match(schema, /enable row level security/);

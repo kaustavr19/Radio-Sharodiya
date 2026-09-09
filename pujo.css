@@ -1186,17 +1186,29 @@ body.live-radio-active:not(.live-room-open) .broadcast-console > .console-main {
   .pujo-footer { padding: 2rem 1.25rem 2.5rem; }
 }
 
-@media (max-width: 760px) {
-  .beta-gate { padding: 1rem; }
-  .beta-gate-brand img { width: 11.5rem; height: 2.8rem; }
-  .beta-gate-brand span { max-width: 8rem; text-align: right; line-height: 1.45; }
-  .beta-gate-layout { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 0; }
-  .beta-gate h1 { font-size: clamp(3.3rem,15vw,5rem); }
-  .beta-gate-intro > p:not(.beta-gate-kicker) { margin: 1.4rem 0; font-size: 1rem; }
+@media (max-width: 900px) {
+  .beta-gate { grid-template-rows: auto auto auto; align-content: start; padding: max(1rem,env(safe-area-inset-top)) max(1rem,env(safe-area-inset-right)) max(1rem,env(safe-area-inset-bottom)) max(1rem,env(safe-area-inset-left)); }
+  .beta-gate-brand { gap: .75rem; padding-bottom: .8rem; }
+  .beta-gate-brand img { width: min(9.25rem,48vw); height: 2.35rem; }
+  .beta-gate-brand span { max-width: 7.5rem; text-align: right; font-size: .5rem; line-height: 1.4; }
+  .beta-gate-layout { align-self: start; grid-template-columns: minmax(0,1fr); gap: 1.5rem; padding: 1.8rem 0 1.5rem; }
+  .beta-gate-kicker { margin-bottom: .85rem; font-size: .58rem; }
+  .beta-gate h1 { max-width: 9ch; font-size: clamp(3rem,14.5vw,4.35rem); line-height: .88; }
+  .beta-gate-intro > p:not(.beta-gate-kicker) { margin: 1.15rem 0 0; font-size: .94rem; line-height: 1.5; }
   .beta-signal { display: none; }
-  .beta-gate-card { min-height: 0; padding: 1.35rem; border-radius: .9rem; }
-  .beta-gate-footer { align-items: flex-end; }
+  .beta-gate-card { min-height: 0; padding: 1.2rem; border-radius: .9rem; backdrop-filter: blur(16px) saturate(1.05); }
+  .beta-gate-panel h2 { margin-top: .55rem; font-size: clamp(2rem,10vw,2.5rem); }
+  .beta-gate-panel > p { margin-bottom: 1.1rem; font-size: .86rem; }
+  .beta-gate-panel input { min-height: 3.15rem; }
+  .beta-gate-panel form button { min-height: 3.35rem; margin-top: .75rem; }
+  .beta-gate-footer { align-items: flex-end; padding-bottom: .15rem; }
   .beta-gate-footer span { max-width: 10rem; line-height: 1.45; }
+}
+
+@media (max-width: 360px) {
+  .beta-gate-brand img { width: 8.4rem; }
+  .beta-gate h1 { font-size: 2.9rem; }
+  .beta-gate-card { padding: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
