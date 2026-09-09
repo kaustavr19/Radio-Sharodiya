@@ -171,7 +171,8 @@ test('the generated service worker is revision-aware, isolated, and never caches
   assert.match(serviceWorker, /request\.destination === 'audio'/);
   assert.match(serviceWorker, /request\.headers\.has\('range'\)/);
   const installHandler = extractBlock(serviceWorker, "self.addEventListener('install'", "self.addEventListener('message'");
-  assert.doesNotMatch(installHandler, /skipWaiting/);
+  assert.match(installHandler, /if \(BETA_GATE_ENABLED\) await self\.skipWaiting\(\)/);
+  assert.equal((installHandler.match(/skipWaiting/g) || []).length, 1);
 });
 
 test('offline and version states remain quiet and user-controlled', () => {

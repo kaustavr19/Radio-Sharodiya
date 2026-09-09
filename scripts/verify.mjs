@@ -2,7 +2,7 @@ import { spawnSync } from 'node:child_process';
 
 const steps = [
   ['syntax', ['scripts/check-syntax.mjs']],
-  ['behaviour contracts', ['--test', 'tests/catalogue.test.mjs', 'tests/youtube-sync-core.test.mjs', 'tests/pujo-contract.test.mjs', 'tests/playback-core.test.mjs']],
+  ['behaviour contracts', ['--test', 'tests/catalogue.test.mjs', 'tests/youtube-sync-core.test.mjs', 'tests/pujo-contract.test.mjs', 'tests/playback-core.test.mjs', 'tests/beta-access.test.mjs']],
   ['production build', ['scripts/build.mjs']],
   ['build-weight audit', ['scripts/audit-build.mjs']],
 ];

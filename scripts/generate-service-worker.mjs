@@ -10,6 +10,7 @@ const outputPath = resolve(dist, 'sw.js');
 
 const html = await readFile(pujoHtmlPath, 'utf8');
 const template = await readFile(templatePath, 'utf8');
+const betaGateEnabled = process.env.VITE_BETA_GATE_ENABLED === 'true';
 const builtAssets = [...html.matchAll(/(?:src|href)="(\/assets\/[^"?#]+\.(?:js|css))"/g)].map((match) => match[1]);
 const defaultScenes = ['mobile', 'tablet', 'desktop'].flatMap((size) => [
   `/assets/optimized/pujo-vibes-autumn/pujo-vibes-autumn-${size}.avif`,
@@ -34,7 +35,8 @@ for (const url of precache) {
 const release = hash.digest('hex').slice(0, 12);
 const output = template
   .replace('__RELEASE__', release)
-  .replace('__PRECACHE__', JSON.stringify(precache, null, 2));
+  .replace('__PRECACHE__', JSON.stringify(precache, null, 2))
+  .replace('__BETA_GATE_ENABLED__', String(betaGateEnabled));
 
 await mkdir(dirname(outputPath), { recursive: true });
 await writeFile(outputPath, output);

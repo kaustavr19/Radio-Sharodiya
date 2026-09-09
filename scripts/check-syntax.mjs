@@ -12,6 +12,8 @@ const sourceFiles = [
   'pujo-scenes.js',
   'playback-core.js',
   'pujo-youtube-adapter.js',
+  'beta-access.js',
+  'beta-admin.js',
   'pujo.js',
   'vite.config.js',
 ];
@@ -19,10 +21,10 @@ const sourceFiles = [
 const collectModules = (directory) => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
   const path = join(directory, entry.name);
   if (entry.isDirectory()) return collectModules(path);
-  return extname(entry.name) === '.mjs' ? [path] : [];
+  return ['.js', '.mjs'].includes(extname(entry.name)) ? [path] : [];
 });
 
-const files = [...sourceFiles, ...collectModules('scripts'), ...collectModules('tests')];
+const files = [...sourceFiles, ...collectModules('api'), ...collectModules('server'), ...collectModules('scripts'), ...collectModules('tests')];
 
 for (const file of files) {
   const result = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });

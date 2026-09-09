@@ -9,11 +9,14 @@
     "build": "node scripts/build.mjs",
     "preview": "vite preview",
     "check:syntax": "node scripts/check-syntax.mjs",
-    "test": "node --test tests/catalogue.test.mjs tests/youtube-sync-core.test.mjs tests/pujo-contract.test.mjs tests/playback-core.test.mjs",
+    "test": "node --test tests/catalogue.test.mjs tests/youtube-sync-core.test.mjs tests/pujo-contract.test.mjs tests/playback-core.test.mjs tests/beta-access.test.mjs",
     "sync:youtube": "node scripts/sync-youtube-playlists.mjs --write",
     "sync:youtube:check": "node scripts/sync-youtube-playlists.mjs",
     "audit:build": "node scripts/audit-build.mjs",
     "verify": "node scripts/verify.mjs"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "devDependencies": {
     "vite": "^8.2.0"

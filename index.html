@@ -15,7 +15,69 @@
     <link rel="stylesheet" href="/pujo.css" />
     <title>Pujo Vibes — Bengali Pujo Radio</title>
   </head>
-  <body data-pujo-state="pre-mahalaya">
+  <body class="beta-access-pending" data-pujo-state="pre-mahalaya">
+    <section class="beta-gate" id="beta-gate" aria-labelledby="beta-gate-title">
+      <div class="beta-gate-art" aria-hidden="true"></div>
+      <header class="beta-gate-brand">
+        <img src="/assets/radio-sharodiya-logo.png" alt="রেডিও শারদীয়া" />
+        <span>Private beta · By invitation</span>
+      </header>
+      <div class="beta-gate-layout">
+        <div class="beta-gate-intro">
+          <p class="beta-gate-kicker">A new frequency is forming</p>
+          <h1 id="beta-gate-title">Come listen<br />before the city does.</h1>
+          <p>Radio Sharodiya is opening quietly to a small circle of early listeners. Request an invitation, or enter the code sent to your approved email.</p>
+          <div class="beta-signal" aria-hidden="true"><i></i><span>Beta transmission · Limited access</span><i></i></div>
+        </div>
+
+        <div class="beta-gate-card" id="beta-gate-card" aria-live="polite">
+          <div class="beta-gate-loading" id="beta-gate-loading">
+            <span class="beta-loading-dial" aria-hidden="true"></span>
+            <strong>Checking your frequency…</strong>
+          </div>
+
+          <div class="beta-gate-panel" id="beta-request-panel" hidden>
+            <span class="beta-card-label">Request an invitation</span>
+            <h2>Join the listening circle.</h2>
+            <p>Every request is reviewed personally. If approved, your access code will arrive at this email.</p>
+            <form id="beta-request-form">
+              <label for="beta-name">Name <small>Optional</small></label>
+              <input id="beta-name" name="name" type="text" autocomplete="name" maxlength="80" placeholder="How should we know you?" />
+              <label for="beta-email">Email address</label>
+              <input id="beta-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" />
+              <button type="submit"><span>Request beta access</span><i aria-hidden="true">→</i></button>
+            </form>
+            <button class="beta-text-action" type="button" data-beta-show="access">Already have a code? Enter it here</button>
+          </div>
+
+          <div class="beta-gate-panel" id="beta-access-panel" hidden>
+            <span class="beta-card-label">Invitation received</span>
+            <h2>Tune into the beta.</h2>
+            <p>Use the same email address you requested access with and the six-digit code we sent you.</p>
+            <form id="beta-access-form">
+              <label for="beta-access-email">Approved email</label>
+              <input id="beta-access-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" />
+              <label for="beta-code">Access code</label>
+              <input id="beta-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" minlength="6" maxlength="6" pattern="[0-9]{6}" required placeholder="000000" />
+              <button type="submit"><span>Open Radio Sharodiya</span><i aria-hidden="true">→</i></button>
+            </form>
+            <button class="beta-text-action" type="button" data-beta-show="request">Need an invitation? Request access</button>
+          </div>
+
+          <div class="beta-gate-panel beta-requested-panel" id="beta-requested-panel" hidden>
+            <span class="beta-request-mark" aria-hidden="true">✓</span>
+            <span class="beta-card-label">Request received</span>
+            <h2>Your name is on the desk.</h2>
+            <p id="beta-requested-message">We’ll send an invitation code to your email after your request has been approved.</p>
+            <button class="beta-text-action" type="button" data-beta-show="access">I already received my code</button>
+          </div>
+
+          <p class="beta-form-status" id="beta-form-status" role="status" hidden></p>
+        </div>
+      </div>
+      <footer class="beta-gate-footer"><span>Radio Sharodiya · Beta desk</span><a href="/beta-admin">Administrator sign in</a></footer>
+    </section>
+
     <a class="skip-link" href="#main">Skip to the broadcast</a>
 
     <div class="network-status" id="network-status" role="status" aria-live="polite" hidden>
@@ -317,6 +379,7 @@
     </footer>
 
     <div class="media-engine" id="youtube-player" aria-hidden="true"></div>
+    <script type="module" src="/beta-access.js"></script>
     <script type="module" src="/pujo.js"></script>
   </body>
 </html>

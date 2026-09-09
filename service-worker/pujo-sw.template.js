@@ -7,9 +7,14 @@ const ACTIVE_CACHES = new Set([SHELL_CACHE, PAGE_CACHE, SCENE_CACHE]);
 const PRECACHE = __PRECACHE__;
 const NAVIGATION_TIMEOUT_MS = 4000;
 const MAX_SCENES = 12;
+const BETA_GATE_ENABLED = __BETA_GATE_ENABLED__;
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(SHELL_CACHE).then((cache) => cache.addAll(PRECACHE)));
+  event.waitUntil((async () => {
+    const cache = await caches.open(SHELL_CACHE);
+    await cache.addAll(PRECACHE);
+    if (BETA_GATE_ENABLED) await self.skipWaiting();
+  })());
 });
 
 self.addEventListener('message', (event) => {
@@ -23,6 +28,10 @@ self.addEventListener('activate', (event) => {
       .filter((key) => key.startsWith(CACHE_PREFIX) && !ACTIVE_CACHES.has(key))
       .map((key) => caches.delete(key)));
     await self.clients.claim();
+    if (BETA_GATE_ENABLED) {
+      const clients = await self.clients.matchAll({ type: 'window' });
+      await Promise.all(clients.map((client) => client.navigate(client.url)));
+    }
   })());
 });
 
@@ -78,6 +87,7 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+  if (url.pathname.startsWith('/api/beta') || url.pathname === '/beta-admin' || url.pathname === '/beta-admin.html') return;
   if (request.destination === 'audio' || request.headers.has('range')) return;
 
   if (request.mode === 'navigate') {

@@ -6,6 +6,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         app: resolve(import.meta.dirname, 'index.html'),
+        betaAdmin: resolve(import.meta.dirname, 'beta-admin.html'),
       },
     },
   },

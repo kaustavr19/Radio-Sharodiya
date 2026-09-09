@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#18201e" />
+    <link rel="icon" href="/radio-mark.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/beta-admin.css" />
+    <title>Beta Desk — Radio Sharodiya</title>
+  </head>
+  <body>
+    <header class="desk-header">
+      <a href="/" aria-label="Return to Radio Sharodiya"><img src="/assets/radio-sharodiya-logo.png" alt="রেডিও শারদীয়া" /></a>
+      <div><span>Private controls</span><strong>Beta desk</strong></div>
+    </header>
+
+    <main>
+      <section class="desk-auth" id="desk-auth" aria-labelledby="desk-auth-title">
+        <div class="desk-auth-copy">
+          <p>Administrator frequency</p>
+          <h1 id="desk-auth-title">Open the<br />beta desk.</h1>
+          <span>Only the configured Radio Sharodiya administrator can receive a sign-in code.</span>
+        </div>
+        <div class="desk-auth-card">
+          <div class="desk-loading" id="desk-loading"><i aria-hidden="true"></i><span>Checking your session…</span></div>
+          <form id="admin-login-form" hidden>
+            <span class="desk-label">Administrator sign in</span>
+            <h2>Request a private code.</h2>
+            <label for="admin-email">Administrator email</label>
+            <input id="admin-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+            <button type="submit">Send sign-in code <span aria-hidden="true">→</span></button>
+          </form>
+          <form id="admin-verify-form" hidden>
+            <span class="desk-label">Code sent</span>
+            <h2>Confirm it’s you.</h2>
+            <p id="admin-code-destination"></p>
+            <label for="admin-code">Six-digit code</label>
+            <input id="admin-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" minlength="6" maxlength="6" pattern="[0-9]{6}" required placeholder="000000" />
+            <button type="submit">Open beta desk <span aria-hidden="true">→</span></button>
+            <button class="desk-text-button" id="admin-change-email" type="button">Use another email</button>
+          </form>
+          <p class="desk-message" id="admin-auth-message" role="status" hidden></p>
+        </div>
+      </section>
+
+      <section class="desk-dashboard" id="desk-dashboard" aria-labelledby="desk-title" hidden>
+        <header class="dashboard-heading">
+          <div><p>Radio Sharodiya · Private beta</p><h1 id="desk-title">Invitation desk</h1></div>
+          <div class="dashboard-actions"><button id="refresh-testers" type="button">Refresh</button><button id="admin-logout" type="button">Sign out</button></div>
+        </header>
+
+        <section class="desk-stats" aria-label="Beta overview">
+          <article><span>Waiting</span><strong id="stat-pending">00</strong></article>
+          <article><span>Invited</span><strong id="stat-invited">00</strong></article>
+          <article><span>Listening</span><strong id="stat-active">00</strong></article>
+          <article><span>Total requests</span><strong id="stat-total">00</strong></article>
+        </section>
+
+        <section class="request-ledger" aria-labelledby="ledger-title">
+          <header><div><span>Access requests</span><h2 id="ledger-title">Listeners at the door</h2></div><label for="tester-filter">Filter <input id="tester-filter" type="search" placeholder="Name or email" /></label></header>
+          <p class="desk-message" id="dashboard-message" role="status" hidden></p>
+          <div class="request-list" id="request-list" aria-live="polite"></div>
+        </section>
+      </section>
+    </main>
+    <script type="module" src="/beta-admin.js"></script>
+  </body>
+</html>
