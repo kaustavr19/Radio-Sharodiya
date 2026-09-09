@@ -97,10 +97,15 @@
       <a class="station-brand" href="/" aria-label="Radio Sharodiya home">
         <img src="/assets/radio-sharodiya-logo.png" alt="রেডিও শারদীয়া" />
       </a>
-      <button class="nav-catalogue nav-pill" type="button" data-open-room="catalogue"><span>Catalogue</span><strong>06</strong><i aria-hidden="true">↗</i></button>
-      <button class="nav-live nav-pill" type="button" data-open-room="live-radio"><i class="live-pip" aria-hidden="true"></i><span>Live Radio</span><strong>04</strong></button>
-      <time class="kolkata-time nav-pill" id="kolkata-time">--:-- IST</time>
-      <button class="nav-experience nav-pill" id="experience-toggle" type="button" aria-label="Station experience" aria-expanded="false" aria-controls="experience-panel"><i aria-hidden="true">✦</i><span>Experience</span></button>
+      <div class="station-primary-actions">
+        <button class="nav-catalogue nav-pill" type="button" data-open-room="catalogue"><span>Catalogue</span><strong>06</strong><i aria-hidden="true">↗</i></button>
+        <button class="nav-live nav-pill" type="button" data-open-room="live-radio"><i class="live-pip" aria-hidden="true"></i><span>Live Radio</span><strong>04</strong></button>
+      </div>
+      <div class="station-secondary-actions">
+        <button class="nav-experience nav-pill" id="experience-toggle" type="button" aria-label="Station experience" aria-expanded="false" aria-controls="experience-panel"><i aria-hidden="true">✦</i><span>Experience</span></button>
+        <button class="nav-about nav-pill" type="button" data-station-open="about">About</button>
+        <button class="nav-donate nav-pill" type="button" data-station-open="chai" aria-label="Donate"><i aria-hidden="true">♥</i><span>Donate</span></button>
+      </div>
     </header>
 
     <section class="experience-panel" id="experience-panel" aria-label="Station experience controls" hidden>
@@ -115,6 +120,10 @@
       <div class="experience-actions">
         <button id="fullscreen-toggle" type="button">Enter fullscreen</button>
         <button id="install-station" type="button" hidden>Install station</button>
+      </div>
+      <div class="experience-station-links">
+        <button type="button" data-station-open="about"><span><strong>About the station</strong><small>Why this frequency exists</small></span><i aria-hidden="true">→</i></button>
+        <button type="button" data-station-open="chai"><span><strong>Pujo for a cause</strong><small>Contribute through the project</small></span><i aria-hidden="true">→</i></button>
       </div>
       <p id="experience-status" role="status" aria-live="polite">Atmosphere stays off until you choose it.</p>
     </section>
@@ -375,8 +384,63 @@
     <footer class="pujo-footer">
       <div><span class="footer-mark">PV</span><strong>Pujo Vibes</strong></div>
       <p lang="bn">পুজো, প্রজন্মের পর প্রজন্ম।</p>
-      <span>A station from The Radio Project</span>
+      <div class="footer-station-meta">
+        <span>A station from The Radio Project</span>
+        <nav aria-label="Station information">
+          <button type="button" data-station-open="about">About</button>
+          <button type="button" data-station-open="chai">Contribute</button>
+        </nav>
+      </div>
     </footer>
+
+    <button class="station-info-scrim" id="station-info-scrim" type="button" aria-label="Close station notes" hidden></button>
+    <section class="station-info-dialog" id="station-info-dialog" role="dialog" aria-modal="true" aria-labelledby="station-info-title" aria-hidden="true" hidden>
+      <header>
+        <div><span>95.8 FM · Station notes</span><strong id="station-info-title">Inside Radio Sharodiya</strong></div>
+        <button class="station-info-close" id="station-info-close" type="button" aria-label="Close station notes">×</button>
+      </header>
+      <nav class="station-info-tabs" aria-label="Station notes" role="tablist">
+        <button id="station-about-tab" type="button" role="tab" aria-controls="station-about-panel" aria-selected="true" data-station-view="about">About</button>
+        <button id="station-chai-tab" type="button" role="tab" aria-controls="station-chai-panel" aria-selected="false" data-station-view="chai">Contribute</button>
+      </nav>
+      <div class="station-info-panel station-about-panel" id="station-about-panel" role="tabpanel" aria-labelledby="station-about-tab">
+        <section class="station-maker" aria-labelledby="station-maker-name">
+          <h2 class="station-maker-label">Made with bhalobasha by</h2>
+          <div class="station-maker-card">
+            <img src="/assets/station/kaustav-roy-linkedin.jpg" alt="Kaustav Roy" width="100" height="100" />
+            <div>
+              <strong id="station-maker-name">Kaustav Roy</strong>
+              <a href="https://www.linkedin.com/in/kaustavr19/" target="_blank" rel="noopener noreferrer" aria-label="Kaustav Roy on LinkedIn"><i aria-hidden="true">in</i><span>LinkedIn</span></a>
+            </div>
+          </div>
+        </section>
+        <section class="station-credits" aria-labelledby="station-credits-title">
+          <h3 id="station-credits-title">Credits</h3>
+          <ul>
+            <li>Prabuddha Chowdhury</li>
+            <li>Maurakshi Banerjee</li>
+            <li>Souvik Kangsa Banik</li>
+            <li>Upahar Jana</li>
+            <li>Subhayan Mallick</li>
+          </ul>
+        </section>
+      </div>
+      <div class="station-info-panel station-chai-panel" id="station-chai-panel" role="tabpanel" aria-labelledby="station-chai-tab" hidden>
+        <span class="station-info-kicker">Pujo for a cause</span>
+        <h2>Give a little. Share the Pujo.</h2>
+        <p>Choose a ₹10 or ₹20 contribution through Radio Sharodiya. Everything collected will be donated to a charity during the Puja days, and I’ll share the charity and donation details when I make the contribution.</p>
+        <div class="chai-payment" id="chai-payment">
+          <div class="donation-amounts" role="group" aria-label="Choose a contribution amount">
+            <button type="button" data-donation-amount="10" aria-pressed="true">₹10</button>
+            <button type="button" data-donation-amount="20" aria-pressed="false">₹20</button>
+          </div>
+          <img class="donation-qr" id="donation-qr" src="/assets/station/donation-10.png" alt="UPI QR code for a 10 rupee contribution to Radio Sharodiya" width="392" height="392" />
+          <span id="donation-amount-status" role="status" aria-live="polite">₹10 contribution selected · Scan with any UPI app</span>
+          <button class="chai-copy" id="chai-copy" type="button"><strong id="chai-upi-id">kaustavr25@okhdfcbank</strong><span>Copy UPI ID</span></button>
+        </div>
+        <p class="chai-status" id="chai-status" role="status" aria-live="polite" hidden></p>
+      </div>
+    </section>
 
     <div class="media-engine" id="youtube-player" aria-hidden="true"></div>
     <script type="module" src="/beta-access.js"></script>

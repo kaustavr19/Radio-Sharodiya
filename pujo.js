@@ -24,7 +24,6 @@ import { createSceneDelivery, nextSceneForKolkataTime, sceneForKolkataTime, scen
 
 const paraAtmosphereUrl = '/assets/audio/para-atmosphere-loop.mp3';
 
-const time = document.querySelector('#kolkata-time');
 const countdown = document.querySelector('#countdown-days');
 const countdownWidget = document.querySelector('#pujo-countdown');
 const countdownLabel = document.querySelector('#countdown-label');
@@ -143,6 +142,19 @@ const networkStatus = document.querySelector('#network-status');
 const updateToast = document.querySelector('#update-toast');
 const updateRefreshButton = document.querySelector('#update-refresh');
 const updateLaterButton = document.querySelector('#update-later');
+const stationInfoDialog = document.querySelector('#station-info-dialog');
+const stationInfoScrim = document.querySelector('#station-info-scrim');
+const stationInfoClose = document.querySelector('#station-info-close');
+const stationInfoOpeners = [...document.querySelectorAll('[data-station-open]')];
+const stationInfoTabs = [...document.querySelectorAll('[data-station-view]')];
+const stationAboutPanel = document.querySelector('#station-about-panel');
+const stationChaiPanel = document.querySelector('#station-chai-panel');
+const donationAmountButtons = [...document.querySelectorAll('[data-donation-amount]')];
+const donationQr = document.querySelector('#donation-qr');
+const donationAmountStatus = document.querySelector('#donation-amount-status');
+const chaiCopy = document.querySelector('#chai-copy');
+const chaiUpiId = document.querySelector('#chai-upi-id');
+const chaiStatus = document.querySelector('#chai-status');
 
 let visibleHeroLayer = 0;
 let activeSceneId;
@@ -171,6 +183,33 @@ let installPrompt;
 let liveRadioReturnTarget;
 let liveRadioIsActive = false;
 let liveRadioController;
+let stationInfoReturnTarget;
+
+const showStationInfoView = (view) => {
+  const activeView = view === 'chai' ? 'chai' : 'about';
+  stationInfoTabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.stationView === activeView)));
+  stationAboutPanel.hidden = activeView !== 'about';
+  stationChaiPanel.hidden = activeView !== 'chai';
+};
+
+const openStationInfo = (view, opener) => {
+  if (!experiencePanel.hidden) setExperiencePanel(false);
+  stationInfoReturnTarget = opener;
+  showStationInfoView(view);
+  stationInfoScrim.hidden = false;
+  stationInfoDialog.hidden = false;
+  stationInfoDialog.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('station-info-open');
+  stationInfoClose.focus();
+};
+
+const closeStationInfo = () => {
+  stationInfoScrim.hidden = true;
+  stationInfoDialog.hidden = true;
+  stationInfoDialog.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('station-info-open');
+  stationInfoReturnTarget?.focus();
+};
 
 const setMobileTab = (name) => {
   mobileTabButtons.forEach((button) => {
@@ -965,7 +1004,6 @@ const formatKolkata = () => {
   const now = new Date();
   const kolkata = getKolkataParts(now);
   const calendarState = applyCalendarPresentation(now);
-  time.textContent = `${new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Kolkata' }).format(now)} IST`;
   const hour = Number(kolkata.hour);
   moment.textContent = hour < 5 ? 'After midnight' : hour < 11 ? 'Pujo morning' : hour < 16 ? 'Afternoon' : hour < 20 ? 'Early evening' : 'After dark';
   if (!playbackPresentationActive) {
@@ -1539,6 +1577,32 @@ const setExperiencePanel = (open) => {
   if (open) atmosphereButton.focus();
 };
 
+stationInfoOpeners.forEach((button) => button.addEventListener('click', () => openStationInfo(button.dataset.stationOpen, button)));
+stationInfoTabs.forEach((button) => button.addEventListener('click', () => {
+  showStationInfoView(button.dataset.stationView);
+  button.focus();
+}));
+stationInfoClose.addEventListener('click', closeStationInfo);
+stationInfoScrim.addEventListener('click', closeStationInfo);
+donationAmountButtons.forEach((button) => button.addEventListener('click', () => {
+  const amount = button.dataset.donationAmount === '20' ? '20' : '10';
+  donationAmountButtons.forEach((option) => option.setAttribute('aria-pressed', String(option === button)));
+  donationQr.src = `/assets/station/donation-${amount}.png`;
+  donationQr.alt = `UPI QR code for a ${amount} rupee contribution to Radio Sharodiya`;
+  donationAmountStatus.textContent = `₹${amount} contribution selected · Scan with any UPI app`;
+}));
+chaiCopy.addEventListener('click', async () => {
+  const upiId = chaiUpiId.textContent.trim();
+  if (!upiId) return;
+  try {
+    await navigator.clipboard.writeText(upiId);
+    chaiStatus.textContent = 'UPI ID copied.';
+  } catch {
+    chaiStatus.textContent = `Copy this UPI ID: ${upiId}`;
+  }
+  chaiStatus.hidden = false;
+});
+
 experienceButton.addEventListener('click', () => setExperiencePanel(experiencePanel.hidden));
 experienceCloseButton.addEventListener('click', () => {
   setExperiencePanel(false);
@@ -1984,11 +2048,12 @@ const setupMediaSession = () => {
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && !experiencePanel.hidden) { setExperiencePanel(false); experienceButton.focus(); return; }
+  if (event.key === 'Escape' && document.body.classList.contains('station-info-open')) { closeStationInfo(); return; }
   if (event.key === 'Escape' && document.body.classList.contains('queue-open')) { closeQueuePane(); return; }
   if (event.key === 'Escape' && document.body.classList.contains('mobile-player-open')) { setMobilePlayerExpanded(false); return; }
   if (event.key === 'Escape' && document.body.classList.contains('live-room-open')) { closeLiveRadio(); return; }
   if (event.key === 'Escape' && document.body.classList.contains('room-open')) { closeRoom(); return; }
-  const openDialog = document.body.classList.contains('queue-open') ? queuePane : document.body.classList.contains('live-room-open') ? liveRadioRoom : document.body.classList.contains('room-open') ? room : undefined;
+  const openDialog = document.body.classList.contains('station-info-open') ? stationInfoDialog : document.body.classList.contains('queue-open') ? queuePane : document.body.classList.contains('live-room-open') ? liveRadioRoom : document.body.classList.contains('room-open') ? room : undefined;
   if (event.key === 'Tab' && openDialog) {
     const focusable = [...openDialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter((element) => !element.hidden && element.getClientRects().length);
     if (focusable.length) {

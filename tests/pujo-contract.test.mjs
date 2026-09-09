@@ -309,3 +309,47 @@ test('starting programme or live-radio playback switches para atmosphere off', (
   assert.match(mainPlay, /if \(!isPlaying\) stopParaAtmosphereForPlayback\(\)/);
   assert.match(mainPlay, /if \(shouldPlay\) stopParaAtmosphereForPlayback\(\)/);
 });
+
+test('station About and Pujo contributions use one accessible responsive dialog', () => {
+  for (const id of ['station-info-dialog', 'station-info-scrim', 'station-info-close', 'station-about-panel', 'station-chai-panel', 'chai-copy']) {
+    assert.equal((html.match(new RegExp(`id="${id}"`, 'g')) || []).length, 1, `${id} must exist exactly once`);
+  }
+  assert.match(html, /id="station-info-dialog"[^>]+role="dialog"[^>]+aria-modal="true"/);
+  assert.match(html, /data-station-open="about"/);
+  assert.match(html, /data-station-open="chai"/);
+  assert.match(html, /class="station-primary-actions"/);
+  assert.match(html, /class="station-secondary-actions"/);
+  assert.match(html, /class="nav-about nav-pill"[^>]+data-station-open="about"/);
+  assert.match(html, /class="nav-donate nav-pill"[^>]+data-station-open="chai"/);
+  assert.match(pujoCss, /\.nav-about \{ display: none; \}/);
+  assert.match(pujoCss, /\.nav-experience span \{ display: inline;/);
+  assert.match(pujoCss, /\.nav-donate span \{ display: none; \}/);
+  assert.doesNotMatch(html, /id="kolkata-time"/);
+  assert.doesNotMatch(html, /class="station-utilities"/);
+  assert.match(pujoCss, /\.experience-station-links \{ display: block;/);
+  assert.match(pujoCss, /\.station-info-dialog \{[\s\S]*max-height: calc\(100dvh - max\(\.75rem,env\(safe-area-inset-top\)\)\);/);
+});
+
+test('About credits the supplied LinkedIn profile without remote image dependency', () => {
+  assert.match(html, /Kaustav Roy/);
+  assert.match(html, /href="https:\/\/www\.linkedin\.com\/in\/kaustavr19\/"/);
+  assert.match(html, /src="\/assets\/station\/kaustav-roy-linkedin\.jpg"/);
+  assert.ok(existsSync('public/assets/station/kaustav-roy-linkedin.jpg'));
+  for (const credit of ['Prabuddha Chowdhury', 'Maurakshi Banerjee', 'Souvik Kangsa Banik', 'Upahar Jana', 'Subhayan Mallick']) {
+    assert.match(html, new RegExp(credit));
+  }
+  assert.doesNotMatch(html, /Made for the days when Pujo is almost here/);
+});
+
+test('Pujo contribution uses the supplied QR and displays the UPI ID without a payment deep link', () => {
+  assert.match(html, /data-donation-amount="10"[^>]+aria-pressed="true"/);
+  assert.match(html, /data-donation-amount="20"[^>]+aria-pressed="false"/);
+  assert.match(html, /src="\/assets\/station\/donation-10\.png"/);
+  assert.match(html, /kaustavr25@okhdfcbank/);
+  assert.match(html, /Everything collected will be donated to a charity during the Puja days/);
+  assert.match(player, /donationQr\.src = `\/assets\/station\/donation-\$\{amount\}\.png`/);
+  assert.ok(existsSync('public/assets/station/donation-10.png'));
+  assert.ok(existsSync('public/assets/station/donation-20.png'));
+  assert.doesNotMatch(html, /upi:\/\/pay/);
+  assert.doesNotMatch(html, /Buy me a chai/);
+});
