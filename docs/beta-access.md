@@ -23,7 +23,7 @@ Five failed code attempts lock verification for 15 minutes. Administrator codes 
 
 1. Create a Supabase project and run `supabase/migrations/20260909_beta_access.sql` in its SQL editor.
 2. Create and verify a sending domain in Resend.
-3. Add every variable from `.env.example` to the Vercel project. Use a current Supabase `sb_secret_...` key for `SUPABASE_SECRET_KEY`; the older `SUPABASE_SERVICE_ROLE_KEY` remains supported only for existing projects. Use a cryptographically random value of at least 32 characters for `BETA_SESSION_SECRET`.
+3. Add every variable from `.env.example` to the Vercel project. `SUPABASE_URL` may be either the project base URL or the Data API URL ending in `/rest/v1`. Use a current Supabase `sb_secret_...` key for `SUPABASE_SECRET_KEY`; the older `SUPABASE_SERVICE_ROLE_KEY` remains supported only for existing projects. Use a cryptographically random value of at least 32 characters for `BETA_SESSION_SECRET`.
 4. Deploy once with `VITE_BETA_GATE_ENABLED=false`. Confirm `/beta-admin` can send an administrator code, list requests, and send an invitation.
 5. Set `VITE_BETA_GATE_ENABLED=true` and redeploy to open the gated beta.
 

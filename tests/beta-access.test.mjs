@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { normalizeSupabaseUrl } from '../server/beta/config.js';
 import {
   accessCodeMatches,
   clearSessionCookie,
@@ -13,6 +14,11 @@ import {
 } from '../server/beta/security.js';
 
 const secret = 'a-test-secret-that-is-longer-than-thirty-two-characters';
+
+test('Supabase project and Data API URLs resolve to the same base', () => {
+  assert.equal(normalizeSupabaseUrl('https://project.supabase.co'), 'https://project.supabase.co');
+  assert.equal(normalizeSupabaseUrl('https://project.supabase.co/rest/v1/'), 'https://project.supabase.co');
+});
 
 test('beta identity input is normalized and bounded', () => {
   assert.equal(normalizeEmail('  Listener@Example.COM '), 'listener@example.com');
