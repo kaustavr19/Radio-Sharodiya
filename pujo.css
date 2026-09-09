@@ -1040,7 +1040,6 @@ body.station-info-open { overflow: hidden; }
   .broadcast-console .console-controls .queue-inline { display: none; }
   .broadcast-console .console-controls .console-play { width: 3.15rem; height: 3.15rem; margin: 0; }
   body.live-room-open .broadcast-console,
-  body.room-open .broadcast-console,
   body.queue-open .broadcast-console { display: none; }
 
   .broadcast-console .live-broadcast-player { height: 100%; }
@@ -1075,6 +1074,7 @@ body.station-info-open { overflow: hidden; }
     scrollbar-width: none;
   }
   body.mobile-player-open .broadcast-console::-webkit-scrollbar { display: none; }
+  body.mobile-player-open .station-room[data-player-overlay="true"] { visibility: hidden; pointer-events: none; }
   body.mobile-player-open .mobile-player-expand { display: none; }
   body.mobile-player-open .mobile-player-header {
     position: sticky;
@@ -1156,7 +1156,7 @@ body.station-info-open { overflow: hidden; }
     min-height: 0 !important;
     height: auto;
     max-height: none;
-    padding: 0 1rem 1.5rem !important;
+    padding: 0 1rem calc(var(--mobile-player-height) + 1.45rem) !important;
     scroll-padding-top: 4.75rem;
   }
   body.live-room-open .station-room { padding-bottom: 1rem !important; }

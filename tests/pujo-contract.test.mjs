@@ -49,6 +49,20 @@ test('catalogue opens as an accessible modal without invoking playback', () => {
   assert.doesNotMatch(openCatalogue, /setCurrentTrack|playVideo|loadVideoById/);
 });
 
+test('catalogue docks the existing player and keeps mobile browsing open during playback', () => {
+  assert.match(player, /const broadcastConsoleHome = document\.createComment\('broadcast-console-home'\)/);
+  assert.match(player, /const dockBroadcastConsoleInCatalogue = \(\) => \{[\s\S]*room\.append\(broadcastConsole\)/);
+  assert.match(player, /const restoreBroadcastConsoleHome = \(\) =>/);
+  assert.match(player, /room\.dataset\.playerOverlay = 'true'/);
+  assert.match(player, /delete room\.dataset\.playerOverlay/);
+  assert.match(pujoCss, /\.station-room\[data-player-overlay="true"\] \{ visibility: hidden; pointer-events: none; \}/);
+  const openCatalogue = extractBlock(player, 'const openCatalogue =', "document.addEventListener('click', (event) => {");
+  assert.match(openCatalogue, /dockBroadcastConsoleInCatalogue\(\)/);
+  const cataloguePlayback = extractBlock(player, "trackList.addEventListener('click'", 'const moveTrack =');
+  assert.doesNotMatch(cataloguePlayback, /closeRoom\(\)/);
+  assert.match(pujoCss, /padding: 0 1rem calc\(var\(--mobile-player-height\) \+ 1\.45rem\) !important;/);
+});
+
 test('live radio is a separate four-station Akashvani room with explicit playback', () => {
   for (const id of ['live-radio-room', 'live-radio-audio', 'live-radio-play', 'live-radio-volume', 'live-broadcast-player', 'live-console-play', 'return-to-pujo']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));

@@ -50,6 +50,8 @@ const playerDuration = document.querySelector('#player-duration');
 const playerArtImage = document.querySelector('#player-art-image');
 const playerArtFallback = document.querySelector('#player-art-fallback');
 const broadcastConsole = document.querySelector('#broadcast-console');
+const broadcastConsoleHome = document.createComment('broadcast-console-home');
+broadcastConsole.parentNode.insertBefore(broadcastConsoleHome, broadcastConsole);
 const playerRecovery = document.querySelector('#player-recovery');
 const retryButton = document.querySelector('#player-retry');
 const skipButton = document.querySelector('#player-skip');
@@ -222,8 +224,19 @@ const setMobileTab = (name) => {
 
 const setMobilePlayerExpanded = (open, { restoreFocus = true } = {}) => {
   if (open && !mobileShellQuery.matches) return;
+  const catalogueIsOpen = document.body.classList.contains('room-open') && !room.hidden && liveRadioRoom.hidden;
+  if (open && catalogueIsOpen) {
+    room.dataset.playerOverlay = 'true';
+    room.setAttribute('aria-hidden', 'true');
+    restoreBroadcastConsoleHome();
+  }
   document.body.classList.toggle('mobile-player-open', open);
   mobilePlayerExpand.setAttribute('aria-expanded', String(open));
+  if (!open && room.dataset.playerOverlay === 'true') {
+    dockBroadcastConsoleInCatalogue();
+    room.setAttribute('aria-hidden', 'false');
+    delete room.dataset.playerOverlay;
+  }
   if (open) mobilePlayerDismiss.focus();
   else if (restoreFocus) mobilePlayerExpand.focus();
 };
@@ -1254,6 +1267,8 @@ const showPlaylist = async (playlistId) => {
 };
 
 const closeRoom = () => {
+  setMobilePlayerExpanded(false, { restoreFocus: false });
+  restoreBroadcastConsoleHome();
   room.hidden = true;
   room.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('room-open');
@@ -1319,6 +1334,7 @@ const openLiveRadio = (opener) => {
   if (queuePaneIsOpen()) closeQueuePane();
   if (document.body.classList.contains('room-open') && !liveRadioRoom.hidden) return;
   if (!room.hidden) {
+    restoreBroadcastConsoleHome();
     room.hidden = true;
     room.setAttribute('aria-hidden', 'true');
   }
@@ -1345,6 +1361,7 @@ const openCatalogue = (opener) => {
   if (!document.body.classList.contains('room-open')) roomReturnTarget = opener;
   room.hidden = false;
   room.setAttribute('aria-hidden', 'false');
+  dockBroadcastConsoleInCatalogue();
   document.body.classList.add('room-open');
   setMobilePlayerExpanded(false, { restoreFocus: false });
   setMobileTab('catalogue');
@@ -1383,7 +1400,6 @@ trackList.addEventListener('click', (event) => {
     const selectedIndex = Math.max(0, catalogueSequence.findIndex((item) => item.id === track.id));
     replaceQueue(availableTracks(catalogueSequence.slice(selectedIndex)));
     setCurrentTrack(track, true);
-    if (mobileShellQuery.matches) closeRoom();
   }
   if (button.dataset.trackAction === 'add') addToQueue([track]);
 });
@@ -1394,7 +1410,6 @@ playAllButton.addEventListener('click', () => {
   setPlaybackOrigin('manual');
   replaceQueue(playableTracks);
   setCurrentTrack(queue[0], true);
-  if (mobileShellQuery.matches) closeRoom();
 });
 shuffleAllButton.addEventListener('click', () => {
   const playableTracks = availableTracks(catalogueSequence);
@@ -1402,7 +1417,6 @@ shuffleAllButton.addEventListener('click', () => {
   setPlaybackOrigin('manual');
   replaceQueue(shuffledTracks(playableTracks));
   setCurrentTrack(queue[0], true);
-  if (mobileShellQuery.matches) closeRoom();
 });
 addAllButton.addEventListener('click', () => {
   addToQueue(availableTracks(playlists[activePlaylistId].tracks));
@@ -1527,6 +1541,15 @@ const stopParaAtmosphereForPlayback = () => {
   atmosphereAudio.currentTime = 0;
   renderExperiencePreferences();
   experienceStatus.textContent = 'Para atmosphere stopped for playback.';
+};
+
+const dockBroadcastConsoleInCatalogue = () => {
+  if (broadcastConsole.parentNode !== room) room.append(broadcastConsole);
+};
+
+const restoreBroadcastConsoleHome = () => {
+  const home = broadcastConsoleHome.parentNode;
+  if (home && broadcastConsole.parentNode !== home) home.insertBefore(broadcastConsole, broadcastConsoleHome.nextSibling);
 };
 
 atmosphereAudio.addEventListener('error', () => {
