@@ -10,7 +10,7 @@
   ],
   "playlists": {
     "mahalaya": {
-      "code": "PV-01",
+      "code": "RS-01",
       "title": "মহালয়া",
       "english": "Mahalaya",
       "cover": "/assets/playlist-covers/mahalaya.jpg",
@@ -27,7 +27,7 @@
       ]
     },
     "agomoni": {
-      "code": "PV-02",
+      "code": "RS-02",
       "title": "আগমনী",
       "english": "Agomoni",
       "cover": "/assets/playlist-covers/agomoni.jpg",
@@ -44,7 +44,7 @@
       ]
     },
     "retro": {
-      "code": "PV-03",
+      "code": "RS-03",
       "title": "ফিরে দেখা পুজো",
       "english": "Retro Pujo",
       "cover": "/assets/playlist-covers/retro.jpg",
@@ -61,7 +61,7 @@
       ]
     },
     "modern": {
-      "code": "PV-04",
+      "code": "RS-04",
       "title": "নতুন পুজোর গান",
       "english": "Modern Pujo",
       "cover": "/assets/playlist-covers/modern.jpg",
@@ -78,7 +78,7 @@
       ]
     },
     "pandal": {
-      "code": "PV-05",
+      "code": "RS-05",
       "title": "প্যান্ডেলের সুর",
       "english": "Pandal Favourites",
       "cover": "/assets/playlist-covers/pandal.jpg",
@@ -94,7 +94,7 @@
       ]
     },
     "biday": {
-      "code": "PV-06",
+      "code": "RS-06",
       "title": "বিদায়বেলা",
       "english": "Biday Bela",
       "cover": "/assets/playlist-covers/biday.jpg",

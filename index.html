@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Pujo Vibes — a seasonal Bengali radio station for songs, rituals, and memories across generations." />
+    <meta name="description" content="Radio Sharodiya — a seasonal Bengali radio station for songs, rituals, and memories across generations." />
     <meta name="theme-color" content="#1f2624" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Noto+Sans+Bengali:wght@500&family=Noto+Serif+Bengali:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/pujo.css" />
-    <title>Pujo Vibes — Bengali Pujo Radio</title>
+    <title>Radio Sharodiya — Bengali Pujo Radio</title>
   </head>
   <body class="beta-access-pending" data-pujo-state="pre-mahalaya">
     <section class="beta-gate" id="beta-gate" aria-labelledby="beta-gate-title">
@@ -159,12 +159,20 @@
           <p class="eyebrow" id="hero-eyebrow">A seasonal transmission from Calcutta</p>
           <h1 id="hero-title" lang="bn">শহর জুড়ে<br />পুজোর সুর</h1>
           <p class="hero-intro" id="hero-intro">Six broadcasts. One season. Every way Pujo sounds.</p>
+          <div class="hero-actions" aria-label="Start listening">
+            <button class="hero-listen" id="hero-listen" type="button">
+              <span>Today’s programme</span>
+              <strong id="hero-programme-title">Preparing the day’s music</strong>
+              <i aria-hidden="true">▶</i>
+            </button>
+            <button class="hero-choose" type="button" data-open-room="catalogue">Choose your music</button>
+          </div>
         </div>
 
-        <section class="broadcast-console" id="broadcast-console" aria-label="Pujo Vibes audio player" aria-busy="false">
+        <section class="broadcast-console" id="broadcast-console" aria-label="Radio Sharodiya audio player" aria-busy="false">
           <header class="mobile-player-header">
             <button id="mobile-player-dismiss" type="button" aria-label="Collapse full player"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 9 7 7 7-7"></path></svg></button>
-            <div><span id="mobile-player-context-label">Playing from playlist</span><strong id="mobile-player-context">Mahalaya</strong></div>
+            <div><span id="mobile-player-context-label">Ready to play</span><strong id="mobile-player-context">Mahalaya</strong></div>
             <span class="mobile-player-header-mark" aria-hidden="true">RS</span>
           </header>
           <button class="mobile-player-expand" id="mobile-player-expand" type="button" aria-label="Open full player" aria-expanded="false"><span>Open full player</span></button>
@@ -173,28 +181,29 @@
             <button id="resume-listening" type="button">Resume <span id="resume-time">0:00</span></button>
             <button class="continue-dismiss" id="dismiss-resume" type="button" aria-label="Dismiss and start this track from the beginning">×</button>
           </div>
-          <section class="station-guide" id="station-guide" aria-label="Live Pujo Vibes programme guide">
+          <section class="station-guide" id="station-guide" aria-label="Today’s Pujo programme guide">
             <div class="station-guide-line">
               <div class="guide-slot is-now"><span><i aria-hidden="true"></i> Now · <b id="guide-now-time">--:--</b></span><strong id="guide-now-title">Finding today’s programme</strong></div>
               <div class="guide-slot"><span>Next · <b id="guide-next-time">--:--</b></span><strong id="guide-next-title">—</strong></div>
               <div class="guide-slot"><span>Later · <b id="guide-later-time">--:--</b></span><strong id="guide-later-title">—</strong></div>
             </div>
-            <button class="join-broadcast" id="join-broadcast" type="button"><strong id="join-broadcast-label">Join broadcast</strong><span id="join-broadcast-status">Kolkata programme</span></button>
+            <button class="join-broadcast" id="join-broadcast" type="button"><strong id="join-broadcast-label">Listen to today’s programme</strong><span id="join-broadcast-status">Curated in Kolkata</span></button>
           </section>
           <div class="console-topline">
-            <span>Pujo broadcast console</span>
-            <span><i aria-hidden="true"></i> 95.8 FM · Signal locked</span>
+            <span id="player-mode-label">Ready to play</span>
+            <span id="player-connection-label"><i aria-hidden="true"></i> Choose play to begin</span>
           </div>
           <div class="console-main">
             <section class="now-playing" aria-live="polite">
               <div class="programme-art" aria-hidden="true">
                 <img id="player-art-image" data-video-id="YQyo8QeoYhc" src="https://img.youtube.com/vi/YQyo8QeoYhc/maxresdefault.jpg" alt="" />
-                <span id="player-art-fallback" hidden>PV</span>
+                <span id="player-art-fallback" hidden>RS</span>
               </div>
               <div class="console-track">
                 <strong id="player-title">Mahalaya — Mahishasura Mardini · Full Album</strong>
                 <span id="player-description">Birendra Krishna Bhadra · Mahalaya · Long listen</span>
                 <small class="player-status-line"><span id="player-note" role="status" aria-live="polite">Standing by</span><span class="player-recovery" id="player-recovery" hidden><button class="player-retry" id="player-retry" type="button">Retry</button><button class="player-retry" id="player-skip" type="button">Skip</button><a class="player-source" id="player-source" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube ↗</a></span><span id="listener-moment" hidden>Early evening</span></small>
+                <small class="player-next-up" id="player-next-up" hidden></small>
               </div>
             </section>
             <div class="console-progress">
@@ -265,32 +274,42 @@
 
       <section class="first-signal station-room programme-room" id="catalogue-room" role="dialog" aria-modal="true" aria-labelledby="catalogue-heading" aria-hidden="true" hidden>
         <header class="room-toolbar">
-          <div><span>95.8 FM · Station archive</span><strong>Pujo Catalogue</strong></div>
+          <div><span>Your seasonal music library</span><strong>Pujo Catalogue</strong></div>
           <p>Six broadcasts · One season</p>
           <button class="room-close" type="button" data-close-room aria-label="Close Pujo catalogue"><span>Close</span> ×</button>
         </header>
         <div class="catalogue-overview" id="catalogue-overview">
-          <p class="section-kicker">The complete seasonal frequency</p>
-          <h2 id="catalogue-heading">Choose how<br />Pujo sounds.</h2>
-          <p class="section-intro">Six editorial playlists—from Mahalaya before sunrise to the quiet of Dashami by the river.</p>
-          <div class="playlist-grid" id="playlist-grid">
-            <button type="button" data-playlist="mahalaya" style="--playlist-cover: url('/assets/playlist-covers/mahalaya.jpg')"><span>PV-01 · Invocation</span><strong lang="bn">মহালয়া</strong><small>Mahalaya</small><i data-playlist-count>21 tracks</i></button>
-            <button type="button" data-playlist="agomoni" style="--playlist-cover: url('/assets/playlist-covers/agomoni.jpg')"><span>PV-02 · Arrival</span><strong lang="bn">আগমনী</strong><small>Agomoni</small><i data-playlist-count>94 tracks</i></button>
-            <button type="button" data-playlist="retro" style="--playlist-cover: url('/assets/playlist-covers/retro.jpg')"><span>PV-03 · Archive</span><strong lang="bn">ফিরে দেখা পুজো</strong><small>Retro Pujo</small><i data-playlist-count>82 songs</i></button>
-            <button type="button" data-playlist="modern" style="--playlist-cover: url('/assets/playlist-covers/modern.jpg')"><span>PV-04 · New signal</span><strong lang="bn">নতুন পুজোর গান</strong><small>Modern Pujo</small><i data-playlist-count>91 songs</i></button>
-            <button type="button" data-playlist="pandal" style="--playlist-cover: url('/assets/playlist-covers/pandal.jpg')"><span>PV-05 · Crowd</span><strong lang="bn">প্যান্ডেলের সুর</strong><small>Pandal Favourites</small><i data-playlist-count>48 songs</i></button>
-            <button type="button" data-playlist="biday" style="--playlist-cover: url('/assets/playlist-covers/biday.jpg')"><span>PV-06 · Farewell</span><strong lang="bn">বিদায়বেলা</strong><small>Biday Bela</small><i data-playlist-count>11 songs</i></button>
+          <div class="catalogue-intro">
+            <div>
+              <p class="section-kicker">The complete seasonal frequency</p>
+              <h2 id="catalogue-heading">Choose how<br />Pujo sounds.</h2>
+              <p class="section-intro">Six editorial playlists—from Mahalaya before sunrise to the quiet of Dashami by the river.</p>
+            </div>
+            <search class="catalogue-search" aria-label="Search the Pujo catalogue">
+              <label for="catalogue-search-input">Find a song, artist or collection</label>
+              <div><input id="catalogue-search-input" type="search" autocomplete="off" placeholder="Try “Manna Dey”, “আগমনী” or “Dashami”" /><span aria-hidden="true">⌕</span></div>
+              <p id="catalogue-search-status" role="status" aria-live="polite">Search all 350 songs in Bengali or English.</p>
+            </search>
           </div>
+          <section class="catalogue-search-results" id="catalogue-search-results" aria-label="Catalogue search results" hidden></section>
           <section class="personal-listening" id="personal-listening" aria-labelledby="personal-listening-title" hidden>
-            <header><span>Your listening</span><h3 id="personal-listening-title">Saved on this device</h3></header>
-            <section id="recent-shelf" hidden><h4>Recently played</h4><div id="recent-list"></div></section>
+            <header><span>Pick up where you left off</span><h3 id="personal-listening-title">Recently played</h3></header>
+            <section id="recent-shelf" hidden><div id="recent-list"></div></section>
           </section>
+          <div class="playlist-grid" id="playlist-grid">
+            <button type="button" data-playlist="mahalaya" style="--playlist-cover: url('/assets/playlist-covers/mahalaya.jpg')"><span>RS-01 · Invocation</span><strong lang="bn">মহালয়া</strong><small>Mahalaya</small><em>Chandipath and the first light of Devi Paksha</em><i data-playlist-count>21 tracks</i></button>
+            <button type="button" data-playlist="agomoni" style="--playlist-cover: url('/assets/playlist-covers/agomoni.jpg')"><span>RS-02 · Arrival</span><strong lang="bn">আগমনী</strong><small>Agomoni</small><em>Uma comes home; anticipation fills the city</em><i data-playlist-count>94 tracks</i></button>
+            <button type="button" data-playlist="retro" style="--playlist-cover: url('/assets/playlist-covers/retro.jpg')"><span>RS-03 · Archive</span><strong lang="bn">ফিরে দেখা পুজো</strong><small>Retro Pujo</small><em>Records, cassettes and voices from another Pujo</em><i data-playlist-count>82 songs</i></button>
+            <button type="button" data-playlist="modern" style="--playlist-cover: url('/assets/playlist-covers/modern.jpg')"><span>RS-04 · New signal</span><strong lang="bn">নতুন পুজোর গান</strong><small>Modern Pujo</small><em>New releases for memories being made now</em><i data-playlist-count>91 songs</i></button>
+            <button type="button" data-playlist="pandal" style="--playlist-cover: url('/assets/playlist-covers/pandal.jpg')"><span>RS-05 · Crowd</span><strong lang="bn">প্যান্ডেলের সুর</strong><small>Pandal Favourites</small><em>Big choruses for lights, crowds and late nights</em><i data-playlist-count>48 songs</i></button>
+            <button type="button" data-playlist="biday" style="--playlist-cover: url('/assets/playlist-covers/biday.jpg')"><span>RS-06 · Farewell</span><strong lang="bn">বিদায়বেলা</strong><small>Biday Bela</small><em>Quiet songs for Dashami and the road home</em><i data-playlist-count>11 songs</i></button>
+          </div>
         </div>
 
         <div class="playlist-detail" id="playlist-detail" hidden>
           <button class="detail-back" id="detail-back" type="button">← All playlists</button>
           <div class="detail-heading">
-            <div class="detail-art" id="detail-art" aria-hidden="true">PV-01</div>
+            <div class="detail-art" id="detail-art" aria-hidden="true">RS-01</div>
             <div>
               <p class="detail-kicker" id="detail-kicker">Invocation · Before sunrise</p>
               <h2 id="detail-title" lang="bn">মহালয়া</h2>
@@ -382,7 +401,7 @@
     </main>
 
     <footer class="pujo-footer">
-      <div><span class="footer-mark">PV</span><strong>Pujo Vibes</strong></div>
+      <div class="footer-brand"><img src="/assets/radio-sharodiya-logo.png" alt="Radio Sharodiya" /></div>
       <p lang="bn">পুজো, প্রজন্মের পর প্রজন্ম।</p>
       <div class="footer-station-meta">
         <span>A station from The Radio Project</span>
@@ -396,7 +415,7 @@
     <button class="station-info-scrim" id="station-info-scrim" type="button" aria-label="Close station notes" hidden></button>
     <section class="station-info-dialog" id="station-info-dialog" role="dialog" aria-modal="true" aria-labelledby="station-info-title" aria-hidden="true" hidden>
       <header>
-        <div><span>95.8 FM · Station notes</span><strong id="station-info-title">Inside Radio Sharodiya</strong></div>
+        <div><span>Radio Sharodiya · Station notes</span><strong id="station-info-title">Inside Radio Sharodiya</strong></div>
         <button class="station-info-close" id="station-info-close" type="button" aria-label="Close station notes">×</button>
       </header>
       <nav class="station-info-tabs" aria-label="Station notes" role="tablist">

@@ -4,6 +4,7 @@ const CATALOGUE_URL = '/data/pujo/catalogue.v1.json';
 const OVERRIDES_URL = '/data/pujo/track-overrides.json';
 const CACHE_KEY = 'pujo-vibes:catalogue:v1';
 const LONG_FORM_SECONDS = 20 * 60;
+const SOURCE_CREDIT_PATTERN = /(?:music|songs?|bangla|bengali|saregama|svf|chorki|records?|entertainment|official|world|label|inreco|atlantis|angel|rdc)/i;
 
 export const durationToSeconds = (duration = '0:00') => String(duration).split(':').reduce((total, part) => total * 60 + Number(part), 0);
 
@@ -19,16 +20,31 @@ export const escapeMarkup = (value) => plainText(value)
   .replaceAll('<', '&lt;')
   .replaceAll('>', '&gt;');
 
+export const editorialTitle = (value, fallback = 'Untitled programme') => {
+  const clean = plainText(value, fallback);
+  const primaryTitle = clean.split('|')[0]
+    .replace(/\s+(?:with\s+lyrics?|lyrical(?:\s+video)?|official\s+(?:audio|video)|hd\s+song)\s*$/i, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+  return primaryTitle || clean;
+};
+
 const normalizeTrack = (playlistId, track, index, overrides = {}) => {
   const source = Array.isArray(track) ? track : [track?.title, track?.artist, track?.duration, track?.videoId];
   const videoId = plainText(source[3]);
   const override = overrides[`${playlistId}:${index}`] || overrides[videoId] || {};
   const duration = plainText(override.duration ?? source[2], '0:00');
+  const rawCredit = plainText(override.artist ?? source[1], 'Unknown source');
+  const topicArtist = rawCredit.replace(/\s+-\s+Topic$/i, '').trim();
+  const creditType = override.artist || topicArtist !== rawCredit || !SOURCE_CREDIT_PATTERN.test(rawCredit) ? 'artist' : 'source';
   return {
     id: `${playlistId}-${index}`,
     playlistId,
-    title: plainText(override.title ?? source[0], 'Untitled programme'),
-    artist: plainText(override.artist ?? source[1], 'Unknown artist'),
+    title: override.title
+      ? plainText(override.title, 'Untitled programme')
+      : editorialTitle(source[0], 'Untitled programme'),
+    artist: topicArtist || rawCredit,
+    creditType,
     duration,
     videoId: plainText(override.videoId ?? videoId),
     isLongForm: durationToSeconds(duration) >= LONG_FORM_SECONDS,

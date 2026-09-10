@@ -12,6 +12,7 @@ const manifest = readFileSync('public/manifest.webmanifest', 'utf8');
 const viteConfig = readFileSync('vite.config.js', 'utf8');
 const pujoCss = readFileSync('pujo.css', 'utf8');
 const catalogueLoader = readFileSync('pujo-catalogue.js', 'utf8');
+const catalogueView = readFileSync('pujo-catalogue-view.js', 'utf8');
 const liveRadio = readFileSync('pujo-live-radio.js', 'utf8');
 const persistence = readFileSync('pujo-persistence.js', 'utf8');
 const sceneManager = readFileSync('pujo-scenes.js', 'utf8');
@@ -113,6 +114,21 @@ test('queue remains a side pane with explicit open and close state', () => {
   assert.match(queueControls, /queuePane\.setAttribute\('aria-hidden', 'true'\)/);
 });
 
+test('catalogue search and navigation preserve listening context', () => {
+  for (const id of ['catalogue-search-input', 'catalogue-search-status', 'catalogue-search-results', 'personal-listening', 'player-next-up']) {
+    assert.match(html, new RegExp(`id=["']${id}["']`));
+  }
+  assert.match(player, /const SEARCH_ALIASES = Object\.freeze/);
+  assert.match(player, /normalizeSearchText/);
+  assert.match(player, /ensureFullCatalogue\(\)\.then\(renderCatalogueSearch\)/);
+  assert.match(player, /catalogueOverviewScroll/);
+  assert.match(player, /playlistScrollPositions/);
+  const queueControls = extractBlock(player, 'const openQueuePane =', 'const showOverview');
+  assert.doesNotMatch(queueControls, /if \(!room\.hidden\) closeRoom\(\)/);
+  assert.match(queueControls, /queueReturnSurface === 'catalogue'/);
+  assert.match(player, /playerNextUp\.textContent = nextTrack \? `Next · \$\{nextTrack\.title\}`/);
+});
+
 test('mobile shell provides app navigation, a mini player, and full-screen surfaces', () => {
   assert.equal((html.match(/data-mobile-tab=/g) || []).length, 4);
   for (const id of ['mobile-player-expand', 'mobile-player-dismiss', 'mobile-player-context-label', 'mobile-player-context', 'mobile-queue-count', 'experience-close']) {
@@ -127,7 +143,9 @@ test('mobile shell provides app navigation, a mini player, and full-screen surfa
   assert.match(pujoCss, /body\.mobile-player-open \.broadcast-console/);
   assert.match(pujoCss, /grid-template-columns: repeat\(5,minmax\(2\.75rem,1fr\)\)/);
   assert.match(pujoCss, /width: min\(72vw,36dvh,20rem\)/);
-  assert.match(player, /mobilePlayerContext\.textContent = playlists\[track\.playlistId\]/);
+  assert.match(player, /mobilePlayerContextLabel\.textContent = 'Today’s programme'/);
+  assert.match(player, /mobilePlayerContextLabel\.textContent = 'Your playlist'/);
+  assert.match(player, /mobilePlayerContext\.textContent = playlistName/);
 });
 
 test('continuity saves and restores queue, position, volume, shuffle and origin without autoplay', () => {
@@ -165,13 +183,18 @@ test('catalogue data is separated, lazy loaded, cached and safe to render', () =
   assert.doesNotMatch(player, /const playlists = \{/);
 });
 
-test('delivery contracts use Pujo Vibes as the standalone root application', () => {
+test('delivery contracts use Radio Sharodiya as the standalone root application', () => {
   assert.match(viteConfig, /app:\s*resolve\([^)]*'index\.html'/);
   assert.doesNotMatch(viteConfig, /hub:|legacyPujo:|pujo\/index\.html/);
   assert.doesNotMatch(viteConfig, /entryFileNames|chunkFileNames|assetFileNames/);
   assert.match(manifest, /"start_url": "\/"/);
   assert.match(manifest, /"scope": "\/"/);
   assert.match(html, /href="\/manifest\.webmanifest"/);
+  assert.match(html, /<title>Radio Sharodiya — Bengali Pujo Radio<\/title>/);
+  assert.match(manifest, /"name": "Radio Sharodiya"/);
+  assert.doesNotMatch(html, /Pujo Vibes|PV-0|95\.8 FM/);
+  assert.doesNotMatch(player, /'Pujo Vibes'|`Pujo Vibes/);
+  assert.doesNotMatch(catalogueView, /Pujo Vibes|>PV</);
 });
 
 test('the generated service worker is revision-aware, isolated, and never caches audio ranges', () => {

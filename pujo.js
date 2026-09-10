@@ -36,6 +36,7 @@ const moment = document.querySelector('#listener-moment');
 const playerTitle = document.querySelector('#player-title');
 const playerDescription = document.querySelector('#player-description');
 const playerNote = document.querySelector('#player-note');
+const playerNextUp = document.querySelector('#player-next-up');
 const playButton = document.querySelector('#player-play');
 const previousButton = document.querySelector('#previous-programme');
 const nextButton = document.querySelector('#next-programme');
@@ -71,6 +72,10 @@ const guideLaterTitle = document.querySelector('#guide-later-title');
 const joinBroadcastButton = document.querySelector('#join-broadcast');
 const joinBroadcastLabel = document.querySelector('#join-broadcast-label');
 const joinBroadcastStatus = document.querySelector('#join-broadcast-status');
+const heroListenButton = document.querySelector('#hero-listen');
+const heroProgrammeTitle = document.querySelector('#hero-programme-title');
+const playerModeLabel = document.querySelector('#player-mode-label');
+const playerConnectionLabel = document.querySelector('#player-connection-label');
 const queueButton = document.querySelector('#open-queue');
 const queueCount = document.querySelector('#queue-count');
 const mobileQueueCount = document.querySelector('#mobile-queue-count');
@@ -122,6 +127,9 @@ const addAllButton = document.querySelector('#add-all');
 const personalListening = document.querySelector('#personal-listening');
 const recentShelf = document.querySelector('#recent-shelf');
 const recentList = document.querySelector('#recent-list');
+const catalogueSearchInput = document.querySelector('#catalogue-search-input');
+const catalogueSearchStatus = document.querySelector('#catalogue-search-status');
+const catalogueSearchResults = document.querySelector('#catalogue-search-results');
 const hero = document.querySelector('.hero');
 const heroLayers = [...document.querySelectorAll('.hero-art')];
 const heroCopy = document.querySelector('#hero-copy');
@@ -298,7 +306,7 @@ const calendarPresentations = {
     programmes: ['biday', 'retro', 'agomoni'], label: 'Bijoya', targetLabel: 'Season archive',
   },
   'off-season': {
-    eyebrow: 'Pujo Vibes · Season archive', title: 'পুজো থাকে<br />গানের ভিতরে', intro: 'The lights rest. The music keeps the season within reach.',
+    eyebrow: 'Radio Sharodiya · Season archive', title: 'পুজো থাকে<br />গানের ভিতরে', intro: 'The lights rest. The music keeps the season within reach.',
     programmes: ['retro', 'modern', 'agomoni'], label: 'Season archive', targetLabel: 'Next calendar soon',
   },
 };
@@ -461,6 +469,9 @@ let scheduledGuideProgrammes = [];
 let playbackOrigin = 'idle';
 let queueRenderLimit = 16;
 let queueContinuationObserver;
+let catalogueOverviewScroll = 0;
+const playlistScrollPositions = new Map();
+let queueReturnSurface = 'home';
 let heroPointerFrame;
 let pendingHeroPointer;
 
@@ -468,6 +479,15 @@ const CONTINUITY_KEY = 'pujo-vibes:continuity:v1';
 const CONTINUITY_VERSION = 1;
 const continuityStorage = createVersionedStorage({ storage: window.localStorage, key: CONTINUITY_KEY, version: CONTINUITY_VERSION });
 const QUEUE_RENDER_BATCH = 16;
+const SEARCH_RESULT_LIMIT = 12;
+const SEARCH_ALIASES = Object.freeze({
+  mahalaya: 'mahalaya mohishasur mardini mahishasura chandipath devi paksha মহালয়া মহিষাসুরমর্দিনী চণ্ডীপাঠ দেবীপক্ষ',
+  agomoni: 'agomoni agamoni uma arrival homecoming আগমনী উমা আসছে',
+  retro: 'retro old classic archive purono ফিরে দেখা পুরনো',
+  modern: 'modern new notun contemporary নতুন পুজোর গান',
+  pandal: 'pandal pandel crowd dhaak প্যান্ডেল ঢাক',
+  biday: 'biday bidai dashami farewell immersion বিসর্জন দশমী বিদায়',
+});
 const PLAYBACK_PROGRESS_INTERVAL = 250;
 const MAX_AUTOMATIC_RECOVERIES = 2;
 const RECOVERY_DELAYS = [1500, 4000];
@@ -498,6 +518,7 @@ const hydrateCatalogue = (catalogue) => {
   catalogueSequence = playlists[activePlaylistId]?.tracks || playlists.mahalaya.tracks;
   catalogueIsFull = true;
   updatePlaylistOverviewCounts();
+  renderCatalogueSearch();
   auditCatalogue();
   updateStationGuide();
   renderGuideAction();
@@ -589,20 +610,29 @@ const formatPlaybackTime = (seconds = 0) => {
 
 const playableProgrammeTracks = (programme) => availableTracks(playlists[programme?.playlistId]?.tracks || []);
 
-const renderGuideContent = () => {
-  if (playbackOrigin === 'manual' && currentTrack) {
-    const currentIndex = Math.max(0, PLAYLIST_ORDER.indexOf(currentTrack.playlistId));
-    const currentPlaylist = playlists[PLAYLIST_ORDER[currentIndex]];
-    const nextPlaylist = playlists[PLAYLIST_ORDER[(currentIndex + 1) % PLAYLIST_ORDER.length]];
-    const laterPlaylist = playlists[PLAYLIST_ORDER[(currentIndex + 2) % PLAYLIST_ORDER.length]];
-    guideNowTime.textContent = currentPlaylist.code;
-    guideNowTitle.textContent = currentPlaylist.english;
-    guideNextTime.textContent = nextPlaylist.code;
-    guideNextTitle.textContent = nextPlaylist.english;
-    guideLaterTime.textContent = laterPlaylist.code;
-    guideLaterTitle.textContent = laterPlaylist.english;
+const trackCredit = (track) => `${track?.creditType === 'source' ? 'Source · ' : ''}${track?.artist || 'Unknown source'}`;
+
+const renderListeningMode = () => {
+  if (liveRadioIsActive) return;
+  const playlistName = playlists[currentTrack?.playlistId]?.english || 'Radio Sharodiya';
+  if (playbackOrigin === 'broadcast') {
+    playerModeLabel.textContent = 'Today’s programme';
+    mobilePlayerContextLabel.textContent = 'Today’s programme';
+    mobilePlayerContext.textContent = activeScheduledProgramme?.title || playlistName;
     return;
   }
+  if (playbackOrigin === 'manual') {
+    playerModeLabel.textContent = 'Your playlist';
+    mobilePlayerContextLabel.textContent = 'Your playlist';
+    mobilePlayerContext.textContent = playlistName;
+    return;
+  }
+  playerModeLabel.textContent = 'Ready to play';
+  mobilePlayerContextLabel.textContent = 'Ready to play';
+  mobilePlayerContext.textContent = playlistName;
+};
+
+const renderGuideContent = () => {
   if (!scheduledGuideProgrammes.length) return;
   const [current, next, later] = scheduledGuideProgrammes;
   guideNowTime.textContent = programmeTimeLabel(current.startHour);
@@ -620,21 +650,21 @@ const renderGuideAction = () => {
   const declaredTrackCount = playlists[activeScheduledProgramme.playlistId]?.trackCount || playableTracks.length;
   const onCurrentProgramme = playbackOrigin === 'broadcast' && currentTrack?.playlistId === activeScheduledProgramme.playlistId;
   stationGuide.classList.toggle('is-manual', playbackOrigin === 'manual' || (playbackOrigin === 'broadcast' && !onCurrentProgramme));
-  joinBroadcastButton.hidden = declaredTrackCount === 0;
+  joinBroadcastButton.hidden = declaredTrackCount === 0 || playbackOrigin === 'idle';
   if (!declaredTrackCount) return;
   joinBroadcastButton.disabled = false;
   if (onCurrentProgramme && isPlaying) {
-    joinBroadcastLabel.textContent = 'Live programme';
+    joinBroadcastLabel.textContent = 'Today’s programme';
     joinBroadcastStatus.textContent = 'Playing now';
     joinBroadcastButton.disabled = true;
     return;
   }
   if (onCurrentProgramme) {
-    joinBroadcastLabel.textContent = 'Resume broadcast';
-    joinBroadcastStatus.textContent = 'Kolkata programme';
+    joinBroadcastLabel.textContent = 'Resume today’s programme';
+    joinBroadcastStatus.textContent = 'Curated in Kolkata';
     return;
   }
-  joinBroadcastLabel.textContent = playbackOrigin === 'manual' ? 'Return to live' : 'Join broadcast';
+  joinBroadcastLabel.textContent = playbackOrigin === 'manual' ? 'Return to today’s programme' : 'Listen to today’s programme';
   joinBroadcastStatus.textContent = catalogueIsFull
     ? `${String(playableTracks.length).padStart(2, '0')} playable tracks`
     : `${String(declaredTrackCount).padStart(2, '0')} catalogue tracks`;
@@ -645,12 +675,15 @@ const updateStationGuide = (date = new Date()) => {
   const [current, next, later] = resolveProgrammeWindow({ date, seasonalIds, playlists });
   activeScheduledProgramme = current;
   scheduledGuideProgrammes = [current, next, later];
+  heroProgrammeTitle.textContent = current.title;
   renderGuideContent();
   renderGuideAction();
+  renderListeningMode();
 };
 
 const setPlaybackOrigin = (origin) => {
   playbackOrigin = origin;
+  renderListeningMode();
   renderGuideAction();
   scheduleContinuitySave();
 };
@@ -717,6 +750,44 @@ const renderPersonalListening = () => {
   }).join('');
 };
 
+const normalizeSearchText = (value = '') => String(value)
+  .normalize('NFKD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .toLocaleLowerCase('en-IN')
+  .replace(/[^\p{L}\p{N}]+/gu, ' ')
+  .trim();
+
+const searchTextForTrack = (track) => {
+  const playlist = playlists[track.playlistId];
+  return normalizeSearchText([
+    track.title, track.artist, playlist?.title, playlist?.english,
+    playlist?.kicker, SEARCH_ALIASES[track.playlistId],
+  ].filter(Boolean).join(' '));
+};
+
+const renderCatalogueSearch = () => {
+  const query = normalizeSearchText(catalogueSearchInput.value);
+  if (!query) {
+    catalogueSearchResults.hidden = true;
+    catalogueSearchResults.replaceChildren();
+    catalogueSearchStatus.textContent = `Search all ${allTracks.length} songs in Bengali or English.`;
+    return;
+  }
+  const terms = query.split(' ').filter(Boolean);
+  const matches = allTracks.filter((track) => terms.every((term) => searchTextForTrack(track).includes(term)));
+  const visibleMatches = matches.slice(0, SEARCH_RESULT_LIMIT);
+  catalogueSearchStatus.textContent = matches.length
+    ? `${matches.length} ${matches.length === 1 ? 'match' : 'matches'}${matches.length > SEARCH_RESULT_LIMIT ? ` · showing first ${SEARCH_RESULT_LIMIT}` : ''}`
+    : 'No matches yet. Try a song, artist, festival moment or collection name.';
+  catalogueSearchResults.hidden = false;
+  catalogueSearchResults.innerHTML = matches.length
+    ? `<header><strong>Search results</strong><span>${matches.length} found</span></header>${visibleMatches.map((track) => {
+      const playlist = playlists[track.playlistId];
+      return personalTrackMarkup(track, 'search', playlist?.english, playlist?.cover);
+    }).join('')}`
+    : '<p class="empty-queue">No songs found. Try a shorter spelling or a collection such as Agomoni, Retro or Dashami.</p>';
+};
+
 const updateMediaMetadata = (track) => {
   if (!('mediaSession' in navigator) || !('MediaMetadata' in window) || !track) return;
   const playlistCover = playlists[track.playlistId]?.cover;
@@ -724,14 +795,13 @@ const updateMediaMetadata = (track) => {
     { src: `https://img.youtube.com/vi/${track.videoId}/mqdefault.jpg`, sizes: '320x180', type: 'image/jpeg' },
     { src: `https://img.youtube.com/vi/${track.videoId}/hqdefault.jpg`, sizes: '480x360', type: 'image/jpeg' },
   ] : playlistCover ? [{ src: playlistCover, sizes: '640x640', type: 'image/jpeg' }] : [];
-  try { navigator.mediaSession.metadata = new MediaMetadata({ title: track.title, artist: track.artist, album: `Pujo Vibes · ${playlists[track.playlistId]?.english || 'Seasonal Radio'}`, artwork }); } catch { /* Metadata support varies across embedded browsers. */ }
+  try { navigator.mediaSession.metadata = new MediaMetadata({ title: track.title, artist: track.artist, album: `Radio Sharodiya · ${playlists[track.playlistId]?.english || 'Seasonal Radio'}`, artwork }); } catch { /* Metadata support varies across embedded browsers. */ }
 };
 
 const renderCurrentTrack = (track) => {
-  mobilePlayerContextLabel.textContent = 'Playing from playlist';
-  mobilePlayerContext.textContent = playlists[track.playlistId]?.english || 'Pujo Vibes';
+  renderListeningMode();
   playerTitle.textContent = track.title;
-  playerDescription.textContent = `${track.artist} · ${playlists[track.playlistId]?.english || 'Queue'}${track.isLongForm ? ' · Long listen' : ''}`;
+  playerDescription.textContent = `${trackCredit(track)} · ${playlists[track.playlistId]?.english || 'Queue'}${track.isLongForm ? ' · Long listen' : ''}`;
   playerSource.href = track.videoId ? `https://www.youtube.com/watch?v=${track.videoId}` : 'https://www.youtube.com/';
   const playlistCover = playlists[track.playlistId]?.cover;
   playerArtImage.dataset.playlistCover = playlistCover || '';
@@ -851,6 +921,12 @@ const setPlaybackStatus = (status, note) => {
   broadcastConsole.setAttribute('aria-busy', String(busy));
   broadcastConsole.classList.toggle('is-error', status === 'error' || status === 'stalled');
   signalWaveform.classList.toggle('searching', busy);
+  const connectionLabels = {
+    connecting: 'Connecting…', buffering: 'Buffering…', recovering: 'Reconnecting…',
+    playing: 'Playing now', paused: 'Paused', ready: 'Ready to play', ended: 'Programme ended',
+    offline: 'Offline', stalled: 'Connection interrupted', error: 'Unable to play',
+  };
+  playerConnectionLabel.lastChild.textContent = ` ${connectionLabels[status] || 'Choose play to begin'}`;
   if (note) playerNote.textContent = note;
   if (status !== 'error' && status !== 'stalled') hidePlayerRecovery();
 };
@@ -1041,7 +1117,7 @@ const updateCountdown = () => {
     countdownMinutes.textContent = '--';
     countdownSeconds.textContent = '--';
     countdownWidget.dataset.mode = 'archive';
-    countdownWidget.setAttribute('aria-label', 'Pujo Vibes season archive. The next verified calendar will be added soon.');
+    countdownWidget.setAttribute('aria-label', 'Radio Sharodiya season archive. The next verified calendar will be added soon.');
     return;
   }
   const remaining = Math.max(0, target - now.getTime());
@@ -1068,7 +1144,7 @@ const queueThumbnail = (track) => track.videoId
   ? `<img class="queue-thumb" src="https://img.youtube.com/vi/${escapeMarkup(track.videoId)}/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" decoding="async" />`
   : playlists[track.playlistId]?.cover
     ? `<img class="queue-thumb" src="${escapeMarkup(playlists[track.playlistId].cover)}" alt="" width="640" height="640" loading="lazy" decoding="async" />`
-    : '<span class="queue-thumb" aria-hidden="true">PV</span>';
+    : '<span class="queue-thumb" aria-hidden="true">RS</span>';
 
 const renderQueuePanel = () => {
   if (!queuePaneIsOpen()) return;
@@ -1086,9 +1162,9 @@ const renderQueuePanel = () => {
     return;
   }
 
-  const currentMarkup = current ? `<section class="queue-now"><span class="queue-label">Now playing</span><div class="queue-now-card">${queueThumbnail(current)}<div><strong>${escapeMarkup(current.title)}</strong><small>${escapeMarkup(current.artist)} · ${escapeMarkup(playlists[current.playlistId]?.english || 'Pujo Vibes')}</small></div></div></section>` : '';
+  const currentMarkup = current ? `<section class="queue-now"><span class="queue-label">Now playing</span><div class="queue-now-card">${queueThumbnail(current)}<div><strong>${escapeMarkup(current.title)}</strong><small>${escapeMarkup(trackCredit(current))} · ${escapeMarkup(playlists[current.playlistId]?.english || 'Radio Sharodiya')}</small></div></div></section>` : '';
   const upcomingMarkup = upcoming.length
-    ? `<section class="queue-up-next"><span class="queue-label">Up next · ${String(upcoming.length).padStart(2, '0')}</span>${visibleUpcoming.map((track, index) => `<div class="queue-item"><button class="queue-item-main" type="button" data-queue-action="play" data-track-id="${escapeMarkup(track.id)}"><span class="queue-item-index">${String(index + 1).padStart(2, '0')}</span>${queueThumbnail(track)}<span class="queue-item-copy"><strong>${escapeMarkup(track.title)}</strong><small>${escapeMarkup(track.artist)}</small></span><span class="queue-item-duration">${escapeMarkup(track.duration)}</span></button><button class="queue-item-remove" type="button" data-queue-action="remove" data-track-id="${escapeMarkup(track.id)}" aria-label="Remove ${escapeMarkup(track.title)} from queue">×</button></div>`).join('')}${remainingCount ? `<button class="queue-more" type="button" data-queue-action="more">Show next ${Math.min(QUEUE_RENDER_BATCH, remainingCount)}<small>${remainingCount} songs remain</small></button>` : ''}</section>`
+    ? `<section class="queue-up-next"><span class="queue-label">Up next · ${String(upcoming.length).padStart(2, '0')}</span>${visibleUpcoming.map((track, index) => `<div class="queue-item"><button class="queue-item-main" type="button" data-queue-action="play" data-track-id="${escapeMarkup(track.id)}"><span class="queue-item-index">${String(index + 1).padStart(2, '0')}</span>${queueThumbnail(track)}<span class="queue-item-copy"><strong>${escapeMarkup(track.title)}</strong><small>${escapeMarkup(trackCredit(track))}</small></span><span class="queue-item-duration">${escapeMarkup(track.duration)}</span></button><button class="queue-item-remove" type="button" data-queue-action="remove" data-track-id="${escapeMarkup(track.id)}" aria-label="Remove ${escapeMarkup(track.title)} from queue">×</button></div>`).join('')}${remainingCount ? `<button class="queue-more" type="button" data-queue-action="more">Show next ${Math.min(QUEUE_RENDER_BATCH, remainingCount)}<small>${remainingCount} songs remain</small></button>` : ''}</section>`
     : '<div class="queue-empty"><strong>Last song in line</strong><p>There is nothing else queued after this track.</p></div>';
   queuePaneList.innerHTML = currentMarkup + upcomingMarkup;
   const continuation = queuePaneList.querySelector('[data-queue-action="more"]');
@@ -1105,9 +1181,12 @@ const renderQueuePanel = () => {
 const updateQueueCount = () => {
   const currentIndex = queueCurrentIndex();
   const upNextCount = currentIndex >= 0 ? Math.max(0, queue.length - currentIndex - 1) : queue.length;
+  const nextTrack = currentIndex >= 0 ? queue[currentIndex + 1] : queue[0];
   const formattedCount = String(upNextCount).padStart(2, '0');
   queueCount.textContent = formattedCount;
   mobileQueueCount.textContent = formattedCount;
+  playerNextUp.hidden = !nextTrack;
+  playerNextUp.textContent = nextTrack ? `Next · ${nextTrack.title}` : '';
   queueButton.setAttribute('aria-label', `Open current queue, ${upNextCount} ${upNextCount === 1 ? 'song' : 'songs'} up next`);
   mobileQueueButton.setAttribute('aria-label', `Open current queue, ${upNextCount} ${upNextCount === 1 ? 'song' : 'songs'} up next`);
   if (queuePaneIsOpen()) renderQueuePanel();
@@ -1197,8 +1276,8 @@ const shuffledTracks = (tracks) => {
 };
 
 const openQueuePane = (opener = queueButton) => {
+  queueReturnSurface = !room.hidden ? 'catalogue' : (!liveRadioRoom.hidden || liveRadioIsActive ? 'radio' : 'home');
   if (!liveRadioRoom.hidden) closeLiveRadio({ stop: false });
-  if (!room.hidden) closeRoom();
   window.clearTimeout(queueCloseTimer);
   queueReturnTarget = opener;
   queueRenderLimit = QUEUE_RENDER_BATCH;
@@ -1222,7 +1301,7 @@ const closeQueuePane = () => {
   queueScrim.classList.remove('is-open');
   queuePane.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('queue-open');
-  if (mobileShellQuery.matches) setMobileTab('home');
+  if (mobileShellQuery.matches) setMobileTab(queueReturnSurface === 'catalogue' && !room.hidden ? 'catalogue' : (liveRadioIsActive ? 'radio' : 'home'));
   queueCloseTimer = window.setTimeout(() => {
     if (queuePaneIsOpen()) return;
     queuePane.hidden = true;
@@ -1232,9 +1311,16 @@ const closeQueuePane = () => {
   queueReturnTarget?.focus();
 };
 
-const showOverview = () => { detail.hidden = true; overview.hidden = false; room.scrollTop = 0; };
+const showOverview = () => {
+  if (!detail.hidden && activePlaylistId) playlistScrollPositions.set(activePlaylistId, room.scrollTop);
+  detail.hidden = true;
+  overview.hidden = false;
+  window.requestAnimationFrame(() => { room.scrollTop = catalogueOverviewScroll; });
+};
 
 const showPlaylist = async (playlistId) => {
+  if (!overview.hidden) catalogueOverviewScroll = room.scrollTop;
+  else if (activePlaylistId) playlistScrollPositions.set(activePlaylistId, room.scrollTop);
   room.setAttribute('aria-busy', 'true');
   const fullCatalogueAvailable = await ensureFullCatalogue();
   room.setAttribute('aria-busy', 'false');
@@ -1263,10 +1349,12 @@ const showPlaylist = async (playlistId) => {
   shuffleAllButton.disabled = playableCount === 0;
   addAllButton.disabled = playableCount === 0;
   renderTracks(playlist.tracks);
-  room.scrollTop = 0;
+  window.requestAnimationFrame(() => { room.scrollTop = playlistScrollPositions.get(playlistId) || 0; });
 };
 
 const closeRoom = () => {
+  if (overview.hidden && activePlaylistId) playlistScrollPositions.set(activePlaylistId, room.scrollTop);
+  else catalogueOverviewScroll = room.scrollTop;
   setMobilePlayerExpanded(false, { restoreFocus: false });
   restoreBroadcastConsoleHome();
   room.hidden = true;
@@ -1365,9 +1453,11 @@ const openCatalogue = (opener) => {
   document.body.classList.add('room-open');
   setMobilePlayerExpanded(false, { restoreFocus: false });
   setMobileTab('catalogue');
-  showOverview();
   room.setAttribute('aria-busy', 'true');
-  ensureFullCatalogue().finally(() => room.setAttribute('aria-busy', 'false'));
+  ensureFullCatalogue().finally(() => {
+    room.setAttribute('aria-busy', 'false');
+    renderCatalogueSearch();
+  });
   window.requestAnimationFrame(() => room.querySelector('[data-close-room]').focus());
 };
 
@@ -1382,11 +1472,29 @@ document.addEventListener('click', (event) => {
 
 playlistGrid.addEventListener('click', (event) => { const button = event.target.closest('[data-playlist]'); if (button) void showPlaylist(button.dataset.playlist); });
 detailBack.addEventListener('click', showOverview);
+catalogueSearchInput.addEventListener('input', () => {
+  renderCatalogueSearch();
+  if (!catalogueSearchInput.value.trim() || catalogueIsFull) return;
+  catalogueSearchStatus.textContent = 'Loading the full catalogue…';
+  ensureFullCatalogue().then(renderCatalogueSearch);
+});
+catalogueSearchResults.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-personal-track]');
+  if (!button) return;
+  const track = tracksById.get(button.dataset.personalTrack);
+  if (!track) return;
+  const playlistTracks = availableTracks(playlists[track.playlistId]?.tracks || [track]);
+  const selectedIndex = Math.max(0, playlistTracks.findIndex((item) => item.id === track.id));
+  setPlaybackOrigin('manual');
+  replaceQueue([...playlistTracks.slice(selectedIndex), ...playlistTracks.slice(0, selectedIndex)]);
+  setCurrentTrack(track, true);
+});
 queueButton.addEventListener('click', () => openQueuePane(queueButton));
 mobileQueueButton.addEventListener('click', () => openQueuePane(mobileQueueButton));
 mobilePlayerExpand.addEventListener('click', () => setMobilePlayerExpanded(true));
 mobilePlayerDismiss.addEventListener('click', () => setMobilePlayerExpanded(false));
 joinBroadcastButton.addEventListener('click', () => void joinScheduledBroadcast());
+heroListenButton.addEventListener('click', () => void joinScheduledBroadcast());
 queuePaneClose.addEventListener('click', closeQueuePane);
 queueScrim.addEventListener('click', closeQueuePane);
 
@@ -1707,11 +1815,11 @@ installButton.addEventListener('click', async () => {
   if (!installPrompt) return;
   installPrompt.prompt();
   const choice = await installPrompt.userChoice;
-  experienceStatus.textContent = choice.outcome === 'accepted' ? 'Pujo Vibes is ready on this device.' : 'Installation was dismissed.';
+  experienceStatus.textContent = choice.outcome === 'accepted' ? 'Radio Sharodiya is ready on this device.' : 'Installation was dismissed.';
   installPrompt = undefined;
   installButton.hidden = true;
 });
-window.addEventListener('appinstalled', () => { installButton.hidden = true; experienceStatus.textContent = 'Pujo Vibes has been installed.'; });
+window.addEventListener('appinstalled', () => { installButton.hidden = true; experienceStatus.textContent = 'Radio Sharodiya has been installed.'; });
 
 const renderNetworkStatus = () => {
   const offline = !navigator.onLine;
@@ -1796,7 +1904,7 @@ const setupServiceWorker = async () => {
     });
     window.setInterval(() => registration.update().catch(() => {}), 60 * 60 * 1000);
   } catch {
-    // Pujo Vibes remains a regular network-first website if installation is unavailable.
+    // Radio Sharodiya remains a regular network-first website if installation is unavailable.
   }
 };
 

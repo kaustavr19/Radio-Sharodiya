@@ -1,8 +1,8 @@
-# Pujo Vibes
+# Radio Sharodiya
 
-A cinematic seasonal Bengali listening experience for Durga Pujo. Pujo Vibes combines six editorial playlists, time-aware artwork, a persistent queue, an optional para atmosphere, and a lightweight YouTube-backed player.
+A cinematic seasonal Bengali listening experience for Durga Pujo. Radio Sharodiya combines six editorial playlists, time-aware artwork, a persistent queue, an optional para atmosphere, and a lightweight YouTube-backed player.
 
-Pujo Vibes is a standalone station in The Radio Project family. It is intentionally silent on arrival: playback and atmosphere begin only after a listener chooses them.
+Radio Sharodiya is a standalone station in The Radio Project family. It is intentionally silent on arrival: playback and atmosphere begin only after a listener chooses them.
 
 ## Development
 
@@ -13,7 +13,7 @@ npm ci
 npm run dev
 ```
 
-Create a production build with `npm run build`. The deployable output is written to `dist/`, with Pujo Vibes served from the site root.
+Create a production build with `npm run build`. The deployable output is written to `dist/`, with Radio Sharodiya served from the site root.
 
 ## Verification
 
