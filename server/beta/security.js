@@ -1,6 +1,7 @@
 import { createHmac, randomInt, timingSafeEqual } from 'node:crypto';
 
 export const SESSION_COOKIE = 'rs_beta_session';
+export const TESTER_SESSION_SECONDS = 60 * 60 * 24 * 90;
 
 export const normalizeEmail = (value) => {
   const email = String(value || '').trim().toLowerCase();

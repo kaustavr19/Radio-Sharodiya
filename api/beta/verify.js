@@ -1,11 +1,10 @@
 import { getBetaConfig } from '../../server/beta/config.js';
 import { allowMethod, handleFailure, json, readBody, requestOriginIsValid } from '../../server/beta/http.js';
-import { accessCodeMatches, createSessionToken, hashAccessCode, normalizeEmail, requestUsesHttps, sessionCookie } from '../../server/beta/security.js';
+import { accessCodeMatches, createSessionToken, hashAccessCode, normalizeEmail, requestUsesHttps, sessionCookie, TESTER_SESSION_SECONDS } from '../../server/beta/security.js';
 import { getTester, updateTester } from '../../server/beta/store.js';
 
 const MAX_ATTEMPTS = 5;
 const LOCK_MINUTES = 15;
-const TESTER_SESSION_SECONDS = 60 * 60 * 24 * 14;
 
 export default async function handler(request, response) {
   if (!allowMethod(request, response, 'POST')) return;

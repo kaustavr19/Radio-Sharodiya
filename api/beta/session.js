@@ -1,6 +1,7 @@
 import { activeTesterForSession, isAdminSession, readBetaSession } from '../../server/beta/auth.js';
 import { getBetaConfig } from '../../server/beta/config.js';
 import { allowMethod, handleFailure, json } from '../../server/beta/http.js';
+import { createSessionToken, requestUsesHttps, sessionCookie, TESTER_SESSION_SECONDS } from '../../server/beta/security.js';
 
 export default async function handler(request, response) {
   if (!allowMethod(request, response, 'GET')) return;
@@ -13,7 +14,16 @@ export default async function handler(request, response) {
     }
     const tester = await activeTesterForSession(request, config);
     if (tester) {
-      json(response, 200, { authenticated: true, role: 'tester', email: tester.email });
+      const token = createSessionToken({
+        email: tester.email,
+        role: 'tester',
+        version: tester.session_version,
+        ttlSeconds: TESTER_SESSION_SECONDS,
+        secret: config.sessionSecret,
+      });
+      json(response, 200, { authenticated: true, role: 'tester', email: tester.email }, {
+        'Set-Cookie': sessionCookie(token, { maxAge: TESTER_SESSION_SECONDS, secure: requestUsesHttps(request) }),
+      });
       return;
     }
     json(response, 200, { authenticated: false });
