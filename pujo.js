@@ -72,8 +72,6 @@ const guideLaterTitle = document.querySelector('#guide-later-title');
 const joinBroadcastButton = document.querySelector('#join-broadcast');
 const joinBroadcastLabel = document.querySelector('#join-broadcast-label');
 const joinBroadcastStatus = document.querySelector('#join-broadcast-status');
-const heroListenButton = document.querySelector('#hero-listen');
-const heroProgrammeTitle = document.querySelector('#hero-programme-title');
 const playerModeLabel = document.querySelector('#player-mode-label');
 const playerConnectionLabel = document.querySelector('#player-connection-label');
 const queueButton = document.querySelector('#open-queue');
@@ -675,7 +673,6 @@ const updateStationGuide = (date = new Date()) => {
   const [current, next, later] = resolveProgrammeWindow({ date, seasonalIds, playlists });
   activeScheduledProgramme = current;
   scheduledGuideProgrammes = [current, next, later];
-  heroProgrammeTitle.textContent = current.title;
   renderGuideContent();
   renderGuideAction();
   renderListeningMode();
@@ -1494,7 +1491,6 @@ mobileQueueButton.addEventListener('click', () => openQueuePane(mobileQueueButto
 mobilePlayerExpand.addEventListener('click', () => setMobilePlayerExpanded(true));
 mobilePlayerDismiss.addEventListener('click', () => setMobilePlayerExpanded(false));
 joinBroadcastButton.addEventListener('click', () => void joinScheduledBroadcast());
-heroListenButton.addEventListener('click', () => void joinScheduledBroadcast());
 queuePaneClose.addEventListener('click', closeQueuePane);
 queueScrim.addEventListener('click', closeQueuePane);
 
