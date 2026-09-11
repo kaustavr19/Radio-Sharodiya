@@ -114,6 +114,15 @@
       <button class="update-later" id="update-later" type="button">Later</button>
     </aside>
 
+    <aside class="data-nudge" id="data-nudge" role="status" aria-live="polite" hidden>
+      <div>
+        <strong>Loading has been slow</strong>
+        <span>Low-data mode uses lighter art and turns off atmosphere audio.</span>
+      </div>
+      <button class="data-nudge-accept" id="data-nudge-accept" type="button">Turn on Low-data</button>
+      <button class="data-nudge-dismiss" id="data-nudge-dismiss" type="button">Not now</button>
+    </aside>
+
     <header class="station-nav">
       <a class="station-brand" href="/" aria-label="Radio Sharodiya home">
         <img src="/assets/radio-sharodiya-logo.png" alt="রেডিও শারদীয়া" />
@@ -138,6 +147,15 @@
       </div>
       <button class="experience-option" id="motion-toggle" type="button" role="switch" aria-checked="true"><span><strong>Visual depth</strong><small>Scene movement and gentle parallax</small></span><i aria-hidden="true"></i></button>
       <button class="experience-option" id="low-data-toggle" type="button" role="switch" aria-checked="false"><span><strong>Low-data mode</strong><small>One still scene, no background preloading</small></span><i aria-hidden="true"></i></button>
+      <div class="image-quality">
+        <span><strong>Image quality</strong><small>Scene and catalogue artwork detail</small></span>
+        <div class="image-quality-options" role="radiogroup" aria-label="Image quality">
+          <button type="button" data-image-quality="auto" aria-pressed="true">Auto</button>
+          <button type="button" data-image-quality="mobile" aria-pressed="false">Data saver</button>
+          <button type="button" data-image-quality="tablet" aria-pressed="false">Standard</button>
+          <button type="button" data-image-quality="desktop" aria-pressed="false">High</button>
+        </div>
+      </div>
       <div class="experience-actions">
         <button id="fullscreen-toggle" type="button">Enter fullscreen</button>
         <button id="install-station" type="button" hidden>Install station</button>
@@ -303,6 +321,7 @@
               <p class="section-kicker">The complete seasonal frequency</p>
               <h2 id="catalogue-heading">Choose how<br />Pujo sounds.</h2>
               <p class="section-intro">Six editorial playlists—from Mahalaya before sunrise to the quiet of Dashami by the river.</p>
+              <p class="catalogue-cache-status" id="catalogue-cache-status" role="status" aria-live="polite" hidden></p>
             </div>
             <search class="catalogue-search" aria-label="Search the Pujo catalogue">
               <label for="catalogue-search-input">Find a song, artist or collection</label>
@@ -316,12 +335,12 @@
             <section id="recent-shelf" hidden><div id="recent-list"></div></section>
           </section>
           <div class="playlist-grid" id="playlist-grid">
-            <button type="button" data-playlist="mahalaya" style="--playlist-cover: url('/assets/playlist-covers/mahalaya.jpg')"><span>RS-01 · Invocation</span><strong lang="bn">মহালয়া</strong><small>Mahalaya</small><em>Chandipath and the first light of Devi Paksha</em><i data-playlist-count>21 tracks</i></button>
-            <button type="button" data-playlist="agomoni" style="--playlist-cover: url('/assets/playlist-covers/agomoni.jpg')"><span>RS-02 · Arrival</span><strong lang="bn">আগমনী</strong><small>Agomoni</small><em>Uma comes home; anticipation fills the city</em><i data-playlist-count>94 tracks</i></button>
-            <button type="button" data-playlist="retro" style="--playlist-cover: url('/assets/playlist-covers/retro.jpg')"><span>RS-03 · Archive</span><strong lang="bn">ফিরে দেখা পুজো</strong><small>Retro Pujo</small><em>Records, cassettes and voices from another Pujo</em><i data-playlist-count>82 songs</i></button>
-            <button type="button" data-playlist="modern" style="--playlist-cover: url('/assets/playlist-covers/modern.jpg')"><span>RS-04 · New signal</span><strong lang="bn">নতুন পুজোর গান</strong><small>Modern Pujo</small><em>New releases for memories being made now</em><i data-playlist-count>91 songs</i></button>
-            <button type="button" data-playlist="pandal" style="--playlist-cover: url('/assets/playlist-covers/pandal.jpg')"><span>RS-05 · Crowd</span><strong lang="bn">প্যান্ডেলের সুর</strong><small>Pandal Favourites</small><em>Big choruses for lights, crowds and late nights</em><i data-playlist-count>48 songs</i></button>
-            <button type="button" data-playlist="biday" style="--playlist-cover: url('/assets/playlist-covers/biday.jpg')"><span>RS-06 · Farewell</span><strong lang="bn">বিদায়বেলা</strong><small>Biday Bela</small><em>Quiet songs for Dashami and the road home</em><i data-playlist-count>11 songs</i></button>
+            <button type="button" data-playlist="mahalaya" data-cover="/assets/playlist-covers/mahalaya.jpg"><span>RS-01 · Invocation</span><strong lang="bn">মহালয়া</strong><small>Mahalaya</small><em>Chandipath and the first light of Devi Paksha</em><i data-playlist-count>21 tracks</i></button>
+            <button type="button" data-playlist="agomoni" data-cover="/assets/playlist-covers/agomoni.jpg"><span>RS-02 · Arrival</span><strong lang="bn">আগমনী</strong><small>Agomoni</small><em>Uma comes home; anticipation fills the city</em><i data-playlist-count>94 tracks</i></button>
+            <button type="button" data-playlist="retro" data-cover="/assets/playlist-covers/retro.jpg"><span>RS-03 · Archive</span><strong lang="bn">ফিরে দেখা পুজো</strong><small>Retro Pujo</small><em>Records, cassettes and voices from another Pujo</em><i data-playlist-count>82 songs</i></button>
+            <button type="button" data-playlist="modern" data-cover="/assets/playlist-covers/modern.jpg"><span>RS-04 · New signal</span><strong lang="bn">নতুন পুজোর গান</strong><small>Modern Pujo</small><em>New releases for memories being made now</em><i data-playlist-count>91 songs</i></button>
+            <button type="button" data-playlist="pandal" data-cover="/assets/playlist-covers/pandal.jpg"><span>RS-05 · Crowd</span><strong lang="bn">প্যান্ডেলের সুর</strong><small>Pandal Favourites</small><em>Big choruses for lights, crowds and late nights</em><i data-playlist-count>48 songs</i></button>
+            <button type="button" data-playlist="biday" data-cover="/assets/playlist-covers/biday.jpg"><span>RS-06 · Farewell</span><strong lang="bn">বিদায়বেলা</strong><small>Biday Bela</small><em>Quiet songs for Dashami and the road home</em><i data-playlist-count>11 songs</i></button>
           </div>
         </div>
 

@@ -10,6 +10,7 @@ This contract records the user-facing behaviour that performance and architectur
 - Catalogue browsing alone must not replace the landing scene or hero copy.
 - The catalogue is a modal surface with a clear close action and focus return.
 - Selecting a playlist shows its complete available track list in playlist order.
+- Playlist cover art and track thumbnails only download once their card scrolls near the viewport; none of it is requested before the catalogue is opened.
 
 ## Playlist actions
 
@@ -40,6 +41,11 @@ This contract records the user-facing behaviour that performance and architectur
 - Its saved volume is independent from the main player volume.
 - Low-data mode disables atmosphere playback.
 - Audio and byte-range requests are excluded from service-worker caching.
+- Low-data mode turns on by itself only before a listener has ever chosen a preference of their own, and only while the connection reports Save-Data; any explicit choice, including opting out, is never overridden.
+- Opening the catalogue while offline shows whether the catalogue itself is served from cache, and makes clear that playing songs still needs a connection.
+- Losing connection mid-playback saves the current queue and position immediately, not on the next periodic tick.
+- A manual image-quality preference (Auto/Data saver/Standard/High) lets a listener pin one of the three real asset tiers; Low-data mode still forces the lightest tier regardless of that choice.
+- After a majority of the last five track starts take 6 seconds or longer, a dismissible nudge offers Low-data mode; dismissing it (by any action) keeps it quiet for 7 days.
 
 ## Playback reliability
 

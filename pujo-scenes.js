@@ -45,11 +45,17 @@ export const nextSceneForKolkataTime = (parts, calendarState) => {
   return scenes.dawn;
 };
 
-export const createSceneDelivery = ({ lowData, viewportWidth = () => window.innerWidth } = {}) => {
+const VIEWPORT_VARIANTS = new Set(['mobile', 'tablet', 'desktop']);
+
+export const createSceneDelivery = ({ lowData, imageQuality, viewportWidth = () => window.innerWidth } = {}) => {
   const loadedSceneAssets = new Map();
   const supportsTypedImageSet = CSS.supports?.('background-image', 'image-set(url("data:image/avif;base64,") type("image/avif"))') ?? false;
   const variantForViewport = () => {
-    if (lowData?.() || viewportWidth() <= 620) return 'mobile';
+    // Low-data mode is the strongest, most explicit signal, so it wins over any manual quality pick.
+    if (lowData?.()) return 'mobile';
+    const preferredQuality = imageQuality?.();
+    if (VIEWPORT_VARIANTS.has(preferredQuality)) return preferredQuality;
+    if (viewportWidth() <= 620) return 'mobile';
     if (viewportWidth() <= 900) return 'tablet';
     return 'desktop';
   };

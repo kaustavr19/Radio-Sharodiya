@@ -194,6 +194,57 @@ test('catalogue data is separated, lazy loaded, cached and safe to render', () =
   assert.doesNotMatch(player, /const playlists = \{/);
 });
 
+test('low-data mode activates conservatively and never overrides an explicit choice', () => {
+  assert.match(player, /saveData: navigator\.connection\?\.saveData/);
+  assert.match(player, /navigator\.connection\?\.addEventListener\?\.\('change', \(\) => \{/);
+  assert.match(player, /if \(experiencePreferences\.lowData \|\| !navigator\.connection\.saveData \|\| experienceStorage\.hasValue\(\)\) return;/);
+  assert.match(player, /setLowDataPreference\(true, 'Low-data mode turned on for this data-saver connection\.'\);/);
+});
+
+test('artwork below the fold defers its download', () => {
+  assert.doesNotMatch(html, /style="--playlist-cover:/);
+  assert.match(html, /data-playlist="mahalaya" data-cover="\/assets\/playlist-covers\/mahalaya\.jpg"/);
+  assert.match(pujoCss, /var\(--playlist-cover, none\) center \/ cover no-repeat var\(--ink\)/);
+  assert.match(player, /const playlistCoverObserver = 'IntersectionObserver' in window/);
+  assert.match(player, /playlistCoverObserver\.unobserve\(entry\.target\)/);
+  assert.match(catalogueView, /loading="lazy" decoding="async"/);
+});
+
+test('offline listening surfaces a cached catalogue and saves the queue immediately', () => {
+  assert.match(html, /id="catalogue-cache-status"[^>]*hidden><\/p>/);
+  assert.match(player, /const catalogueCacheStatus = document\.querySelector\('#catalogue-cache-status'\);/);
+  assert.match(player, /const renderCatalogueCacheStatus = \(state\) => \{/);
+  assert.match(player, /cache: 'Catalogue available offline · Playing songs still needs a connection'/);
+  assert.match(player, /unavailable: 'Catalogue unavailable offline · Reconnect to browse songs'/);
+  assert.match(player, /renderCatalogueCacheStatus\(catalogue\.source\)/);
+  assert.match(player, /renderCatalogueCacheStatus\('unavailable'\)/);
+  const handleOffline = extractBlock(player, 'const handleOffline = () => {', 'const handleOnline = () => {');
+  assert.match(handleOffline, /saveContinuity\(\);/);
+});
+
+test('a manual image-quality preference is available and Low-data always overrides it', () => {
+  assert.match(sceneManager, /if \(lowData\?\.\(\)\) return 'mobile';/);
+  assert.match(sceneManager, /const preferredQuality = imageQuality\?\.\(\);/);
+  assert.match(sceneManager, /if \(VIEWPORT_VARIANTS\.has\(preferredQuality\)\) return preferredQuality;/);
+  assert.match(html, /data-image-quality="auto" aria-pressed="true">Auto<\/button>/);
+  assert.match(html, /data-image-quality="mobile"[^>]*>Data saver<\/button>/);
+  assert.match(html, /data-image-quality="tablet"[^>]*>Standard<\/button>/);
+  assert.match(html, /data-image-quality="desktop"[^>]*>High<\/button>/);
+  assert.match(player, /imageQuality: \(\) => experiencePreferences\.imageQuality,/);
+  assert.match(player, /button\.disabled = experiencePreferences\.lowData;/);
+});
+
+test('repeated slow loads offer a dismissible, cooldown-limited fewer-visuals nudge', () => {
+  assert.match(player, /const SLOW_STARTUP_MS = 6000;/);
+  assert.match(player, /const SLOW_STARTUP_SAMPLE_SIZE = 5;/);
+  assert.match(player, /const SLOW_STARTUP_THRESHOLD_COUNT = 3;/);
+  assert.match(player, /const DATA_NUDGE_COOLDOWN_MS = 7 \* 24 \* 60 \* 60 \* 1000;/);
+  assert.match(player, /if \(experiencePreferences\.lowData \|\| !dataNudge\.hidden \|\| !updateToast\.hidden\) return;/);
+  assert.match(player, /maybeShowDataNudge\(\);/);
+  assert.match(html, /id="data-nudge"[^>]*hidden>/);
+  assert.match(html, /Turn on Low-data<\/button>/);
+});
+
 test('delivery contracts use Radio Sharodiya as the standalone root application', () => {
   assert.match(viteConfig, /app:\s*resolve\([^)]*'index\.html'/);
   assert.doesNotMatch(viteConfig, /hub:|legacyPujo:|pujo\/index\.html/);
