@@ -25,12 +25,12 @@ export default async function handler(request, response) {
     }
 
     const expectedHash = hashAccessCode({ email, code, purpose: 'tester', secret: config.sessionSecret });
-    const valid = tester?.status === 'invited'
+    const valid = ['invited', 'active'].includes(tester?.status)
       && accessCodeMatches(tester.invite_code_hash, expectedHash)
       && new Date(tester.invite_expires_at).getTime() > now;
 
     if (!valid) {
-      if (tester?.status === 'invited') {
+      if (['invited', 'active'].includes(tester?.status)) {
         const attempts = Number(tester.failed_attempts || 0) + 1;
         await updateTester(config, email, {
           failed_attempts: attempts >= MAX_ATTEMPTS ? 0 : attempts,
@@ -43,7 +43,7 @@ export default async function handler(request, response) {
 
     const active = await updateTester(config, email, {
       status: 'active',
-      activated_at: new Date().toISOString(),
+      activated_at: tester.activated_at || new Date().toISOString(),
       invite_code_hash: null,
       invite_expires_at: null,
       failed_attempts: 0,

@@ -76,6 +76,8 @@ button { color: inherit; }
 .beta-gate-panel form button:disabled { cursor: wait; opacity: .62; }
 .beta-gate-panel form button i { font: normal 1.1rem var(--font-ui); }
 .beta-text-action { width: max-content; max-width: 100%; margin-top: 1.1rem; padding: .3rem 0; border: 0; border-bottom: 1px solid rgba(255,245,220,.3); background: transparent; color: rgba(255,245,220,.7); cursor: pointer; font-size: .7rem; }
+.beta-panel-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1.15rem; margin-top: .8rem; }
+.beta-panel-actions .beta-text-action { margin-top: 0; }
 .beta-text-action:hover { border-color: var(--marigold); color: var(--marigold); }
 .beta-requested-panel { justify-items: start; }
 .beta-request-mark { width: 3.2rem; aspect-ratio: 1; display: grid; place-items: center; margin-bottom: 1.2rem; border: 1px solid rgba(185,238,150,.45); border-radius: 50%; color: #b9ee96; font-size: 1.25rem; }

@@ -9,11 +9,12 @@ The beta layer is a controlled-access gate around the existing static radio. It 
 3. The administrator signs in at `/beta-admin` using a one-time code sent only to `BETA_ADMIN_EMAIL`.
 4. **Approve & send** creates a new six-digit code, stores only its HMAC hash, expires it after 48 hours, and emails it to the requested address.
 5. The tester enters the same email and code. A successful verification activates the tester and sets a signed, HTTP-only, same-site session cookie for 90 days. Each successful tester session check on page load renews the token and cookie for another 90 days, after confirming active status and session version. Existing valid 14-day sessions receive this extension on their next visit.
-6. Revoking a tester increments their session version, invalidating existing sessions on the next access check.
+6. An active tester signing in on another browser or after losing their cookie can request a fresh 15-minute code using the approved email address. The response does not reveal whether an address is approved. Issuing and using this code preserves the tester's active sessions on other devices.
+7. Revoking a tester increments their session version, invalidating existing sessions on the next access check.
 
 Five failed code attempts lock verification for 15 minutes. Administrator codes expire after 15 minutes and administrator sessions after eight hours.
 
-Expired sessions cannot be renewed. Testers whose session has expired, who clear cookies, or who use another browser still need a new invitation code from the administrator. Self-service returning-user login is not implemented.
+Expired sessions cannot be renewed directly. Testers whose session has expired, who clear cookies, or who use another browser can request a fresh sign-in code without another administrator action, provided their tester record is still active.
 
 ## Services
 

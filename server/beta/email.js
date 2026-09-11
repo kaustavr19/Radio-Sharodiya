@@ -42,6 +42,19 @@ export const sendTesterInvitation = (config, { email, name, code, expiresAt }) =
   });
 };
 
+export const sendTesterSignInCode = (config, { email, name, code, expiresAt }) => {
+  const greeting = name ? `Hello ${name},` : 'Hello,';
+  const expiry = new Intl.DateTimeFormat('en-IN', { timeStyle: 'short', timeZone: 'Asia/Kolkata' }).format(new Date(expiresAt));
+  const accessUrl = `${config.siteUrl || ''}/?beta=access`;
+  return sendEmail(config, {
+    to: email,
+    subject: 'Your Radio Sharodiya sign-in code',
+    idempotencyKey: `beta-returning-${Buffer.from(`${email}:${expiresAt}`).toString('base64url').slice(0, 180)}`,
+    text: `${greeting}\n\nUse this code to sign in to the Radio Sharodiya beta on this browser or device.\n\nSign-in code: ${code}\n\nThis code expires at ${expiry}. Open ${accessUrl} and enter this email address with the code.\n\nRadio Sharodiya`,
+    html: `<div style="max-width:560px;margin:auto;padding:32px;background:#f3ead6;color:#18201e;font:16px/1.6 Georgia,serif"><p>${escapeHtml(greeting)}</p><h1 style="font-size:30px;line-height:1.1">Return to your frequency.</h1><p>Use this code to sign in to the Radio Sharodiya beta on this browser or device.</p>${codeMarkup(code)}<p>This code expires at <strong>${escapeHtml(expiry)}</strong>.</p><p><a href="${escapeHtml(accessUrl)}" style="color:#9d3e27">Open Radio Sharodiya</a></p><p style="font-size:13px;opacity:.72">If you did not request this code, you can ignore this email.</p></div>`,
+  });
+};
+
 export const sendAdminAccessCode = (config, { code, expiresAt }) => {
   const expiry = new Intl.DateTimeFormat('en-IN', { timeStyle: 'short', timeZone: 'Asia/Kolkata' }).format(new Date(expiresAt));
   return sendEmail(config, {

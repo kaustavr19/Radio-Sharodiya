@@ -2,11 +2,13 @@ const betaGate = document.querySelector('#beta-gate');
 const loadingPanel = document.querySelector('#beta-gate-loading');
 const requestPanel = document.querySelector('#beta-request-panel');
 const accessPanel = document.querySelector('#beta-access-panel');
+const returningPanel = document.querySelector('#beta-returning-panel');
 const requestedPanel = document.querySelector('#beta-requested-panel');
 const requestForm = document.querySelector('#beta-request-form');
 const accessForm = document.querySelector('#beta-access-form');
+const returningForm = document.querySelector('#beta-returning-form');
 const statusMessage = document.querySelector('#beta-form-status');
-const panels = { request: requestPanel, access: accessPanel, requested: requestedPanel };
+const panels = { request: requestPanel, access: accessPanel, returning: returningPanel, requested: requestedPanel };
 const gateEnabled = import.meta.env.VITE_BETA_GATE_ENABLED === 'true';
 const preview = import.meta.env.DEV ? new URLSearchParams(window.location.search).get('beta-preview') : '';
 
@@ -72,6 +74,28 @@ requestForm.addEventListener('submit', async (event) => {
     });
     document.querySelector('#beta-requested-message').textContent = result.message;
     showPanel('requested');
+  } catch (error) {
+    setStatus(error.message, 'error');
+  } finally {
+    submit.disabled = false;
+  }
+});
+
+returningForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const submit = returningForm.querySelector('button[type="submit"]');
+  submit.disabled = true;
+  setStatus('Requesting a fresh sign-in code…');
+  try {
+    const form = new FormData(returningForm);
+    const email = String(form.get('email') || '');
+    const result = await api('/api/beta/returning', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    });
+    accessForm.elements.email.value = email;
+    showPanel('access');
+    setStatus(result.message);
   } catch (error) {
     setStatus(error.message, 'error');
   } finally {

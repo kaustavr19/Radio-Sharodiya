@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import sessionHandler from '../api/beta/session.js';
+import returningHandler from '../api/beta/returning.js';
 import verifyHandler from '../api/beta/verify.js';
 import { normalizeSupabaseUrl } from '../server/beta/config.js';
 import {
@@ -16,6 +17,18 @@ import {
 } from '../server/beta/security.js';
 
 const secret = 'a-test-secret-that-is-longer-than-thirty-two-characters';
+
+const invoke = async (handler, { method = 'POST', body, token } = {}) => {
+  const result = { headers: {} };
+  await handler({ method, body, headers: {
+    cookie: token ? `rs_beta_session=${token}` : '', 'x-forwarded-proto': 'https',
+  } }, {
+    setHeader: (key, value) => { result.headers[key] = value; },
+    set statusCode(value) { result.status = value; },
+    end: (value) => { result.body = JSON.parse(value); },
+  });
+  return result;
+};
 
 test('tester login and renewal use 90 days without renewing invalid or admin sessions', async (t) => {
   const env = {
@@ -39,17 +52,6 @@ test('tester login and renewal use 90 days without renewing invalid or admin ses
     if (options.method === 'PATCH') tester = { ...tester, ...JSON.parse(options.body) };
     return { ok: true, text: async () => JSON.stringify(tester ? [tester] : []) };
   });
-  const invoke = async (handler, token, body) => {
-    const result = { headers: {} };
-    await handler({ method: body ? 'POST' : 'GET', body, headers: {
-      cookie: token ? `rs_beta_session=${token}` : '', 'x-forwarded-proto': 'https',
-    } }, {
-      setHeader: (key, value) => { result.headers[key] = value; },
-      set statusCode(value) { result.status = value; },
-      end: (value) => { result.body = JSON.parse(value); },
-    });
-    return result;
-  };
   const token = (ttlSeconds, role = 'tester', version = 4) => createSessionToken({
     email: role === 'admin' ? env.BETA_ADMIN_EMAIL : email, role, version, ttlSeconds, secret,
   });
@@ -64,31 +66,93 @@ test('tester login and renewal use 90 days without renewing invalid or admin ses
     assert.equal(renewed.version, 4);
     assert.equal(renewed.role, 'tester');
   };
-  checkRenewed(await invoke(sessionHandler, token(14 * 24 * 3600)));
-  checkRenewed(await invoke(sessionHandler, token(1)));
+  checkRenewed(await invoke(sessionHandler, { method: 'GET', token: token(14 * 24 * 3600) }));
+  checkRenewed(await invoke(sessionHandler, { method: 'GET', token: token(1) }));
   for (const invalid of [undefined, token(0), `${token(3600)}x`, token(3600, 'tester', 3)]) {
-    const result = await invoke(sessionHandler, invalid);
+    const result = await invoke(sessionHandler, { method: 'GET', token: invalid });
     assert.equal(result.body.authenticated, false);
     assert.equal(result.headers['Set-Cookie'], undefined);
   }
   for (const status of ['revoked', 'rejected', 'pending', 'invited']) {
     tester.status = status;
-    const result = await invoke(sessionHandler, token(3600));
+    const result = await invoke(sessionHandler, { method: 'GET', token: token(3600) });
     assert.equal(result.body.authenticated, false);
     assert.equal(result.headers['Set-Cookie'], undefined);
   }
   tester = undefined;
-  assert.equal((await invoke(sessionHandler, token(3600))).body.authenticated, false);
-  const admin = await invoke(sessionHandler, token(3600, 'admin'));
+  assert.equal((await invoke(sessionHandler, { method: 'GET', token: token(3600) })).body.authenticated, false);
+  const admin = await invoke(sessionHandler, { method: 'GET', token: token(3600, 'admin') });
   assert.equal(admin.body.role, 'admin');
   assert.equal(admin.headers['Set-Cookie'], undefined);
   tester = { email, status: 'invited', session_version: 4,
     invite_code_hash: hashAccessCode({ email, code: '123456', purpose: 'tester', secret }),
     invite_expires_at: new Date(now + 3600_000).toISOString(),
   };
-  checkRenewed(await invoke(verifyHandler, undefined, { email, code: '123456' }));
+  checkRenewed(await invoke(verifyHandler, { body: { email, code: '123456' } }));
   assert.equal(tester.status, 'active');
   assert.equal(tester.invite_code_hash, null);
+});
+
+test('active testers can request a fresh code without invalidating other sessions', async (t) => {
+  const env = {
+    BETA_SESSION_SECRET: secret, BETA_ADMIN_EMAIL: 'admin@example.com',
+    BETA_FROM_EMAIL: 'test@example.com', RESEND_API_KEY: 'test',
+    SUPABASE_SECRET_KEY: 'test', SUPABASE_URL: 'https://example.invalid',
+    BETA_SITE_URL: 'https://radio.example.com',
+  };
+  const original = Object.fromEntries(Object.keys(env).map((key) => [key, process.env[key]]));
+  Object.assign(process.env, env);
+  t.after(() => {
+    for (const [key, value] of Object.entries(original)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  });
+
+  const now = 1_800_000_000_000;
+  t.mock.method(Date, 'now', () => now);
+  const email = 'returning@example.com';
+  let tester = { email, name: 'Returning Listener', status: 'active', session_version: 7, activated_at: '2026-01-01T00:00:00.000Z', invite_sent_at: null };
+  let emailPayload;
+  let emailCount = 0;
+  t.mock.method(globalThis, 'fetch', async (url, options = {}) => {
+    if (String(url).includes('api.resend.com')) {
+      emailCount += 1;
+      emailPayload = JSON.parse(options.body);
+      return { ok: true, json: async () => ({ id: 'email-1' }) };
+    }
+    if (options.method === 'PATCH') tester = { ...tester, ...JSON.parse(options.body) };
+    return { ok: true, text: async () => JSON.stringify(tester ? [tester] : []) };
+  });
+
+  const requested = await invoke(returningHandler, { body: { email } });
+  assert.equal(requested.status, 202);
+  assert.match(requested.body.message, /If this email has approved beta access/);
+  assert.equal(tester.status, 'active');
+  assert.equal(tester.session_version, 7);
+  assert.equal(tester.invite_expires_at, new Date(now + 15 * 60_000).toISOString());
+  assert.match(emailPayload.subject, /sign-in code/i);
+  const code = emailPayload.text.match(/Sign-in code: (\d{6})/)?.[1];
+  assert.match(code, /^\d{6}$/);
+
+  const repeated = await invoke(returningHandler, { body: { email } });
+  assert.equal(repeated.status, 202);
+  assert.equal(repeated.body.message, requested.body.message);
+  assert.equal(emailCount, 1);
+
+  const signedIn = await invoke(verifyHandler, { body: { email, code } });
+  assert.equal(signedIn.status, 200);
+  assert.equal(signedIn.body.authenticated, true);
+  assert.equal(tester.status, 'active');
+  assert.equal(tester.session_version, 7);
+  assert.equal(tester.activated_at, '2026-01-01T00:00:00.000Z');
+
+  emailPayload = undefined;
+  tester = undefined;
+  const unknown = await invoke(returningHandler, { body: { email: 'unknown@example.com' } });
+  assert.equal(unknown.status, 202);
+  assert.equal(unknown.body.message, requested.body.message);
+  assert.equal(emailPayload, undefined);
 });
 
 test('Supabase project and Data API URLs resolve to the same base', () => {
@@ -145,9 +209,11 @@ test('beta UI, admin actions and private server boundary stay connected', () => 
 
   assert.match(html, /id="beta-request-form"/);
   assert.match(html, /id="beta-access-form"/);
+  assert.match(html, /id="beta-returning-form"/);
   assert.match(gate, /VITE_BETA_GATE_ENABLED === 'true'/);
   assert.match(gate, /\/api\/beta\/session/);
   assert.match(gate, /\/api\/beta\/verify/);
+  assert.match(gate, /\/api\/beta\/returning/);
   assert.match(styles, /\.beta-gate \{ grid-template-rows: auto auto auto; align-content: start;/);
   assert.match(styles, /env\(safe-area-inset-top\)/);
   assert.match(adminHtml, /id="desk-dashboard"/);

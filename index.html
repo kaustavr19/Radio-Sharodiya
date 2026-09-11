@@ -47,13 +47,16 @@
               <input id="beta-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" />
               <button type="submit"><span>Request beta access</span><i aria-hidden="true">→</i></button>
             </form>
-            <button class="beta-text-action" type="button" data-beta-show="access">Already have a code? Enter it here</button>
+            <div class="beta-panel-actions">
+              <button class="beta-text-action" type="button" data-beta-show="access">Already have a code? Enter it here</button>
+              <button class="beta-text-action" type="button" data-beta-show="returning">Already approved? Get a new code</button>
+            </div>
           </div>
 
           <div class="beta-gate-panel" id="beta-access-panel" hidden>
-            <span class="beta-card-label">Invitation received</span>
+            <span class="beta-card-label">Sign-in code received</span>
             <h2>Tune into the beta.</h2>
-            <p>Use the same email address you requested access with and the six-digit code we sent you.</p>
+            <p>Use your approved email address and the six-digit code we sent you.</p>
             <form id="beta-access-form">
               <label for="beta-access-email">Approved email</label>
               <input id="beta-access-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" />
@@ -61,7 +64,25 @@
               <input id="beta-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" minlength="6" maxlength="6" pattern="[0-9]{6}" required placeholder="000000" />
               <button type="submit"><span>Open Radio Sharodiya</span><i aria-hidden="true">→</i></button>
             </form>
-            <button class="beta-text-action" type="button" data-beta-show="request">Need an invitation? Request access</button>
+            <div class="beta-panel-actions">
+              <button class="beta-text-action" type="button" data-beta-show="returning">Need a new code? Email me one</button>
+              <button class="beta-text-action" type="button" data-beta-show="request">Need approval? Request access</button>
+            </div>
+          </div>
+
+          <div class="beta-gate-panel" id="beta-returning-panel" hidden>
+            <span class="beta-card-label">Returning listener</span>
+            <h2>Come back to the frequency.</h2>
+            <p>If this email has already been approved, we’ll send a fresh sign-in code. Your access on other devices will stay active.</p>
+            <form id="beta-returning-form">
+              <label for="beta-returning-email">Approved email</label>
+              <input id="beta-returning-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" />
+              <button type="submit"><span>Email me a sign-in code</span><i aria-hidden="true">→</i></button>
+            </form>
+            <div class="beta-panel-actions">
+              <button class="beta-text-action" type="button" data-beta-show="access">I already have a code</button>
+              <button class="beta-text-action" type="button" data-beta-show="request">I still need approval</button>
+            </div>
           </div>
 
           <div class="beta-gate-panel beta-requested-panel" id="beta-requested-panel" hidden>
