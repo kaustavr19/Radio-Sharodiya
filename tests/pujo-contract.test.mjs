@@ -342,6 +342,15 @@ test('desktop hero reserves the player in layout and compacts for short screens'
   assert.doesNotMatch(pujoCss, /\.hero \{[^}]*padding:[^;}]*17rem/);
 });
 
+test('large displays scale as a system and TV remotes keep directional focus navigation', () => {
+  assert.match(pujoCss, /@media \(min-width: 1800px\) and \(min-height: 900px\) \{/);
+  assert.match(pujoCss, /:root \{ font-size: clamp\(18px,\.75vw,40px\); \}/);
+  assert.match(pujoCss, /\.broadcast-console \{ width: min\(76rem,62vw\); \}/);
+  assert.match(pujoCss, /\.countdown \{ right: max\(3rem,5vw\); width: clamp\(17\.5rem,18vw,22rem\); \}/);
+  assert.match(player, /const tvRemote = window\.matchMedia\('\(hover: none\) and \(pointer: coarse\), \(hover: none\) and \(pointer: none\)'\)\.matches/);
+  assert.match(player, /Math\.abs\(primary\) \* 4 \+ Math\.abs\(secondary\)/);
+});
+
 test('starting programme or live-radio playback switches para atmosphere off', () => {
   const stopAtmosphere = extractBlock(player, 'const stopParaAtmosphereForPlayback = () => {', 'atmosphereAudio.addEventListener');
   const setTrack = extractBlock(player, 'const setCurrentTrack = (track, autoplay = false', 'const addToQueue');

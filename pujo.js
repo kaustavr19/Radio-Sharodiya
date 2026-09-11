@@ -2181,6 +2181,36 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && document.body.classList.contains('live-room-open')) { closeLiveRadio(); return; }
   if (event.key === 'Escape' && document.body.classList.contains('room-open')) { closeRoom(); return; }
   const openDialog = document.body.classList.contains('station-info-open') ? stationInfoDialog : document.body.classList.contains('queue-open') ? queuePane : document.body.classList.contains('live-room-open') ? liveRadioRoom : document.body.classList.contains('room-open') ? room : undefined;
+  const tvRemote = window.matchMedia('(hover: none) and (pointer: coarse), (hover: none) and (pointer: none)').matches;
+  if (tvRemote && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key) && !['INPUT', 'TEXTAREA'].includes(event.target.tagName)) {
+    const scope = openDialog || document;
+    const controls = [...scope.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),[role="slider"][tabindex="0"]')]
+      .filter((element) => !element.hidden && !element.closest('[hidden]') && element.getClientRects().length);
+    const current = document.activeElement;
+    if (!controls.includes(current)) {
+      (scope.querySelector('.hero-choose') || controls[0])?.focus();
+      event.preventDefault();
+      return;
+    }
+    const currentBounds = current.getBoundingClientRect();
+    const currentCenter = { x: currentBounds.left + currentBounds.width / 2, y: currentBounds.top + currentBounds.height / 2 };
+    const horizontal = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
+    const direction = event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1;
+    const next = controls
+      .filter((element) => element !== current)
+      .map((element) => {
+        const bounds = element.getBoundingClientRect();
+        const center = { x: bounds.left + bounds.width / 2, y: bounds.top + bounds.height / 2 };
+        const primary = horizontal ? center.x - currentCenter.x : center.y - currentCenter.y;
+        const secondary = horizontal ? center.y - currentCenter.y : center.x - currentCenter.x;
+        return { element, primary, score: Math.abs(primary) * 4 + Math.abs(secondary) };
+      })
+      .filter((candidate) => Math.sign(candidate.primary) === direction)
+      .sort((a, b) => a.score - b.score)[0]?.element;
+    if (next) next.focus();
+    event.preventDefault();
+    return;
+  }
   if (event.key === 'Tab' && openDialog) {
     const focusable = [...openDialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter((element) => !element.hidden && element.getClientRects().length);
     if (focusable.length) {

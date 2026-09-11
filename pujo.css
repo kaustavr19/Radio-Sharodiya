@@ -1380,3 +1380,22 @@ body.station-info-open { overflow: hidden; }
   body.mobile-player-open .broadcast-console .console-controls { grid-column: 2; grid-row: 2; align-self: start; }
   body.mobile-player-open .broadcast-console .live-broadcast-art { width: 7rem; }
 }
+
+@media (min-width: 1800px) and (min-height: 900px) {
+  :root { font-size: clamp(18px,.75vw,40px); }
+  .station-nav { padding-inline: max(3rem,5vw); }
+  .hero { padding-inline: max(3rem,6vw); }
+  .hero-copy { max-width: 58rem; }
+  .hero h1 { font-size: clamp(5rem,min(7vw,12vh),10rem); }
+  .hero-intro { max-width: 36rem; }
+  .countdown { right: max(3rem,5vw); width: clamp(17.5rem,18vw,22rem); }
+  .broadcast-console { width: min(76rem,62vw); }
+  .station-nav a:focus-visible,
+  .station-nav button:focus-visible,
+  .hero button:focus-visible,
+  .broadcast-console button:focus-visible,
+  .broadcast-console [role="slider"]:focus-visible {
+    outline: max(3px,.14rem) solid var(--marigold);
+    outline-offset: max(4px,.2rem);
+  }
+}
