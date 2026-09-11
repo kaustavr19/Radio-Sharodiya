@@ -558,6 +558,26 @@ const updateCatalogueDiscovery = () => {
 
 updateCatalogueDiscovery();
 
+const loadPlaylistCover = (button) => {
+  const url = button.dataset.cover;
+  if (!url) return;
+  button.style.setProperty('--playlist-cover', `url("${url}")`);
+  delete button.dataset.cover;
+};
+const playlistCoverObserver = 'IntersectionObserver' in window
+  ? new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      loadPlaylistCover(entry.target);
+      playlistCoverObserver.unobserve(entry.target);
+    });
+  }, { rootMargin: '200px 0px' })
+  : undefined;
+playlistGrid.querySelectorAll('[data-cover]').forEach((button) => {
+  if (playlistCoverObserver) playlistCoverObserver.observe(button);
+  else loadPlaylistCover(button);
+});
+
 const hydrateCatalogue = (catalogue) => {
   const currentTrackId = currentTrack?.id;
   const queueIds = queue.map((track) => track.id);

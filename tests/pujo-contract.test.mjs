@@ -201,6 +201,15 @@ test('low-data mode activates conservatively and never overrides an explicit cho
   assert.match(player, /setLowDataPreference\(true, 'Low-data mode turned on for this data-saver connection\.'\);/);
 });
 
+test('artwork below the fold defers its download', () => {
+  assert.doesNotMatch(html, /style="--playlist-cover:/);
+  assert.match(html, /data-playlist="mahalaya" data-cover="\/assets\/playlist-covers\/mahalaya\.jpg"/);
+  assert.match(pujoCss, /var\(--playlist-cover, none\) center \/ cover no-repeat var\(--ink\)/);
+  assert.match(player, /const playlistCoverObserver = 'IntersectionObserver' in window/);
+  assert.match(player, /playlistCoverObserver\.unobserve\(entry\.target\)/);
+  assert.match(catalogueView, /loading="lazy" decoding="async"/);
+});
+
 test('offline listening surfaces a cached catalogue and saves the queue immediately', () => {
   assert.match(html, /id="catalogue-cache-status"[^>]*hidden><\/p>/);
   assert.match(player, /const catalogueCacheStatus = document\.querySelector\('#catalogue-cache-status'\);/);

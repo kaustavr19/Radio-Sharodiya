@@ -10,6 +10,7 @@ This contract records the user-facing behaviour that performance and architectur
 - Catalogue browsing alone must not replace the landing scene or hero copy.
 - The catalogue is a modal surface with a clear close action and focus return.
 - Selecting a playlist shows its complete available track list in playlist order.
+- Playlist cover art and track thumbnails only download once their card scrolls near the viewport; none of it is requested before the catalogue is opened.
 
 ## Playlist actions
 

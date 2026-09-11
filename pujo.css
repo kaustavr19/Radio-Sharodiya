@@ -443,7 +443,7 @@ body.live-radio-active:not(.live-room-open) .broadcast-console > .console-main {
 .archive-room .archive-title-block, .archive-room .cassette-stack { margin-top: 3rem; }
 
 .playlist-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1px; background: var(--catalogue-line); box-shadow: 0 1.2rem 4rem rgba(3,8,7,.18); }
-.playlist-grid button { position: relative; isolation: isolate; min-height: 15rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; overflow: hidden; padding: 1.2rem; border: 0; background: linear-gradient(180deg,rgba(4,10,9,.16) 25%,rgba(4,10,9,.94) 100%), var(--playlist-cover) center / cover no-repeat; color: var(--shiuli); text-align: left; cursor: pointer; }
+.playlist-grid button { position: relative; isolation: isolate; min-height: 15rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; overflow: hidden; padding: 1.2rem; border: 0; background: linear-gradient(180deg,rgba(4,10,9,.16) 25%,rgba(4,10,9,.94) 100%), var(--playlist-cover, none) center / cover no-repeat var(--ink); color: var(--shiuli); text-align: left; cursor: pointer; }
 .playlist-grid button::after { content: ''; position: absolute; z-index: -1; inset: 0; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); transition: background .25s ease, box-shadow .25s ease; }
 .playlist-grid button:hover::after { background: rgba(238,163,35,.16); box-shadow: inset 0 0 0 2px var(--marigold); }
 .playlist-grid span, .playlist-grid i { font: normal .66rem "Space Mono", monospace; letter-spacing: .04em; text-transform: uppercase; }
