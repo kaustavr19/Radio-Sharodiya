@@ -332,6 +332,16 @@ test('hero typography protects the transmitting label at changing viewport propo
   assert.match(pujoCss, /h1 \{[^}]*padding-top: \.12em;[^}]*font-size: clamp\(4rem, min\(8\.5vw,13vh\), 8rem\);[^}]*line-height: \.88;/);
 });
 
+test('desktop hero reserves the player in layout and compacts for short screens', () => {
+  assert.match(pujoCss, /\.hero \{[^}]*min-height: 100svh;[^}]*overflow: clip;/);
+  assert.match(pujoCss, /\.hero \{[^}]*grid-template-columns: minmax\(0,1fr\);/);
+  assert.match(pujoCss, /\.hero \{[^}]*grid-template-rows: minmax\(0,1fr\) auto;/);
+  assert.match(pujoCss, /\.broadcast-console \{[^}]*position: relative;[^}]*grid-row: 2;[^}]*justify-self: center;/);
+  assert.match(pujoCss, /@media \(min-width: 621px\) and \(max-height: 850px\) \{[\s\S]*?\.hero-copy \{[^}]*transform: none;/);
+  assert.match(player, /import\.meta\.env\.DEV[\s\S]*layout-preview[\s\S]*continueListening\.hidden = false/);
+  assert.doesNotMatch(pujoCss, /\.hero \{[^}]*padding:[^;}]*17rem/);
+});
+
 test('starting programme or live-radio playback switches para atmosphere off', () => {
   const stopAtmosphere = extractBlock(player, 'const stopParaAtmosphereForPlayback = () => {', 'atmosphereAudio.addEventListener');
   const setTrack = extractBlock(player, 'const setCurrentTrack = (track, autoplay = false', 'const addToQueue');

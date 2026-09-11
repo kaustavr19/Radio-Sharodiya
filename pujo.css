@@ -132,7 +132,7 @@ button { color: inherit; }
   .nav-pill { gap: .45rem; padding-inline: .72rem; }
 }
 
-.hero { height: 100vh; height: 100svh; min-height: 100svh; position: relative; overflow: hidden; display: grid; align-items: center; padding: clamp(7rem,12vh,9rem) clamp(1.25rem, 6vw, 7rem) clamp(17rem,30vh,20rem); isolation: isolate; }
+.hero { min-height: 100vh; min-height: 100svh; position: relative; overflow: clip; display: grid; grid-template-columns: minmax(0,1fr); grid-template-rows: minmax(0,1fr) auto; align-items: center; row-gap: clamp(1rem,2.5vh,2rem); padding: clamp(7rem,12vh,9rem) clamp(1.25rem, 6vw, 7rem) clamp(1rem,3vh,2rem); isolation: isolate; }
 .hero-art { position: absolute; z-index: -4; inset: -.7rem; background: var(--scene-image, var(--default-scene-image)) center 45% / cover no-repeat; opacity: 0; transform: translate3d(var(--parallax-x,0),var(--parallax-y,0),0) scale(1.04); transition: opacity 1.6s ease, transform 7s ease; }
 .hero-art.is-visible { opacity: 1; transform: translate3d(var(--parallax-x,0),var(--parallax-y,0),0) scale(1.025); }
 .hero-wash { position: absolute; z-index: -3; inset: 0; background: linear-gradient(90deg, rgba(17,25,23,.92) 0%, rgba(23,31,28,.5) 42%, rgba(27,30,24,.06) 68%), linear-gradient(0deg, rgba(16,22,20,.92) 0%, transparent 42%, rgba(16,22,20,.3) 100%); }
@@ -217,7 +217,7 @@ body[data-motion="off"] .hero-art, body[data-motion="off"] .hero-copy { transiti
 body[data-motion="off"] .hero-grain, body[data-low-data="true"] .hero-grain { display: none; }
 body[data-low-data="true"] .hero-art { transition: none; }
 body[data-low-data="true"] * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-.broadcast-console { position: absolute; z-index: 30; right: auto; bottom: 5.2rem; left: 50%; transform: translateX(-50%); width: min(57rem, calc(100% - 2rem)); overflow: hidden; border: 1px solid rgba(255,255,255,.17); border-radius: 1rem; background: linear-gradient(110deg,rgba(16,18,22,.92),rgba(55,34,30,.88)); box-shadow: 0 1.125rem 3.45rem rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.055); backdrop-filter: blur(20px); transition: width .3s ease, bottom .3s ease, border-radius .3s ease; }
+.broadcast-console { position: relative; z-index: 30; grid-row: 2; justify-self: center; width: min(57rem,100%); overflow: hidden; border: 1px solid rgba(255,255,255,.17); border-radius: 1rem; background: linear-gradient(110deg,rgba(16,18,22,.92),rgba(55,34,30,.88)); box-shadow: 0 1.125rem 3.45rem rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.055); backdrop-filter: blur(20px); transition: width .3s ease, bottom .3s ease, border-radius .3s ease; }
 .continue-listening { min-height: 3.2rem; display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; gap: .75rem; padding: .55rem .7rem .55rem .9rem; border-bottom: 1px solid rgba(238,163,35,.28); background: linear-gradient(90deg,rgba(238,163,35,.16),rgba(255,255,255,.035)); }
 .continue-listening > div { min-width: 0; }
 .continue-listening > div span, .continue-listening > div strong { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
@@ -349,7 +349,7 @@ body[data-low-data="true"] * { -webkit-backdrop-filter: none !important; backdro
 body.queue-open { overflow: hidden; }
 
 body.room-open { overflow: hidden; }
-body.room-open .broadcast-console { position: fixed; z-index: 80; top: auto; bottom: 1rem; width: min(57rem,calc(100% - 2rem)); border-radius: .7rem; }
+body.room-open .broadcast-console { position: fixed; z-index: 80; top: auto; bottom: 1rem; left: 50%; transform: translateX(-50%); width: min(57rem,calc(100% - 2rem)); border-radius: .7rem; }
 body.room-open .continue-listening { display: none; }
 body.room-open .station-guide { display: none; }
 body.room-open .console-topline { display: none; }
@@ -682,9 +682,9 @@ body.station-info-open { overflow: hidden; }
     --golper-scene-image: url("/assets/optimized/golper-asor-night/golper-asor-night-tablet.webp");
     --golper-scene-image: image-set(url("/assets/optimized/golper-asor-night/golper-asor-night-tablet.avif") type("image/avif"), url("/assets/optimized/golper-asor-night/golper-asor-night-tablet.webp") type("image/webp"));
   }
-  .hero { height: 100svh; min-height: 100svh; padding: 7.5rem clamp(1.25rem,5vw,3rem) 21rem; }
+  .hero { min-height: 100svh; padding: 7.5rem clamp(1.25rem,5vw,3rem) 1.25rem; }
   .countdown { top: 6rem; }
-  .broadcast-console { bottom: 5.2rem; width: calc(100% - 2.5rem); }
+  .broadcast-console { width: 100%; }
   .console-main { grid-template-columns: minmax(15rem,1fr) auto; }
   .console-progress { grid-column: 1 / -1; grid-row: 2; }
   .console-controls { grid-column: 2; grid-row: 1; }
@@ -706,6 +706,33 @@ body.station-info-open { overflow: hidden; }
   .radio-tuner { grid-column: 1 / -1; grid-row: 2; }
   .live-broadcast-actions { grid-column: 2; grid-row: 1; }
   .detail-heading { grid-template-columns: 9rem minmax(0,1fr); }
+}
+
+@media (min-width: 621px) and (max-height: 850px) {
+  .hero {
+    row-gap: clamp(.7rem,1.5vh,1rem);
+    padding-top: clamp(5.7rem,9vh,6.7rem);
+    padding-bottom: clamp(.7rem,2vh,1.2rem);
+  }
+  .hero-copy { max-width: 48rem; transform: none; }
+  .hero-copy .eyebrow { margin-bottom: clamp(.7rem,1.5vh,1rem); }
+  .hero h1 { font-size: clamp(3.5rem,min(7.2vw,10.5vh),6.5rem); }
+  .hero-intro { margin: clamp(.7rem,1.6vh,1rem) 0; font-size: clamp(1rem,1.55vw,1.2rem); }
+  .hero-choose { min-height: 3.2rem; }
+  .countdown { top: 5.25rem; width: clamp(13rem,18vw,15rem); }
+  .countdown-day { min-height: 4.75rem; }
+  .countdown-number { font-size: clamp(3.25rem,5vw,4.25rem); }
+  .countdown-clock { min-height: 2.55rem; }
+  .continue-listening { min-height: 2.7rem; }
+  .station-guide { min-height: 3rem; }
+  .console-topline { min-height: 1.65rem; }
+  .console-main { min-height: 5.2rem; padding-block: .55rem; }
+  .programme-art { width: 4.35rem; }
+  .signal-waveform { height: 2.8rem; }
+}
+
+@media (min-width: 621px) and (max-width: 1050px) and (max-height: 850px) {
+  .hero-copy { min-width: 0; max-width: calc(100% - 14rem); }
 }
 
 @media (max-width: 620px) {
@@ -1334,9 +1361,9 @@ body.station-info-open { overflow: hidden; }
 @media (max-width: 900px) and (max-height: 500px) {
   .hero { min-height: 32rem; padding-top: 6rem; }
   .countdown { max-width: 18rem; }
-  .hero-copy { max-width: 22rem; transform: none; }
+  .hero-copy { max-width: 22rem; margin-top: -1rem; transform: none; }
   .hero-intro { display: none; }
-  h1 { font-size: 3.5rem; }
+  h1 { font-size: 3.25rem; }
   body.mobile-player-open .broadcast-console .console-main {
     width: min(100%,52rem);
     min-height: calc(100% - 4.25rem - env(safe-area-inset-top));

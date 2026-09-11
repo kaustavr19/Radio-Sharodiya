@@ -2228,6 +2228,11 @@ reducedMotionQuery.addEventListener?.('change', (event) => {
 const initializeStation = async () => {
   loadExperiencePreferences();
   await restoreContinuity();
+  if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('layout-preview') === 'continue') {
+    continueTitle.textContent = currentTrack.title;
+    resumeTime.textContent = '2:14';
+    continueListening.hidden = false;
+  }
   formatKolkata();
   updateCountdown();
   renderTracks(catalogueSequence);
