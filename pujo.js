@@ -192,6 +192,48 @@ let liveRadioReturnTarget;
 let liveRadioIsActive = false;
 let liveRadioController;
 let stationInfoReturnTarget;
+const tvPointerQuery = window.matchMedia('(hover: none) and (pointer: coarse), (hover: none) and (pointer: none)');
+const tvModePreference = new URLSearchParams(window.location.search).get('tv');
+const tvUserAgent = /Android TV|GoogleTV|AFT\w*|BRAVIA|SmartTV|SMART-TV|HbbTV|Tizen|WebOS|Web0S/i.test(navigator.userAgent);
+let tvNavigationMode = tvModePreference === '1' || (tvModePreference !== '0' && tvUserAgent);
+let tvBackStopArmed = false;
+let ignoreNextTVPop = false;
+let handlingTVPop = false;
+let tvBackSyncFrame;
+
+const hasOpenTVLayer = () => !stationInfoDialog.hidden
+  || queuePaneIsOpen()
+  || document.body.classList.contains('mobile-player-open')
+  || !liveRadioRoom.hidden
+  || !room.hidden
+  || !experiencePanel.hidden;
+
+const armTVBackStop = () => {
+  if (!tvNavigationMode || tvBackStopArmed || !hasOpenTVLayer()) return;
+  window.history.pushState({ ...(window.history.state || {}), radioSharodiyaTVLayer: true }, '');
+  tvBackStopArmed = true;
+};
+
+const syncTVBackStop = () => {
+  window.cancelAnimationFrame(tvBackSyncFrame);
+  tvBackSyncFrame = window.requestAnimationFrame(() => {
+    if (handlingTVPop) return;
+    if (hasOpenTVLayer()) { armTVBackStop(); return; }
+    if (!tvBackStopArmed || !window.history.state?.radioSharodiyaTVLayer) return;
+    tvBackStopArmed = false;
+    ignoreNextTVPop = true;
+    window.history.back();
+  });
+};
+
+const activateTVNavigation = () => {
+  if (tvNavigationMode) return;
+  tvNavigationMode = true;
+  document.body.classList.add('tv-navigation');
+  syncTVBackStop();
+};
+
+document.body.classList.toggle('tv-navigation', tvNavigationMode);
 
 const showStationInfoView = (view) => {
   const activeView = view === 'chai' ? 'chai' : 'about';
@@ -209,6 +251,7 @@ const openStationInfo = (view, opener) => {
   stationInfoDialog.setAttribute('aria-hidden', 'false');
   document.body.classList.add('station-info-open');
   stationInfoClose.focus();
+  syncTVBackStop();
 };
 
 const closeStationInfo = () => {
@@ -217,6 +260,7 @@ const closeStationInfo = () => {
   stationInfoDialog.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('station-info-open');
   stationInfoReturnTarget?.focus();
+  syncTVBackStop();
 };
 
 const setMobileTab = (name) => {
@@ -245,6 +289,7 @@ const setMobilePlayerExpanded = (open, { restoreFocus = true } = {}) => {
   }
   if (open) mobilePlayerDismiss.focus();
   else if (restoreFocus) mobilePlayerExpand.focus();
+  syncTVBackStop();
 };
 
 const defaultHeroPresentation = {
@@ -428,6 +473,7 @@ let catalogueSequence = playlists.mahalaya.tracks;
 let currentTrack = availableTracks(playlists.mahalaya.tracks)[0] || playlists.mahalaya.tracks[0];
 let queue = [currentTrack];
 let roomReturnTarget;
+let playlistReturnTarget;
 let queueReturnTarget;
 let queueCloseTimer;
 let isPlaying = false;
@@ -1290,6 +1336,7 @@ const openQueuePane = (opener = queueButton) => {
     queueScrim.classList.add('is-open');
     queuePaneClose.focus();
   });
+  syncTVBackStop();
 };
 
 const closeQueuePane = () => {
@@ -1306,13 +1353,17 @@ const closeQueuePane = () => {
     queuePaneList.replaceChildren();
   }, 320);
   queueReturnTarget?.focus();
+  syncTVBackStop();
 };
 
 const showOverview = () => {
   if (!detail.hidden && activePlaylistId) playlistScrollPositions.set(activePlaylistId, room.scrollTop);
   detail.hidden = true;
   overview.hidden = false;
-  window.requestAnimationFrame(() => { room.scrollTop = catalogueOverviewScroll; });
+  window.requestAnimationFrame(() => {
+    room.scrollTop = catalogueOverviewScroll;
+    if (tvNavigationMode) playlistReturnTarget?.focus();
+  });
 };
 
 const showPlaylist = async (playlistId) => {
@@ -1346,7 +1397,10 @@ const showPlaylist = async (playlistId) => {
   shuffleAllButton.disabled = playableCount === 0;
   addAllButton.disabled = playableCount === 0;
   renderTracks(playlist.tracks);
-  window.requestAnimationFrame(() => { room.scrollTop = playlistScrollPositions.get(playlistId) || 0; });
+  window.requestAnimationFrame(() => {
+    room.scrollTop = playlistScrollPositions.get(playlistId) || 0;
+    if (tvNavigationMode) detailBack.focus();
+  });
 };
 
 const closeRoom = () => {
@@ -1359,6 +1413,7 @@ const closeRoom = () => {
   document.body.classList.remove('room-open');
   if (mobileShellQuery.matches) setMobileTab('home');
   roomReturnTarget?.focus();
+  syncTVBackStop();
 };
 
 const renderLiveRadioConsole = ({ station, message, state, playing, volume }) => {
@@ -1405,6 +1460,7 @@ const closeLiveRadio = ({ stop = !liveRadioIsActive } = {}) => {
   document.body.classList.remove('room-open', 'live-room-open');
   if (mobileShellQuery.matches) setMobileTab(liveRadioIsActive ? 'radio' : 'home');
   liveRadioReturnTarget?.focus();
+  syncTVBackStop();
 };
 
 const deactivateLiveRadio = () => {
@@ -1432,6 +1488,7 @@ const openLiveRadio = (opener) => {
   liveRadioController.warm();
   liveRadioRoom.scrollTop = 0;
   window.requestAnimationFrame(() => liveRadioRoom.querySelector('[data-close-live-radio]').focus());
+  syncTVBackStop();
 };
 
 liveConsolePlay.addEventListener('click', () => liveRadioController.toggle());
@@ -1456,6 +1513,7 @@ const openCatalogue = (opener) => {
     renderCatalogueSearch();
   });
   window.requestAnimationFrame(() => room.querySelector('[data-close-room]').focus());
+  syncTVBackStop();
 };
 
 document.addEventListener('click', (event) => {
@@ -1467,7 +1525,12 @@ document.addEventListener('click', (event) => {
   if (event.target.closest('[data-close-room]')) closeRoom();
 });
 
-playlistGrid.addEventListener('click', (event) => { const button = event.target.closest('[data-playlist]'); if (button) void showPlaylist(button.dataset.playlist); });
+playlistGrid.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-playlist]');
+  if (!button) return;
+  playlistReturnTarget = button;
+  void showPlaylist(button.dataset.playlist);
+});
 detailBack.addEventListener('click', showOverview);
 catalogueSearchInput.addEventListener('input', () => {
   renderCatalogueSearch();
@@ -1702,6 +1765,7 @@ const setExperiencePanel = (open) => {
   experiencePanel.hidden = !open;
   experienceButton.setAttribute('aria-expanded', String(open));
   if (open) atmosphereButton.focus();
+  syncTVBackStop();
 };
 
 stationInfoOpeners.forEach((button) => button.addEventListener('click', () => openStationInfo(button.dataset.stationOpen, button)));
@@ -2173,22 +2237,64 @@ const setupMediaSession = () => {
   });
 };
 
+const closeTopTVLayer = () => {
+  if (document.body.classList.contains('station-info-open')) { closeStationInfo(); return true; }
+  if (document.body.classList.contains('queue-open')) { closeQueuePane(); return true; }
+  if (document.body.classList.contains('mobile-player-open')) { setMobilePlayerExpanded(false); return true; }
+  if (document.body.classList.contains('live-room-open')) { closeLiveRadio(); return true; }
+  if (document.body.classList.contains('room-open')) { closeRoom(); return true; }
+  if (!experiencePanel.hidden) { setExperiencePanel(false); experienceButton.focus(); return true; }
+  return false;
+};
+
+const ensureTVFocusVisible = (element) => window.requestAnimationFrame(() => {
+  element.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
+});
+
+const focusTVStart = () => {
+  if (!tvNavigationMode || document.activeElement !== document.body) return;
+  const betaGate = document.querySelector('#beta-gate:not([hidden])');
+  const target = betaGate?.querySelector('.beta-gate-panel:not([hidden]) input, .beta-gate-panel:not([hidden]) button')
+    || document.querySelector('.hero-choose');
+  target?.focus({ preventScroll: true });
+  if (target) ensureTVFocusVisible(target);
+};
+
+window.addEventListener('popstate', () => {
+  if (ignoreNextTVPop) { ignoreNextTVPop = false; return; }
+  if (!tvNavigationMode || !tvBackStopArmed) return;
+  tvBackStopArmed = false;
+  handlingTVPop = true;
+  const closed = closeTopTVLayer();
+  handlingTVPop = false;
+  if (closed) syncTVBackStop();
+});
+
+window.addEventListener('radio:unlocked', () => window.requestAnimationFrame(focusTVStart));
+
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && !experiencePanel.hidden) { setExperiencePanel(false); experienceButton.focus(); return; }
-  if (event.key === 'Escape' && document.body.classList.contains('station-info-open')) { closeStationInfo(); return; }
-  if (event.key === 'Escape' && document.body.classList.contains('queue-open')) { closeQueuePane(); return; }
-  if (event.key === 'Escape' && document.body.classList.contains('mobile-player-open')) { setMobilePlayerExpanded(false); return; }
-  if (event.key === 'Escape' && document.body.classList.contains('live-room-open')) { closeLiveRadio(); return; }
-  if (event.key === 'Escape' && document.body.classList.contains('room-open')) { closeRoom(); return; }
-  const openDialog = document.body.classList.contains('station-info-open') ? stationInfoDialog : document.body.classList.contains('queue-open') ? queuePane : document.body.classList.contains('live-room-open') ? liveRadioRoom : document.body.classList.contains('room-open') ? room : undefined;
-  const tvRemote = window.matchMedia('(hover: none) and (pointer: coarse), (hover: none) and (pointer: none)').matches;
-  if (tvRemote && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key) && !['INPUT', 'TEXTAREA'].includes(event.target.tagName)) {
+  const editable = ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName) || event.target.isContentEditable;
+  const backKey = ['Escape', 'BrowserBack', 'GoBack'].includes(event.key) || (event.key === 'Backspace' && !editable);
+  if (backKey && closeTopTVLayer()) { event.preventDefault(); return; }
+  const openDialog = document.body.classList.contains('station-info-open') ? stationInfoDialog
+    : document.body.classList.contains('queue-open') ? queuePane
+      : document.body.classList.contains('live-room-open') ? liveRadioRoom
+        : document.body.classList.contains('room-open') ? room
+          : !experiencePanel.hidden ? experiencePanel : undefined;
+  const directionalKey = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key);
+  const tvRemote = tvNavigationMode || tvPointerQuery.matches;
+  const textEntry = event.target.matches?.('input:not([type="range"]):not([type="checkbox"]):not([type="radio"])');
+  const directionalEditing = editable && (!textEntry || ['ArrowLeft', 'ArrowRight'].includes(event.key));
+  if (tvRemote && directionalKey && !directionalEditing) {
+    activateTVNavigation();
     const scope = openDialog || document;
-    const controls = [...scope.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),[role="slider"][tabindex="0"]')]
+    const controls = [...scope.querySelectorAll('button:not([disabled]),a[href]:not(.skip-link),input:not([disabled]),[role="slider"][tabindex="0"]')]
       .filter((element) => !element.hidden && !element.closest('[hidden]') && element.getClientRects().length);
     const current = document.activeElement;
     if (!controls.includes(current)) {
-      (scope.querySelector('.hero-choose') || controls[0])?.focus();
+      const first = scope.querySelector('.hero-choose') || controls[0];
+      first?.focus({ preventScroll: true });
+      if (first) ensureTVFocusVisible(first);
       event.preventDefault();
       return;
     }
@@ -2196,18 +2302,25 @@ document.addEventListener('keydown', (event) => {
     const currentCenter = { x: currentBounds.left + currentBounds.width / 2, y: currentBounds.top + currentBounds.height / 2 };
     const horizontal = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
     const direction = event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1;
-    const next = controls
+    const pickDirectionalControl = (candidates) => candidates
       .filter((element) => element !== current)
       .map((element) => {
         const bounds = element.getBoundingClientRect();
         const center = { x: bounds.left + bounds.width / 2, y: bounds.top + bounds.height / 2 };
         const primary = horizontal ? center.x - currentCenter.x : center.y - currentCenter.y;
         const secondary = horizontal ? center.y - currentCenter.y : center.x - currentCenter.x;
-        return { element, primary, score: Math.abs(primary) * 4 + Math.abs(secondary) };
+        return { element, primary, score: Math.abs(primary) + Math.abs(secondary) * 3 };
       })
       .filter((candidate) => Math.sign(candidate.primary) === direction)
       .sort((a, b) => a.score - b.score)[0]?.element;
-    if (next) next.focus();
+    const contentControls = room.contains(current) && !broadcastConsole.contains(current)
+      ? controls.filter((element) => !broadcastConsole.contains(element))
+      : controls;
+    const next = pickDirectionalControl(contentControls) || pickDirectionalControl(controls);
+    if (next) {
+      next.focus({ preventScroll: true });
+      ensureTVFocusVisible(next);
+    }
     event.preventDefault();
     return;
   }
@@ -2270,6 +2383,7 @@ const initializeStation = async () => {
   updateQueueCount();
   applyVolume();
   setupMediaSession();
+  window.requestAnimationFrame(focusTVStart);
 };
 
 void initializeStation();

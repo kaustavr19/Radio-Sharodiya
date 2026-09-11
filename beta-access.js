@@ -45,6 +45,7 @@ const unlockApplication = () => {
   betaGate.hidden = true;
   document.body.classList.remove('beta-access-pending');
   setApplicationLocked(false);
+  window.dispatchEvent(new Event('radio:unlocked'));
 };
 
 const api = async (path, options = {}) => {

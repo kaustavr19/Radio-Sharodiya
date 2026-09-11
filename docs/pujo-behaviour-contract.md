@@ -55,3 +55,13 @@ This contract records the user-facing behaviour that performance and architectur
 - The hub and Pujo Vibes remain separate build entries.
 - Production playback must not depend on an always-running application server.
 - Later phases may reduce media and rendering work without changing the contracts above.
+
+## TV browser interaction
+
+- TV mode activates automatically for recognised television browsers and when a remote supplies directional keys through a non-hover pointer environment. `?tv=1` forces the mode for uncommon browsers and testing; `?tv=0` disables user-agent activation.
+- The first directional key establishes spatial navigation and places focus on a visible primary action when nothing is focused.
+- Directional focus stays inside the open catalogue, live-radio room, queue, information dialog, or experience panel and scrolls the next control into view.
+- Focus styling remains clearly visible at television distance, with overscan-safe horizontal spacing.
+- Escape, BrowserBack, GoBack, and non-editing Backspace close the top interface layer before leaving the station.
+- In TV mode, a same-page history stop gives browser Back one opportunity to close an open layer. Browsers that reserve the hardware Back key still retain visible, focusable close controls.
+- Opening a playlist moves focus into its detail view; returning to the catalogue restores focus to the originating playlist.

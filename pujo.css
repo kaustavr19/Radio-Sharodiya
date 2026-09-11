@@ -1401,3 +1401,19 @@ body.station-info-open { overflow: hidden; }
     outline-offset: max(4px,.2rem);
   }
 }
+
+body.tv-navigation .station-nav,
+body.tv-navigation .hero,
+body.tv-navigation .pujo-footer { padding-right: max(2rem,5vw); padding-left: max(2rem,5vw); }
+body.tv-navigation .station-room { padding-right: max(2rem,5vw) !important; padding-left: max(2rem,5vw) !important; }
+body.tv-navigation .volume-slider { width: 5rem; margin-right: .25rem; opacity: 1; pointer-events: auto; }
+body.tv-navigation :is(button,a,input,[role="slider"]):focus {
+  outline: max(4px,.18rem) solid var(--marigold);
+  outline-offset: max(5px,.22rem);
+  box-shadow: 0 0 0 max(8px,.35rem) rgba(7,13,12,.72), 0 0 max(1.5rem,3vw) rgba(238,163,35,.48);
+}
+body.tv-navigation .playlist-grid button:focus::after { background: rgba(238,163,35,.2); box-shadow: inset 0 0 0 max(4px,.16rem) var(--marigold); }
+body.tv-navigation :is(.playlist-grid button,.live-station-grid button,.track-row,.queue-item,.experience-option) {
+  scroll-margin-block: max(6rem,10vh) max(14rem,24vh);
+  scroll-margin-inline: max(2rem,5vw);
+}
