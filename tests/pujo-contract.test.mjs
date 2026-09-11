@@ -222,6 +222,29 @@ test('offline listening surfaces a cached catalogue and saves the queue immediat
   assert.match(handleOffline, /saveContinuity\(\);/);
 });
 
+test('a manual image-quality preference is available and Low-data always overrides it', () => {
+  assert.match(sceneManager, /if \(lowData\?\.\(\)\) return 'mobile';/);
+  assert.match(sceneManager, /const preferredQuality = imageQuality\?\.\(\);/);
+  assert.match(sceneManager, /if \(VIEWPORT_VARIANTS\.has\(preferredQuality\)\) return preferredQuality;/);
+  assert.match(html, /data-image-quality="auto" aria-pressed="true">Auto<\/button>/);
+  assert.match(html, /data-image-quality="mobile"[^>]*>Data saver<\/button>/);
+  assert.match(html, /data-image-quality="tablet"[^>]*>Standard<\/button>/);
+  assert.match(html, /data-image-quality="desktop"[^>]*>High<\/button>/);
+  assert.match(player, /imageQuality: \(\) => experiencePreferences\.imageQuality,/);
+  assert.match(player, /button\.disabled = experiencePreferences\.lowData;/);
+});
+
+test('repeated slow loads offer a dismissible, cooldown-limited fewer-visuals nudge', () => {
+  assert.match(player, /const SLOW_STARTUP_MS = 6000;/);
+  assert.match(player, /const SLOW_STARTUP_SAMPLE_SIZE = 5;/);
+  assert.match(player, /const SLOW_STARTUP_THRESHOLD_COUNT = 3;/);
+  assert.match(player, /const DATA_NUDGE_COOLDOWN_MS = 7 \* 24 \* 60 \* 60 \* 1000;/);
+  assert.match(player, /if \(experiencePreferences\.lowData \|\| !dataNudge\.hidden \|\| !updateToast\.hidden\) return;/);
+  assert.match(player, /maybeShowDataNudge\(\);/);
+  assert.match(html, /id="data-nudge"[^>]*hidden>/);
+  assert.match(html, /Turn on Low-data<\/button>/);
+});
+
 test('delivery contracts use Radio Sharodiya as the standalone root application', () => {
   assert.match(viteConfig, /app:\s*resolve\([^)]*'index\.html'/);
   assert.doesNotMatch(viteConfig, /hub:|legacyPujo:|pujo\/index\.html/);

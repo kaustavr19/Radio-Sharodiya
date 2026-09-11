@@ -18,7 +18,7 @@ import {
 } from './pujo-catalogue.js';
 import { personalTrackMarkup, trackListMarkup } from './pujo-catalogue-view.js';
 import { createVersionedStorage } from './pujo-persistence.js';
-import { defaultExperiencePreferences, normalizeExperiencePreferences } from './pujo-experience-preferences.js';
+import { IMAGE_QUALITY_VALUES, defaultExperiencePreferences, normalizeExperiencePreferences } from './pujo-experience-preferences.js';
 import { getKolkataParts, programmeTimeLabel, resolveProgrammeWindow } from './pujo-schedule.js';
 import { createSceneDelivery, nextSceneForKolkataTime, sceneForKolkataTime, scenes } from './pujo-scenes.js';
 
@@ -142,6 +142,7 @@ const experienceCloseButton = document.querySelector('#experience-close');
 const atmosphereButton = document.querySelector('#atmosphere-toggle');
 const motionButton = document.querySelector('#motion-toggle');
 const lowDataButton = document.querySelector('#low-data-toggle');
+const imageQualityButtons = [...document.querySelectorAll('[data-image-quality]')];
 const fullscreenButton = document.querySelector('#fullscreen-toggle');
 const installButton = document.querySelector('#install-station');
 const experienceStatus = document.querySelector('#experience-status');
@@ -152,6 +153,9 @@ const networkStatus = document.querySelector('#network-status');
 const updateToast = document.querySelector('#update-toast');
 const updateRefreshButton = document.querySelector('#update-refresh');
 const updateLaterButton = document.querySelector('#update-later');
+const dataNudge = document.querySelector('#data-nudge');
+const dataNudgeAcceptButton = document.querySelector('#data-nudge-accept');
+const dataNudgeDismissButton = document.querySelector('#data-nudge-dismiss');
 const stationInfoDialog = document.querySelector('#station-info-dialog');
 const stationInfoScrim = document.querySelector('#station-info-scrim');
 const stationInfoClose = document.querySelector('#station-info-close');
@@ -187,6 +191,7 @@ const defaultPreferences = defaultExperiencePreferences({ reducedMotion: reduced
 let experiencePreferences = { ...defaultPreferences };
 const sceneDelivery = createSceneDelivery({
   lowData: () => experiencePreferences.lowData,
+  imageQuality: () => experiencePreferences.imageQuality,
   viewportWidth: () => document.documentElement.clientWidth || window.innerWidth,
 });
 let installPrompt;
@@ -1076,6 +1081,7 @@ function handleSourceState({ state, sourceId, position, duration }) {
       startupMs: Number.isFinite(connectionStartedAt) ? Math.round(performance.now() - connectionStartedAt) : undefined,
     });
     connectionStartedAt = undefined;
+    maybeShowDataNudge();
     setPlayerState(true, currentTrack?.isLongForm ? 'Long listen live · progress is saved' : 'YouTube broadcast live');
     return;
   }
@@ -1778,8 +1784,44 @@ const stopRhythm = () => { window.clearInterval(rhythmTimer); rhythmTimer = unde
 const EXPERIENCE_KEY = 'pujo-vibes:experience:v1';
 const experienceStorage = createVersionedStorage({ storage: window.localStorage, key: EXPERIENCE_KEY, version: 1 });
 
+const DATA_NUDGE_KEY = 'pujo-vibes:data-nudge:v1';
+const dataNudgeStorage = createVersionedStorage({ storage: window.localStorage, key: DATA_NUDGE_KEY, version: 1 });
+const SLOW_STARTUP_MS = 6000;
+const SLOW_STARTUP_SAMPLE_SIZE = 5;
+const SLOW_STARTUP_THRESHOLD_COUNT = 3;
+const DATA_NUDGE_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+
+const dismissDataNudge = (cooldown = true) => {
+  dataNudge.hidden = true;
+  if (cooldown) dataNudgeStorage.write({ dismissedUntil: Date.now() + DATA_NUDGE_COOLDOWN_MS });
+};
+
+const maybeShowDataNudge = () => {
+  if (experiencePreferences.lowData || !dataNudge.hidden || !updateToast.hidden) return;
+  const cooldown = dataNudgeStorage.read();
+  if (cooldown?.dismissedUntil && Date.now() < cooldown.dismissedUntil) return;
+  const recentStarts = playbackDiagnostics.snapshot()
+    .filter((entry) => entry.type === 'playing' && Number.isFinite(entry.startupMs))
+    .slice(-SLOW_STARTUP_SAMPLE_SIZE);
+  if (recentStarts.length < SLOW_STARTUP_SAMPLE_SIZE) return;
+  const slowCount = recentStarts.filter((entry) => entry.startupMs >= SLOW_STARTUP_MS).length;
+  if (slowCount < SLOW_STARTUP_THRESHOLD_COUNT) return;
+  dataNudge.hidden = false;
+};
+
+dataNudgeAcceptButton.addEventListener('click', () => {
+  dismissDataNudge(false);
+  setLowDataPreference(true, 'Low-data mode is using one still scene.');
+});
+dataNudgeDismissButton.addEventListener('click', () => dismissDataNudge());
+
 const saveExperiencePreferences = () => {
-  experienceStorage.write({ motion: experiencePreferences.motion, lowData: experiencePreferences.lowData, atmosphereVolume: experiencePreferences.atmosphereVolume });
+  experienceStorage.write({
+    motion: experiencePreferences.motion,
+    lowData: experiencePreferences.lowData,
+    imageQuality: experiencePreferences.imageQuality,
+    atmosphereVolume: experiencePreferences.atmosphereVolume,
+  });
 };
 
 const renderExperiencePreferences = () => {
@@ -1794,6 +1836,11 @@ const renderExperiencePreferences = () => {
   atmosphereVolumeValue.textContent = `${experiencePreferences.atmosphereVolume}%`;
   motionButton.setAttribute('aria-checked', String(experiencePreferences.motion));
   lowDataButton.setAttribute('aria-checked', String(experiencePreferences.lowData));
+  imageQualityButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', String(button.dataset.imageQuality === experiencePreferences.imageQuality));
+    // Low-data always forces the lightest tier, so the manual picker has nothing to decide while it's on.
+    button.disabled = experiencePreferences.lowData;
+  });
 };
 
 const loadExperiencePreferences = () => {
@@ -1877,6 +1924,17 @@ motionButton.addEventListener('click', () => {
   } else if (isPlaying) startPlaybackSceneRotation();
   experienceStatus.textContent = experiencePreferences.motion ? 'Visual depth is on.' : 'Visual depth is off.';
 });
+const refreshSceneForCurrentContext = () => {
+  activeSceneId = undefined;
+  if (playbackPresentationActive && currentTrack) {
+    applyPlaybackPresentation(currentTrack);
+    if (isPlaying) startPlaybackSceneRotation();
+  } else {
+    const kolkata = getKolkataParts();
+    applyScene(sceneForKolkataTime(kolkata, currentCalendarState), true);
+    preloadScene(nextSceneForKolkataTime(kolkata, currentCalendarState));
+  }
+};
 const setLowDataPreference = (lowData, statusText) => {
   experiencePreferences.lowData = lowData;
   if (experiencePreferences.lowData && experiencePreferences.atmosphere) {
@@ -1885,17 +1943,13 @@ const setLowDataPreference = (lowData, statusText) => {
   }
   renderExperiencePreferences();
   saveExperiencePreferences();
-  activeSceneId = undefined;
   if (experiencePreferences.lowData) {
+    activeSceneId = undefined;
     stopPlaybackSceneRotation();
     applyScene(scenes.goldenField, true);
-  } else if (playbackPresentationActive && currentTrack) {
-    applyPlaybackPresentation(currentTrack);
-    if (isPlaying) startPlaybackSceneRotation();
+    dataNudge.hidden = true;
   } else {
-    const kolkata = getKolkataParts();
-    applyScene(sceneForKolkataTime(kolkata, currentCalendarState), true);
-    preloadScene(nextSceneForKolkataTime(kolkata, currentCalendarState));
+    refreshSceneForCurrentContext();
   }
   experienceStatus.textContent = statusText;
 };
@@ -1904,6 +1958,23 @@ lowDataButton.addEventListener('click', () => {
     !experiencePreferences.lowData,
     !experiencePreferences.lowData ? 'Low-data mode is using one still scene.' : 'Full scene changes are available.',
   );
+});
+const IMAGE_QUALITY_LABELS = {
+  auto: 'Image quality follows your screen automatically.',
+  mobile: 'Data-saver image quality is on.',
+  tablet: 'Standard image quality is on.',
+  desktop: 'High image quality is on.',
+};
+imageQualityButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const quality = IMAGE_QUALITY_VALUES.includes(button.dataset.imageQuality) ? button.dataset.imageQuality : 'auto';
+    if (quality === experiencePreferences.imageQuality) return;
+    experiencePreferences.imageQuality = quality;
+    renderExperiencePreferences();
+    saveExperiencePreferences();
+    refreshSceneForCurrentContext();
+    experienceStatus.textContent = IMAGE_QUALITY_LABELS[quality];
+  });
 });
 
 if (!document.fullscreenEnabled) fullscreenButton.hidden = true;

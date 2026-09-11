@@ -114,6 +114,15 @@
       <button class="update-later" id="update-later" type="button">Later</button>
     </aside>
 
+    <aside class="data-nudge" id="data-nudge" role="status" aria-live="polite" hidden>
+      <div>
+        <strong>Loading has been slow</strong>
+        <span>Low-data mode uses lighter art and turns off atmosphere audio.</span>
+      </div>
+      <button class="data-nudge-accept" id="data-nudge-accept" type="button">Turn on Low-data</button>
+      <button class="data-nudge-dismiss" id="data-nudge-dismiss" type="button">Not now</button>
+    </aside>
+
     <header class="station-nav">
       <a class="station-brand" href="/" aria-label="Radio Sharodiya home">
         <img src="/assets/radio-sharodiya-logo.png" alt="রেডিও শারদীয়া" />
@@ -138,6 +147,15 @@
       </div>
       <button class="experience-option" id="motion-toggle" type="button" role="switch" aria-checked="true"><span><strong>Visual depth</strong><small>Scene movement and gentle parallax</small></span><i aria-hidden="true"></i></button>
       <button class="experience-option" id="low-data-toggle" type="button" role="switch" aria-checked="false"><span><strong>Low-data mode</strong><small>One still scene, no background preloading</small></span><i aria-hidden="true"></i></button>
+      <div class="image-quality">
+        <span><strong>Image quality</strong><small>Scene and catalogue artwork detail</small></span>
+        <div class="image-quality-options" role="radiogroup" aria-label="Image quality">
+          <button type="button" data-image-quality="auto" aria-pressed="true">Auto</button>
+          <button type="button" data-image-quality="mobile" aria-pressed="false">Data saver</button>
+          <button type="button" data-image-quality="tablet" aria-pressed="false">Standard</button>
+          <button type="button" data-image-quality="desktop" aria-pressed="false">High</button>
+        </div>
+      </div>
       <div class="experience-actions">
         <button id="fullscreen-toggle" type="button">Enter fullscreen</button>
         <button id="install-station" type="button" hidden>Install station</button>
