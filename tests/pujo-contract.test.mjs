@@ -194,6 +194,25 @@ test('catalogue data is separated, lazy loaded, cached and safe to render', () =
   assert.doesNotMatch(player, /const playlists = \{/);
 });
 
+test('low-data mode activates conservatively and never overrides an explicit choice', () => {
+  assert.match(player, /saveData: navigator\.connection\?\.saveData/);
+  assert.match(player, /navigator\.connection\?\.addEventListener\?\.\('change', \(\) => \{/);
+  assert.match(player, /if \(experiencePreferences\.lowData \|\| !navigator\.connection\.saveData \|\| experienceStorage\.hasValue\(\)\) return;/);
+  assert.match(player, /setLowDataPreference\(true, 'Low-data mode turned on for this data-saver connection\.'\);/);
+});
+
+test('offline listening surfaces a cached catalogue and saves the queue immediately', () => {
+  assert.match(html, /id="catalogue-cache-status"[^>]*hidden><\/p>/);
+  assert.match(player, /const catalogueCacheStatus = document\.querySelector\('#catalogue-cache-status'\);/);
+  assert.match(player, /const renderCatalogueCacheStatus = \(state\) => \{/);
+  assert.match(player, /cache: 'Catalogue available offline · Playing songs still needs a connection'/);
+  assert.match(player, /unavailable: 'Catalogue unavailable offline · Reconnect to browse songs'/);
+  assert.match(player, /renderCatalogueCacheStatus\(catalogue\.source\)/);
+  assert.match(player, /renderCatalogueCacheStatus\('unavailable'\)/);
+  const handleOffline = extractBlock(player, 'const handleOffline = () => {', 'const handleOnline = () => {');
+  assert.match(handleOffline, /saveContinuity\(\);/);
+});
+
 test('delivery contracts use Radio Sharodiya as the standalone root application', () => {
   assert.match(viteConfig, /app:\s*resolve\([^)]*'index\.html'/);
   assert.doesNotMatch(viteConfig, /hub:|legacyPujo:|pujo\/index\.html/);

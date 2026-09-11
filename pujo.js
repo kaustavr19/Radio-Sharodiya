@@ -92,6 +92,7 @@ const queuePaneClose = document.querySelector('#queue-pane-close');
 const queueScrim = document.querySelector('#queue-scrim');
 const clearUpNextButton = document.querySelector('#clear-up-next');
 const room = document.querySelector('#catalogue-room');
+const catalogueCacheStatus = document.querySelector('#catalogue-cache-status');
 const liveRadioRoom = document.querySelector('#live-radio-room');
 const liveRadioAudio = document.querySelector('#live-radio-audio');
 const liveRadioPlay = document.querySelector('#live-radio-play');
@@ -578,15 +579,26 @@ const hydrateCatalogue = (catalogue) => {
   updateQueueCount();
 };
 
+const renderCatalogueCacheStatus = (state) => {
+  room.dataset.catalogueState = state;
+  const messages = {
+    cache: 'Catalogue available offline · Playing songs still needs a connection',
+    unavailable: 'Catalogue unavailable offline · Reconnect to browse songs',
+  };
+  catalogueCacheStatus.textContent = messages[state] || '';
+  catalogueCacheStatus.hidden = !messages[state];
+  catalogueCacheStatus.dataset.tone = state === 'unavailable' ? 'unavailable' : 'cache';
+};
+
 const ensureFullCatalogue = async () => {
   if (catalogueIsFull) return true;
   try {
     const catalogue = await catalogueLoader.load();
     hydrateCatalogue(catalogue);
-    room.dataset.catalogueState = catalogue.source;
+    renderCatalogueCacheStatus(catalogue.source);
     return true;
   } catch (error) {
-    room.dataset.catalogueState = 'unavailable';
+    renderCatalogueCacheStatus('unavailable');
     playbackDiagnostics?.record?.('catalogue_unavailable', { message: error.message || 'Catalogue unavailable' });
     return false;
   }
@@ -1845,8 +1857,8 @@ motionButton.addEventListener('click', () => {
   } else if (isPlaying) startPlaybackSceneRotation();
   experienceStatus.textContent = experiencePreferences.motion ? 'Visual depth is on.' : 'Visual depth is off.';
 });
-lowDataButton.addEventListener('click', () => {
-  experiencePreferences.lowData = !experiencePreferences.lowData;
+const setLowDataPreference = (lowData, statusText) => {
+  experiencePreferences.lowData = lowData;
   if (experiencePreferences.lowData && experiencePreferences.atmosphere) {
     experiencePreferences.atmosphere = false;
     stopAmbientLayer();
@@ -1865,7 +1877,13 @@ lowDataButton.addEventListener('click', () => {
     applyScene(sceneForKolkataTime(kolkata, currentCalendarState), true);
     preloadScene(nextSceneForKolkataTime(kolkata, currentCalendarState));
   }
-  experienceStatus.textContent = experiencePreferences.lowData ? 'Low-data mode is using one still scene.' : 'Full scene changes are available.';
+  experienceStatus.textContent = statusText;
+};
+lowDataButton.addEventListener('click', () => {
+  setLowDataPreference(
+    !experiencePreferences.lowData,
+    !experiencePreferences.lowData ? 'Low-data mode is using one still scene.' : 'Full scene changes are available.',
+  );
 });
 
 if (!document.fullscreenEnabled) fullscreenButton.hidden = true;
@@ -1905,6 +1923,7 @@ const handleOffline = () => {
   playbackDiagnostics.record('offline', { trackId: currentTrack.id, position: Math.floor(currentPosition()) });
   setPlayerState(false, 'Connection lost · Your queue is safe', 'offline');
   showPlayerRecovery();
+  saveContinuity();
 };
 
 const handleOnline = () => {
@@ -2375,6 +2394,13 @@ reducedMotionQuery.addEventListener?.('change', (event) => {
   experiencePreferences.motion = false;
   renderExperiencePreferences();
   stopPlaybackSceneRotation();
+});
+
+// Only step in automatically before the user has ever chosen a preference of their own;
+// once experienceStorage holds a value, an explicit choice (including opting out) is never overridden.
+navigator.connection?.addEventListener?.('change', () => {
+  if (experiencePreferences.lowData || !navigator.connection.saveData || experienceStorage.hasValue()) return;
+  setLowDataPreference(true, 'Low-data mode turned on for this data-saver connection.');
 });
 
 const initializeStation = async () => {

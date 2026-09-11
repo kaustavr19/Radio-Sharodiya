@@ -40,6 +40,9 @@ This contract records the user-facing behaviour that performance and architectur
 - Its saved volume is independent from the main player volume.
 - Low-data mode disables atmosphere playback.
 - Audio and byte-range requests are excluded from service-worker caching.
+- Low-data mode turns on by itself only before a listener has ever chosen a preference of their own, and only while the connection reports Save-Data; any explicit choice, including opting out, is never overridden.
+- Opening the catalogue while offline shows whether the catalogue itself is served from cache, and makes clear that playing songs still needs a connection.
+- Losing connection mid-playback saves the current queue and position immediately, not on the next periodic tick.
 
 ## Playback reliability
 
