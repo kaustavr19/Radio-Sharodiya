@@ -50,6 +50,17 @@ test('catalogue opens as an accessible modal without invoking playback', () => {
   assert.doesNotMatch(openCatalogue, /setCurrentTrack|playVideo|loadVideoById/);
 });
 
+test('catalogue discovery stays visible and explains its breadth', () => {
+  assert.match(html, /class="hero-choose"[^>]+aria-describedby="hero-catalogue-meta"/);
+  assert.match(html, /Browse Pujo music/);
+  assert.match(html, /data-catalogue-total/);
+  assert.match(html, /songs · 6 collections/);
+  assert.match(html, /data-mobile-tab="catalogue"[^>]+aria-label="Open music catalogue, 6 curated collections"/);
+  assert.match(html, /<span>Music<\/span><strong class="mobile-catalogue-count"/);
+  assert.match(player, /const updateCatalogueDiscovery =/);
+  assert.match(pujoCss, /@media \(max-width: 620px\)[\s\S]*\.hero-actions \{ display: none; \}/);
+});
+
 test('catalogue docks the existing player and keeps mobile browsing open during playback', () => {
   assert.match(player, /const broadcastConsoleHome = document\.createComment\('broadcast-console-home'\)/);
   assert.match(player, /const dockBroadcastConsoleInCatalogue = \(\) => \{[\s\S]*room\.append\(broadcastConsole\)/);

@@ -77,6 +77,7 @@ const playerConnectionLabel = document.querySelector('#player-connection-label')
 const queueButton = document.querySelector('#open-queue');
 const queueCount = document.querySelector('#queue-count');
 const mobileQueueCount = document.querySelector('#mobile-queue-count');
+const catalogueTotalLabels = [...document.querySelectorAll('[data-catalogue-total]')];
 const mobileQueueButton = document.querySelector('[data-mobile-queue]');
 const mobileTabButtons = [...document.querySelectorAll('[data-mobile-tab]')];
 const mobileHomeButton = document.querySelector('[data-mobile-tab="home"]');
@@ -549,6 +550,13 @@ const updatePlaylistOverviewCounts = () => {
   });
 };
 
+const updateCatalogueDiscovery = () => {
+  const total = Object.values(playlists).reduce((sum, playlist) => sum + (catalogueIsFull ? playlist.tracks.length : playlist.trackCount), 0);
+  catalogueTotalLabels.forEach((label) => { label.textContent = String(total); });
+};
+
+updateCatalogueDiscovery();
+
 const hydrateCatalogue = (catalogue) => {
   const currentTrackId = currentTrack?.id;
   const queueIds = queue.map((track) => track.id);
@@ -561,6 +569,7 @@ const hydrateCatalogue = (catalogue) => {
   recentlyPlayed = recentlyPlayed.filter((id) => tracksById.has(id));
   catalogueSequence = playlists[activePlaylistId]?.tracks || playlists.mahalaya.tracks;
   catalogueIsFull = true;
+  updateCatalogueDiscovery();
   updatePlaylistOverviewCounts();
   renderCatalogueSearch();
   auditCatalogue();

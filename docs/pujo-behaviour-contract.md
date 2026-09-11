@@ -6,6 +6,7 @@ This contract records the user-facing behaviour that performance and architectur
 
 - The station is silent when the page opens.
 - Opening or browsing the catalogue must not start playback.
+- The landing hero keeps a visible catalogue invitation on larger screens and states the current song and collection breadth. On mobile, the compact tab bar labels the destination as Music without adding another hero action.
 - Catalogue browsing alone must not replace the landing scene or hero copy.
 - The catalogue is a modal surface with a clear close action and focus return.
 - Selecting a playlist shows its complete available track list in playlist order.

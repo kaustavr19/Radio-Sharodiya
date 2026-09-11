@@ -119,7 +119,7 @@
         <img src="/assets/radio-sharodiya-logo.png" alt="রেডিও শারদীয়া" />
       </a>
       <div class="station-primary-actions">
-        <button class="nav-catalogue nav-pill" type="button" data-open-room="catalogue"><span>Catalogue</span><strong>06</strong><i aria-hidden="true">↗</i></button>
+        <button class="nav-catalogue nav-pill" type="button" data-open-room="catalogue" aria-label="Open music catalogue, 6 curated collections"><span>Catalogue</span><strong aria-hidden="true">06</strong><i aria-hidden="true">↗</i></button>
         <button class="nav-live nav-pill" type="button" data-open-room="live-radio"><i class="live-pip" aria-hidden="true"></i><span>Live Radio</span><strong>04</strong></button>
       </div>
       <div class="station-secondary-actions">
@@ -181,7 +181,10 @@
           <h1 id="hero-title" lang="bn">শহর জুড়ে<br />পুজোর সুর</h1>
           <p class="hero-intro" id="hero-intro">Six broadcasts. One season. Every way Pujo sounds.</p>
           <div class="hero-actions" aria-label="Start listening">
-            <button class="hero-choose" type="button" data-open-room="catalogue"><span>Choose your music</span><i aria-hidden="true">→</i></button>
+            <button class="hero-choose" type="button" data-open-room="catalogue" aria-describedby="hero-catalogue-meta">
+              <span class="hero-choose-copy"><strong>Browse Pujo music</strong><small id="hero-catalogue-meta"><span data-catalogue-total>431</span> songs · 6 collections</small></span>
+              <i aria-hidden="true">→</i>
+            </button>
           </div>
         </div>
 
@@ -397,8 +400,8 @@
         <button class="is-current" type="button" data-mobile-tab="home" aria-current="page">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20h-5v-6H9v6H4z"></path></svg><span>Home</span>
         </button>
-        <button type="button" data-mobile-tab="catalogue" data-open-room="catalogue">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h5v7H5zm9 0h5v7h-5zM5 15h5v5H5zm9 0h5v5h-5z"></path></svg><span>Catalogue</span>
+        <button type="button" data-mobile-tab="catalogue" data-open-room="catalogue" aria-label="Open music catalogue, 6 curated collections">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h5v7H5zm9 0h5v7h-5zM5 15h5v5H5zm9 0h5v5h-5z"></path></svg><span>Music</span><strong class="mobile-catalogue-count" aria-hidden="true">06</strong>
         </button>
         <button type="button" data-mobile-tab="radio" data-open-room="live-radio">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14v11H5zM8 5l8-2M8 12h5m-5 3h3"></path><circle cx="16.5" cy="14" r="2.2"></circle></svg><span>Live</span>
