@@ -283,6 +283,26 @@ test('delivery contracts use Radio Sharodiya as the standalone root application'
   assert.doesNotMatch(catalogueView, /Pujo Vibes|>PV</);
 });
 
+test('search and social discovery have a real technical foundation', () => {
+  assert.equal((html.match(/<h1[ >]/g) || []).length, 1, 'Expected exactly one <h1> in the raw HTML');
+  assert.match(html, /<h1 id="hero-title"/, 'The station\'s own headline should be the page\'s one <h1>');
+  assert.match(html, /<link rel="canonical" href="https:\/\/radio-sharodiya\.in\/" \/>/);
+  assert.match(html, /<meta property="og:title" content="Radio Sharodiya — Bengali Pujo Radio" \/>/);
+  assert.match(html, /<meta property="og:image" content="https:\/\/radio-sharodiya\.in\/assets\/social\/og-image\.jpg" \/>/);
+  assert.match(html, /<meta name="twitter:card" content="summary_large_image" \/>/);
+  const jsonLdMatch = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+  assert.ok(jsonLdMatch, 'Expected a JSON-LD structured data block');
+  const structuredData = JSON.parse(jsonLdMatch[1]);
+  assert.equal(structuredData['@context'], 'https://schema.org');
+  const types = structuredData['@graph'].map((entry) => entry['@type']);
+  assert.ok(types.includes('WebSite'));
+  assert.ok(types.includes('Organization'));
+  assert.match(readFileSync('public/robots.txt', 'utf8'), /Sitemap: https:\/\/radio-sharodiya\.in\/sitemap\.xml/);
+  assert.match(readFileSync('public/robots.txt', 'utf8'), /Disallow: \/beta-admin/);
+  assert.match(readFileSync('public/sitemap.xml', 'utf8'), /<loc>https:\/\/radio-sharodiya\.in\/<\/loc>/);
+  assert.ok(existsSync('public/assets/social/og-image.jpg'));
+});
+
 test('the generated service worker is revision-aware, isolated, and never caches audio ranges', () => {
   assert.match(serviceWorkerGenerator, /createHash\('sha256'\)/);
   assert.match(serviceWorkerGenerator, /resolve\(dist, 'index\.html'\)/);

@@ -54,6 +54,7 @@ Both commands require `YOUTUBE_API_KEY` in the process environment. Editorial ti
 - `docs/phase-4-playback-reliability.md` covers bounded recovery and local diagnostics.
 - `docs/phase-5-catalogue-data.md` covers the lazy, sanitized catalogue boundary.
 - `docs/phase-6-youtube-sync.md` covers scheduled playlist synchronization.
+- `docs/seo-and-discovery.md` covers the search/social discovery foundation and what's a deliberate decision rather than code.
 
 ## Private beta
 

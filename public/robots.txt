@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /beta-admin
+Disallow: /api/
+
+Sitemap: https://radio-sharodiya.in/sitemap.xml
