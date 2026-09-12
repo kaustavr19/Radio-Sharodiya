@@ -467,6 +467,15 @@ test('every interactive element gets a visible focus ring, not just component-sp
   assert.match(pujoCss, /\[tabindex\]:focus-visible \{[\s\S]*?outline: 2px solid var\(--marigold\);[\s\S]*?outline-offset: 2px;/);
 });
 
+test('no live region is nested inside another, so status changes announce exactly once', () => {
+  const liveRegionCount = (html.match(/\baria-live="polite"/g) || []).length + (html.match(/\brole="status"/g) || []).length;
+  assert.ok(liveRegionCount >= 10, 'Expected the known set of live/status regions to still be present');
+  const nowPlaying = extractBlock(html, '<div class="programme-art"', '</section>');
+  assert.doesNotMatch(nowPlaying, /role="status"|aria-live/, 'The now-playing live region must not contain a nested status region');
+  assert.doesNotMatch(html, /id="beta-gate-card"[^>]*aria-live/, 'beta-gate-card must not duplicate the live region already on beta-form-status');
+  assert.match(html, /id="beta-form-status"[^>]*role="status"/);
+});
+
 test('large displays scale as a system and TV browsers keep a complete remote interaction model', () => {
   assert.match(pujoCss, /@media \(min-width: 1800px\) and \(min-height: 900px\) \{/);
   assert.match(pujoCss, /:root \{ font-size: clamp\(18px,\.75vw,40px\); \}/);
