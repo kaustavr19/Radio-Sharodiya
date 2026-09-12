@@ -309,6 +309,11 @@ test('search and social discovery have a real technical foundation', () => {
   assert.match(readFileSync('public/sitemap.xml', 'utf8'), /<loc>https:\/\/www\.radio-sharodiya\.in\/<\/loc>/);
   assert.ok(existsSync('public/assets/social/og-image.jpg'));
   assert.match(html, /<meta name="msvalidate\.01" content="72AC35697519D319970831C42D7A077C" \/>/);
+  assert.doesNotMatch(html, /alt=""/, 'No content image should have a blank alt attribute');
+  assert.match(html, /alt="Cover art for Mahalaya — Mahishasura Mardini · Full Album by Birendra Krishna Bhadra"/);
+  assert.match(player, /playerArtImage\.alt = `Cover art for \$\{track\.title\} by \$\{trackCredit\(track\)\}`/);
+  assert.match(player, /alt="Cover art for \$\{escapeMarkup\(track\.title\)\}"/);
+  assert.match(catalogueView, /alt="Cover art for \$\{escapeMarkup\(track\.title\)\}"/);
 });
 
 test('the generated service worker is revision-aware, isolated, and never caches audio ranges', () => {
