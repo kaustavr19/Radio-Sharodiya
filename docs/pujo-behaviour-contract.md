@@ -63,6 +63,11 @@ This contract records the user-facing behaviour that performance and architectur
 - The Home Screen icon on every platform is a proper raster derivative of the station mark, not a browser-generated screenshot.
 - Every functional UI icon is a self-hosted inline SVG (Material Symbols paths); none depend on a remote icon font or CDN.
 
+## Accessibility
+
+- Every interactive element (not just player controls and dialogs) gets a visible keyboard focus ring; a shared baseline rule fills any gap a component-specific style doesn't already cover.
+- Scrollable lists reserve real layout space for the persistent player, so a focused control is never geometrically hidden behind it, on any list length.
+
 ## Performance invariants
 
 - The hub and Pujo Vibes remain separate build entries.

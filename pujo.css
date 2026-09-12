@@ -30,6 +30,15 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 .icon-glyph { display: inline-block; flex-shrink: 0; vertical-align: -0.125em; }
+/* Baseline focus ring for every interactive element. Deliberately low in the
+   cascade (declared early, unqualified selectors) so any more specific
+   component rule further down the sheet still wins — this only fills gaps. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+textarea:focus-visible, summary:focus-visible, [role="slider"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--marigold);
+  outline-offset: 2px;
+}
 html { scroll-behavior: smooth; }
 body { margin: 0; min-width: 320px; background: var(--ink); color: var(--shiuli); font-family: var(--font-ui); }
 body[data-pujo-state="mahalaya"] { --marigold: #d8bd79; }

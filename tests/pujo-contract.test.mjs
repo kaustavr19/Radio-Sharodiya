@@ -461,6 +461,12 @@ test('desktop hero reserves the player in layout and compacts for short screens'
   assert.doesNotMatch(pujoCss, /\.hero \{[^}]*padding:[^;}]*17rem/);
 });
 
+test('every interactive element gets a visible focus ring, not just component-specific ones', () => {
+  assert.match(pujoCss, /a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,/);
+  assert.match(pujoCss, /textarea:focus-visible, summary:focus-visible, \[role="slider"\]:focus-visible,/);
+  assert.match(pujoCss, /\[tabindex\]:focus-visible \{[\s\S]*?outline: 2px solid var\(--marigold\);[\s\S]*?outline-offset: 2px;/);
+});
+
 test('large displays scale as a system and TV browsers keep a complete remote interaction model', () => {
   assert.match(pujoCss, /@media \(min-width: 1800px\) and \(min-height: 900px\) \{/);
   assert.match(pujoCss, /:root \{ font-size: clamp\(18px,\.75vw,40px\); \}/);
