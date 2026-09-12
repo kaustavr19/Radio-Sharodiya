@@ -1,9 +1,9 @@
 import { escapeMarkup } from './pujo-catalogue.js';
 
 export const catalogueThumbnailMarkup = (track, playlistCover = '') => track.videoId
-  ? `<img src="https://img.youtube.com/vi/${escapeMarkup(track.videoId)}/mqdefault.jpg" alt="" loading="lazy" decoding="async" />`
+  ? `<img src="https://img.youtube.com/vi/${escapeMarkup(track.videoId)}/mqdefault.jpg" alt="Cover art for ${escapeMarkup(track.title)}" loading="lazy" decoding="async" />`
   : playlistCover
-    ? `<img src="${escapeMarkup(playlistCover)}" alt="" loading="lazy" decoding="async" />`
+    ? `<img src="${escapeMarkup(playlistCover)}" alt="Cover art for ${escapeMarkup(track.title)}" loading="lazy" decoding="async" />`
     : '<span aria-hidden="true">RS</span>';
 
 const trackCredit = (track) => `${track.creditType === 'source' ? 'Source · ' : ''}${track.artist}`;
