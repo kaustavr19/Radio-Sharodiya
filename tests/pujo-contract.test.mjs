@@ -461,6 +461,12 @@ test('desktop hero reserves the player in layout and compacts for short screens'
   assert.doesNotMatch(pujoCss, /\.hero \{[^}]*padding:[^;}]*17rem/);
 });
 
+test('every interactive element gets a visible focus ring, not just component-specific ones', () => {
+  assert.match(pujoCss, /a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,/);
+  assert.match(pujoCss, /textarea:focus-visible, summary:focus-visible, \[role="slider"\]:focus-visible,/);
+  assert.match(pujoCss, /\[tabindex\]:focus-visible \{[\s\S]*?outline: 2px solid var\(--marigold\);[\s\S]*?outline-offset: 2px;/);
+});
+
 test('no live region is nested inside another, so status changes announce exactly once', () => {
   const liveRegionCount = (html.match(/\baria-live="polite"/g) || []).length + (html.match(/\brole="status"/g) || []).length;
   assert.ok(liveRegionCount >= 10, 'Expected the known set of live/status regions to still be present');
