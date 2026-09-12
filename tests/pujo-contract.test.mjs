@@ -461,6 +461,15 @@ test('desktop hero reserves the player in layout and compacts for short screens'
   assert.doesNotMatch(pujoCss, /\.hero \{[^}]*padding:[^;}]*17rem/);
 });
 
+test('no live region is nested inside another, so status changes announce exactly once', () => {
+  const liveRegionCount = (html.match(/\baria-live="polite"/g) || []).length + (html.match(/\brole="status"/g) || []).length;
+  assert.ok(liveRegionCount >= 10, 'Expected the known set of live/status regions to still be present');
+  const nowPlaying = extractBlock(html, '<div class="programme-art"', '</section>');
+  assert.doesNotMatch(nowPlaying, /role="status"|aria-live/, 'The now-playing live region must not contain a nested status region');
+  assert.doesNotMatch(html, /id="beta-gate-card"[^>]*aria-live/, 'beta-gate-card must not duplicate the live region already on beta-form-status');
+  assert.match(html, /id="beta-form-status"[^>]*role="status"/);
+});
+
 test('large displays scale as a system and TV browsers keep a complete remote interaction model', () => {
   assert.match(pujoCss, /@media \(min-width: 1800px\) and \(min-height: 900px\) \{/);
   assert.match(pujoCss, /:root \{ font-size: clamp\(18px,\.75vw,40px\); \}/);
