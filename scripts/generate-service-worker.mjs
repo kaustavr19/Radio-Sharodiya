@@ -21,6 +21,9 @@ const precache = [...new Set([
   '/index.html',
   '/manifest.webmanifest',
   '/radio-mark.svg',
+  '/icons/apple-touch-icon.png',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png',
   ...builtAssets,
   ...defaultScenes,
 ])].sort();

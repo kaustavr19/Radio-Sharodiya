@@ -57,6 +57,12 @@ This contract records the user-facing behaviour that performance and architectur
 - Removed, private, or embedding-disabled videos are marked unavailable for the current session and skipped by later queue movement.
 - Playback diagnostics stay on the device, retain at most 80 events, and contain no listener identity.
 
+## Installability
+
+- iOS Safari never fires `beforeinstallprompt`, so it gets manual Add to Home Screen instructions instead of the native install button, shown once and then quiet for 30 days once dismissed.
+- The Home Screen icon on every platform is a proper raster derivative of the station mark, not a browser-generated screenshot.
+- Every functional UI icon is a self-hosted inline SVG (Material Symbols paths); none depend on a remote icon font or CDN.
+
 ## Performance invariants
 
 - The hub and Pujo Vibes remain separate build entries.

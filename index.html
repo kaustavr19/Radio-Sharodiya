@@ -8,6 +8,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="icon" href="/radio-mark.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icons/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,7 +47,7 @@
               <input id="beta-name" name="name" type="text" autocomplete="name" maxlength="80" placeholder="How should we know you?" />
               <label for="beta-email">Email address</label>
               <input id="beta-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" />
-              <button type="submit"><span>Request beta access</span><i aria-hidden="true">→</i></button>
+              <button type="submit"><span>Request beta access</span><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></button>
             </form>
             <div class="beta-panel-actions">
               <button class="beta-text-action" type="button" data-beta-show="access">Already have a code? Enter it here</button>
@@ -62,7 +64,7 @@
               <input id="beta-access-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" />
               <label for="beta-code">Access code</label>
               <input id="beta-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" minlength="6" maxlength="6" pattern="[0-9]{6}" required placeholder="000000" />
-              <button type="submit"><span>Open Radio Sharodiya</span><i aria-hidden="true">→</i></button>
+              <button type="submit"><span>Open Radio Sharodiya</span><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></button>
             </form>
             <div class="beta-panel-actions">
               <button class="beta-text-action" type="button" data-beta-show="returning">Need a new code? Email me one</button>
@@ -77,7 +79,7 @@
             <form id="beta-returning-form">
               <label for="beta-returning-email">Approved email</label>
               <input id="beta-returning-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" />
-              <button type="submit"><span>Email me a sign-in code</span><i aria-hidden="true">→</i></button>
+              <button type="submit"><span>Email me a sign-in code</span><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></button>
             </form>
             <div class="beta-panel-actions">
               <button class="beta-text-action" type="button" data-beta-show="access">I already have a code</button>
@@ -86,7 +88,7 @@
           </div>
 
           <div class="beta-gate-panel beta-requested-panel" id="beta-requested-panel" hidden>
-            <span class="beta-request-mark" aria-hidden="true">✓</span>
+            <span class="beta-request-mark" aria-hidden="true"><svg class="icon-glyph" viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg></span>
             <span class="beta-card-label">Request received</span>
             <h2>Your name is on the desk.</h2>
             <p id="beta-requested-message">We’ll send an invitation code to your email after your request has been approved.</p>
@@ -123,23 +125,31 @@
       <button class="data-nudge-dismiss" id="data-nudge-dismiss" type="button">Not now</button>
     </aside>
 
+    <aside class="ios-install-banner" id="ios-install-banner" role="status" aria-live="polite" hidden>
+      <div>
+        <strong>Add Radio Sharodiya to your Home Screen</strong>
+        <span>Tap <svg class="icon-glyph" viewBox="0 -960 960 960" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h120v80H240v400h480v-400H600v-80h120q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm200-240v-447l-64 64-56-57 160-160 160 160-56 57-64-64v447h-80Z"/></svg> Share, then “Add to Home Screen”.</span>
+      </div>
+      <button class="ios-install-dismiss" id="ios-install-dismiss" type="button">Got it</button>
+    </aside>
+
     <header class="station-nav">
       <a class="station-brand" href="/" aria-label="Radio Sharodiya home">
         <img src="/assets/radio-sharodiya-logo.png" alt="রেডিও শারদীয়া" />
       </a>
       <div class="station-primary-actions">
-        <button class="nav-catalogue nav-pill" type="button" data-open-room="catalogue" aria-label="Open music catalogue, 6 curated collections"><span>Catalogue</span><strong aria-hidden="true">06</strong><i aria-hidden="true">↗</i></button>
+        <button class="nav-catalogue nav-pill" type="button" data-open-room="catalogue" aria-label="Open music catalogue, 6 curated collections"><span>Catalogue</span><strong aria-hidden="true">06</strong><svg class="icon-glyph" viewBox="0 -960 960 960" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z"/></svg></button>
         <button class="nav-live nav-pill" type="button" data-open-room="live-radio"><i class="live-pip" aria-hidden="true"></i><span>Live Radio</span><strong>04</strong></button>
       </div>
       <div class="station-secondary-actions">
-        <button class="nav-experience nav-pill" id="experience-toggle" type="button" aria-label="Station experience" aria-expanded="false" aria-controls="experience-panel"><i aria-hidden="true">✦</i><span>Experience</span></button>
+        <button class="nav-experience nav-pill" id="experience-toggle" type="button" aria-label="Station experience" aria-expanded="false" aria-controls="experience-panel"><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="m760-600-50-110-110-50 110-50 50-110 50 110 110 50-110 50-50 110Zm0 560-50-110-110-50 110-50 50-110 50 110 110 50-110 50-50 110ZM360-160 260-380 40-480l220-100 100-220 100 220 220 100-220 100-100 220Zm0-194 40-86 86-40-86-40-40-86-40 86-86 40 86 40 40 86Zm0-126Z"/></svg><span>Experience</span></button>
         <button class="nav-about nav-pill" type="button" data-station-open="about">About</button>
-        <button class="nav-donate nav-pill" type="button" data-station-open="chai" aria-label="Donate"><i aria-hidden="true">♥</i><span>Donate</span></button>
+        <button class="nav-donate nav-pill" type="button" data-station-open="chai" aria-label="Donate"><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z"/></svg><span>Donate</span></button>
       </div>
     </header>
 
     <section class="experience-panel" id="experience-panel" aria-label="Station experience controls" hidden>
-      <header><span>Station atmosphere</span><strong>Make the frequency yours</strong><button class="mobile-sheet-close" id="experience-close" type="button" aria-label="Close station experience">×</button></header>
+      <header><span>Station atmosphere</span><strong>Make the frequency yours</strong><button class="mobile-sheet-close" id="experience-close" type="button" aria-label="Close station experience"><svg class="icon-glyph" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button></header>
       <button class="experience-option" id="atmosphere-toggle" type="button" role="switch" aria-checked="false"><span><strong>Para atmosphere</strong><small>Pujar Badya Dhak · Saregama Bengali</small></span><i aria-hidden="true"></i></button>
       <div class="atmosphere-volume">
         <label for="atmosphere-volume"><span>Atmosphere volume</span><output id="atmosphere-volume-value" for="atmosphere-volume">14%</output></label>
@@ -161,8 +171,8 @@
         <button id="install-station" type="button" hidden>Install station</button>
       </div>
       <div class="experience-station-links">
-        <button type="button" data-station-open="about"><span><strong>About the station</strong><small>Why this frequency exists</small></span><i aria-hidden="true">→</i></button>
-        <button type="button" data-station-open="chai"><span><strong>Pujo for a cause</strong><small>Contribute through the project</small></span><i aria-hidden="true">→</i></button>
+        <button type="button" data-station-open="about"><span><strong>About the station</strong><small>Why this frequency exists</small></span><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></button>
+        <button type="button" data-station-open="chai"><span><strong>Pujo for a cause</strong><small>Contribute through the project</small></span><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></button>
       </div>
       <p id="experience-status" role="status" aria-live="polite">Atmosphere stays off until you choose it.</p>
     </section>
@@ -201,14 +211,14 @@
           <div class="hero-actions" aria-label="Start listening">
             <button class="hero-choose" type="button" data-open-room="catalogue" aria-describedby="hero-catalogue-meta">
               <span class="hero-choose-copy"><strong>Browse Pujo music</strong><small id="hero-catalogue-meta"><span data-catalogue-total>431</span> songs · 6 collections</small></span>
-              <i aria-hidden="true">→</i>
+              <svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
             </button>
           </div>
         </div>
 
         <section class="broadcast-console" id="broadcast-console" aria-label="Radio Sharodiya audio player" aria-busy="false">
           <header class="mobile-player-header">
-            <button id="mobile-player-dismiss" type="button" aria-label="Collapse full player"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 9 7 7 7-7"></path></svg></button>
+            <button id="mobile-player-dismiss" type="button" aria-label="Collapse full player"><svg class="icon-glyph" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"></path></svg></button>
             <div><span id="mobile-player-context-label">Ready to play</span><strong id="mobile-player-context">Mahalaya</strong></div>
             <span class="mobile-player-header-mark" aria-hidden="true">RS</span>
           </header>
@@ -216,7 +226,7 @@
           <div class="continue-listening" id="continue-listening" hidden>
             <div><span>Continue listening</span><strong id="continue-title">Your last broadcast</strong></div>
             <button id="resume-listening" type="button">Resume <span id="resume-time">0:00</span></button>
-            <button class="continue-dismiss" id="dismiss-resume" type="button" aria-label="Dismiss and start this track from the beginning">×</button>
+            <button class="continue-dismiss" id="dismiss-resume" type="button" aria-label="Dismiss and start this track from the beginning"><svg class="icon-glyph" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>
           </div>
           <section class="station-guide" id="station-guide" aria-label="Today’s Pujo programme guide">
             <div class="station-guide-line">
@@ -252,23 +262,19 @@
               <div class="progress-times"><span id="player-elapsed">0:00</span><span id="player-duration">0:00</span></div>
             </div>
             <div class="console-controls">
-              <button id="shuffle-programmes" type="button" aria-label="Shuffle programmes" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 14 4 4-4 4"></path><path d="m18 2 4 4-4 4"></path><path d="M2 18h1.4c1.2 0 2.3-.6 3-1.6L15.6 3.6c.7-1 1.8-1.6 3-1.6H22"></path><path d="M2 6h1.9c1.2 0 2.3.6 3 1.6l1.2 1.7"></path><path d="m14.5 14.5 1.1 1.9c.7 1 1.8 1.6 3 1.6H22"></path></svg></button>
-              <button id="previous-programme" type="button" aria-label="Previous programme"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 20 9 12l10-8z"></path><path d="M5 19V5"></path></svg></button>
-              <button class="console-play" id="player-play" type="button" aria-label="Play"><svg class="play-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 14 9-14 9z"></path></svg><svg class="pause-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="4" height="16" rx="1"></rect><rect x="15" y="4" width="4" height="16" rx="1"></rect></svg></button>
-              <button id="next-programme" type="button" aria-label="Next programme"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 4 10 8-10 8z"></path><path d="M19 5v14"></path></svg></button>
+              <button id="shuffle-programmes" type="button" aria-label="Shuffle programmes" aria-pressed="false"><svg class="icon-glyph" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M560-160v-80h104L537-367l57-57 126 126v-102h80v240H560Zm-344 0-56-56 504-504H560v-80h240v240h-80v-104L216-160Zm151-377L160-744l56-56 207 207-56 56Z"></path></svg></button>
+              <button id="previous-programme" type="button" aria-label="Previous programme"><svg class="icon-glyph" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M220-240v-480h80v480h-80Zm520 0L380-480l360-240v480Zm-80-240Zm0 90v-180l-136 90 136 90Z"></path></svg></button>
+              <button class="console-play" id="player-play" type="button" aria-label="Play"><svg class="icon-glyph play-icon" viewBox="0 -960 960 960" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"></path></svg><svg class="icon-glyph pause-icon" viewBox="0 -960 960 960" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"></path></svg></button>
+              <button id="next-programme" type="button" aria-label="Next programme"><svg class="icon-glyph" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M660-240v-480h80v480h-80Zm-440 0v-480l360 240-360 240Zm80-240Zm0 90 136-90-136-90v180Z"></path></svg></button>
               <div class="volume-group">
                 <button class="volume-button" id="mute-preview" type="button" aria-label="Mute current track">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path>
-                    <path class="volume-wave" d="M16 9a5 5 0 0 1 0 6"></path>
-                    <path class="volume-wave" d="M19.364 18.364a9 9 0 0 0 0-12.728"></path>
-                    <path class="volume-x" d="m16 9 6 6"></path>
-                    <path class="volume-x" d="m22 9-6 6"></path>
-                  </svg>
+                  <svg class="icon-glyph volume-up" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320ZM400-606l-86 86H200v80h114l86 86v-252ZM300-480Z"></path></svg>
+                  <svg class="icon-glyph volume-down" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M200-360v-240h160l200-200v640L360-360H200Zm440 40v-322q45 21 72.5 65t27.5 97q0 53-27.5 96T640-320ZM480-606l-86 86H280v80h114l86 86v-252ZM380-480Z"></path></svg>
+                  <svg class="icon-glyph volume-off" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M792-56 671-177q-25 16-53 27.5T560-131v-82q14-5 27.5-10t25.5-12L480-368v208L280-360H120v-240h128L56-792l56-56 736 736-56 56Zm-8-232-58-58q17-31 25.5-65t8.5-70q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 53-14.5 102T784-288ZM650-422l-90-90v-130q47 22 73.5 66t26.5 96q0 15-2.5 29.5T650-422ZM480-592 376-696l104-104v208Zm-80 238v-94l-72-72H200v80h114l86 86Zm-36-130Z"></path></svg>
                 </button>
                 <input class="volume-slider" id="volume-slider" type="range" min="0" max="100" value="80" aria-label="Volume" />
               </div>
-              <button class="queue-inline" id="open-queue" type="button" aria-label="Open current queue"><span aria-hidden="true">≡</span><strong id="queue-count">00</strong></button>
+              <button class="queue-inline" id="open-queue" type="button" aria-label="Open current queue"><span aria-hidden="true"><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M640-160q-50 0-85-35t-35-85q0-50 35-85t85-35q11 0 21 1.5t19 6.5v-328h200v80H760v360q0 50-35 85t-85 35ZM120-320v-80h320v80H120Zm0-160v-80h480v80H120Zm0-160v-80h480v80H120Z"/></svg></span><strong id="queue-count">00</strong></button>
             </div>
           </div>
           <section class="live-broadcast-player" id="live-broadcast-player" aria-label="Akashvani live radio player" hidden>
@@ -297,9 +303,9 @@
               </div>
               <div class="live-broadcast-actions">
                 <div class="live-broadcast-controls">
-                  <button id="live-console-previous" type="button" aria-label="Previous Akashvani station">‹</button>
-                  <button class="console-play" id="live-console-play" type="button" aria-label="Pause live radio"><i aria-hidden="true"></i></button>
-                  <button id="live-console-next" type="button" aria-label="Next Akashvani station">›</button>
+                  <button id="live-console-previous" type="button" aria-label="Previous Akashvani station"><svg class="icon-glyph" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"/></svg></button>
+                  <button class="console-play" id="live-console-play" type="button" aria-label="Pause live radio"><svg class="icon-glyph play-icon" viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"></path></svg><svg class="icon-glyph pause-icon" viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"></path></svg></button>
+                  <button id="live-console-next" type="button" aria-label="Next Akashvani station"><svg class="icon-glyph" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg></button>
                 </div>
                 <label class="live-console-volume" for="live-console-volume"><span>Volume</span><input id="live-console-volume" type="range" min="0" max="100" value="80" aria-label="Live radio volume" /></label>
                 <button class="return-to-pujo" id="return-to-pujo" type="button">Return to Pujo</button>
@@ -313,7 +319,7 @@
         <header class="room-toolbar">
           <div><span>Your seasonal music library</span><strong>Pujo Catalogue</strong></div>
           <p>Six broadcasts · One season</p>
-          <button class="room-close" type="button" data-close-room aria-label="Close Pujo catalogue"><span>Close</span> ×</button>
+          <button class="room-close" type="button" data-close-room aria-label="Close Pujo catalogue"><span>Close</span> <svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>
         </header>
         <div class="catalogue-overview" id="catalogue-overview">
           <div class="catalogue-intro">
@@ -325,7 +331,7 @@
             </div>
             <search class="catalogue-search" aria-label="Search the Pujo catalogue">
               <label for="catalogue-search-input">Find a song, artist or collection</label>
-              <div><input id="catalogue-search-input" type="search" autocomplete="off" placeholder="Try “Manna Dey”, “আগমনী” or “Dashami”" /><span aria-hidden="true">⌕</span></div>
+              <div><input id="catalogue-search-input" type="search" autocomplete="off" placeholder="Try “Manna Dey”, “আগমনী” or “Dashami”" /><span aria-hidden="true"><svg class="icon-glyph" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg></span></div>
               <p id="catalogue-search-status" role="status" aria-live="polite">Search all 350 songs in Bengali or English.</p>
             </search>
           </div>
@@ -345,7 +351,7 @@
         </div>
 
         <div class="playlist-detail" id="playlist-detail" hidden>
-          <button class="detail-back" id="detail-back" type="button">← All playlists</button>
+          <button class="detail-back" id="detail-back" type="button"><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg> All playlists</button>
           <div class="detail-heading">
             <div class="detail-art" id="detail-art" aria-hidden="true">RS-01</div>
             <div>
@@ -355,9 +361,9 @@
             </div>
           </div>
           <div class="playlist-actions">
-            <button class="action-primary" id="play-all" type="button">▶ Play all</button>
-            <button id="shuffle-all" type="button">↝ Shuffle</button>
-            <button id="add-all" type="button">＋ Add all to queue</button>
+            <button class="action-primary" id="play-all" type="button"><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg> Play all</button>
+            <button id="shuffle-all" type="button"><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M560-160v-80h104L537-367l57-57 126 126v-102h80v240H560Zm-344 0-56-56 504-504H560v-80h240v240h-80v-104L216-160Zm151-377L160-744l56-56 207 207-56 56Z"/></svg> Shuffle</button>
+            <button id="add-all" type="button"><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg> Add all to queue</button>
             <span id="playlist-meta">04 songs · 21 min</span>
           </div>
           <div class="track-list" id="track-list" aria-live="polite"></div>
@@ -368,7 +374,7 @@
         <header class="room-toolbar">
           <div><span>Akashvani · Official live streams</span><strong>Radio Sharodiya Live</strong></div>
           <p>Four channels · One live dial</p>
-          <button class="room-close" type="button" data-close-live-radio aria-label="Close live radio"><span>Close</span> ×</button>
+          <button class="room-close" type="button" data-close-live-radio aria-label="Close live radio"><span>Close</span> <svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>
         </header>
         <div class="live-radio-overview">
           <p class="section-kicker">Broadcasting now</p>
@@ -390,7 +396,7 @@
               <p id="live-radio-description">West Bengal · Bengali</p>
               <small id="live-radio-status" role="status" aria-live="polite">Ready · Press play to connect</small>
             </div>
-            <button class="live-radio-play" id="live-radio-play" type="button" data-playing="false" aria-label="Play Akashvani Bangla live"><i aria-hidden="true"></i><span>Play live</span></button>
+            <button class="live-radio-play" id="live-radio-play" type="button" data-playing="false" aria-label="Play Akashvani Bangla live"><svg class="icon-glyph play-icon" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"></path></svg><svg class="icon-glyph pause-icon" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"></path></svg><span>Play live</span></button>
             <label class="live-radio-volume" for="live-radio-volume"><span>Volume</span><input id="live-radio-volume" type="range" min="0" max="100" value="80" aria-label="Live radio volume" /></label>
           </section>
 
@@ -406,7 +412,7 @@
             <span>Personal listening queue</span>
             <h2 id="queue-pane-title">Current queue</h2>
           </div>
-          <button class="queue-pane-close" id="queue-pane-close" type="button" aria-label="Close current queue">×</button>
+          <button class="queue-pane-close" id="queue-pane-close" type="button" aria-label="Close current queue"><svg class="icon-glyph" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>
         </header>
         <div class="queue-pane-body" id="queue-pane-list" aria-live="polite"></div>
         <footer class="queue-pane-footer">
@@ -417,16 +423,16 @@
 
       <nav class="mobile-tabbar" aria-label="Primary navigation">
         <button class="is-current" type="button" data-mobile-tab="home" aria-current="page">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20h-5v-6H9v6H4z"></path></svg><span>Home</span>
+          <svg class="icon-glyph" viewBox="0 -960 960 960" aria-hidden="true"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"></path></svg><span>Home</span>
         </button>
         <button type="button" data-mobile-tab="catalogue" data-open-room="catalogue" aria-label="Open music catalogue, 6 curated collections">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h5v7H5zm9 0h5v7h-5zM5 15h5v5H5zm9 0h5v5h-5z"></path></svg><span>Music</span><strong class="mobile-catalogue-count" aria-hidden="true">06</strong>
+          <svg class="icon-glyph" viewBox="0 -960 960 960" aria-hidden="true"><path d="M500-360q42 0 71-29t29-71v-220h120v-80H560v220q-13-10-28-15t-32-5q-42 0-71 29t-29 71q0 42 29 71t71 29ZM320-240q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320Zm0-80h480v-480H320v480ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Zm160-720v480-480Z"></path></svg><span>Music</span><strong class="mobile-catalogue-count" aria-hidden="true">06</strong>
         </button>
         <button type="button" data-mobile-tab="radio" data-open-room="live-radio">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14v11H5zM8 5l8-2M8 12h5m-5 3h3"></path><circle cx="16.5" cy="14" r="2.2"></circle></svg><span>Live</span>
+          <svg class="icon-glyph" viewBox="0 -960 960 960" aria-hidden="true"><path d="M197-197q-54-55-85.5-127.5T80-480q0-84 31.5-156.5T197-763l57 57q-44 44-69 102t-25 124q0 67 25 125t69 101l-57 57Zm113-113q-32-33-51-76.5T240-480q0-51 19-94.5t51-75.5l57 57q-22 22-34.5 51T320-480q0 33 12.5 62t34.5 51l-57 57Zm113.5-113.5Q400-447 400-480t23.5-56.5Q447-560 480-560t56.5 23.5Q560-513 560-480t-23.5 56.5Q513-400 480-400t-56.5-23.5ZM650-310l-57-57q22-22 34.5-51t12.5-62q0-33-12.5-62T593-593l57-57q32 32 51 75.5t19 94.5q0 50-19 93.5T650-310Zm113 113-57-57q44-44 69-102t25-124q0-67-25-125t-69-101l57-57q54 54 85.5 126.5T880-480q0 83-31.5 155.5T763-197Z"></path></svg><span>Live</span>
         </button>
         <button type="button" data-mobile-tab="queue" data-mobile-queue>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h11M5 12h11M5 17h8"></path><path d="m17 15 3 2-3 2z"></path></svg><span>Queue</span><strong id="mobile-queue-count">00</strong>
+          <svg class="icon-glyph" viewBox="0 -960 960 960" aria-hidden="true"><path d="M640-160q-50 0-85-35t-35-85q0-50 35-85t85-35q11 0 21 1.5t19 6.5v-328h200v80H760v360q0 50-35 85t-85 35ZM120-320v-80h320v80H120Zm0-160v-80h480v80H120Zm0-160v-80h480v80H120Z"></path></svg><span>Queue</span><strong id="mobile-queue-count">00</strong>
         </button>
       </nav>
 
@@ -434,7 +440,7 @@
         <p class="section-kicker">Across the frequency · Station 01</p>
         <h2 id="frequency-title">When the music pauses,<br /><span>the stories begin.</span></h2>
         <p>A Pujo-night special from Golper Asor—mystery, nostalgia and one more story before the para lights go out.</p>
-        <a href="https://golper-asor.vercel.app/">Cross over to Golper Asor <span aria-hidden="true">→</span></a>
+        <a href="https://golper-asor.vercel.app/">Cross over to Golper Asor <svg class="icon-glyph" viewBox="0 -960 960 960" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></a>
       </section>
     </main>
 
@@ -454,7 +460,7 @@
     <section class="station-info-dialog" id="station-info-dialog" role="dialog" aria-modal="true" aria-labelledby="station-info-title" aria-hidden="true" hidden>
       <header>
         <div><span>Radio Sharodiya · Station notes</span><strong id="station-info-title">Inside Radio Sharodiya</strong></div>
-        <button class="station-info-close" id="station-info-close" type="button" aria-label="Close station notes">×</button>
+        <button class="station-info-close" id="station-info-close" type="button" aria-label="Close station notes"><svg class="icon-glyph" viewBox="0 -960 960 960" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>
       </header>
       <nav class="station-info-tabs" aria-label="Station notes" role="tablist">
         <button id="station-about-tab" type="button" role="tab" aria-controls="station-about-panel" aria-selected="true" data-station-view="about">About</button>
