@@ -308,6 +308,7 @@ test('search and social discovery have a real technical foundation', () => {
   assert.match(readFileSync('public/robots.txt', 'utf8'), /Disallow: \/beta-admin/);
   assert.match(readFileSync('public/sitemap.xml', 'utf8'), /<loc>https:\/\/www\.radio-sharodiya\.in\/<\/loc>/);
   assert.ok(existsSync('public/assets/social/og-image.jpg'));
+  assert.match(html, /<meta name="msvalidate\.01" content="72AC35697519D319970831C42D7A077C" \/>/);
 });
 
 test('the generated service worker is revision-aware, isolated, and never caches audio ranges', () => {
