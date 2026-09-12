@@ -254,24 +254,6 @@ body[data-low-data="true"] * { -webkit-backdrop-filter: none !important; backdro
 .continue-listening button { min-height: 2rem; padding: 0 .7rem; border: 1px solid rgba(255,245,220,.18); border-radius: 99px; background: rgba(255,255,255,.055); color: var(--shiuli); font: 600 .64rem "Space Mono",monospace; text-transform: uppercase; cursor: pointer; }
 .continue-listening button:hover { background: var(--marigold); color: var(--ink); }
 .continue-listening .continue-dismiss { width: 2rem; padding: 0; border-radius: 50%; font-size: .8rem; }
-.station-guide { min-height: 3.35rem; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: stretch; border-bottom: 1px solid rgba(255,245,220,.12); background: rgba(3,8,7,.24); }
-.station-guide-line { min-width: 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
-.guide-slot { min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: .5rem .75rem; border-right: 1px solid rgba(255,245,220,.1); }
-.guide-slot span, .guide-slot strong { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.guide-slot span { color: rgba(255,245,220,.62); font: .6rem "Space Mono",monospace; letter-spacing: .05em; text-transform: uppercase; }
-.guide-slot span b { font: inherit; }
-.guide-slot strong { margin-top: .22rem; font: 500 .78rem var(--font-reading-en); }
-.guide-slot.is-now span { color: var(--marigold); }
-.guide-slot.is-now i { display: inline-block; width: .35rem; height: .35rem; margin-right: .25rem; border-radius: 50%; background: #9ee36e; box-shadow: 0 0 .45rem rgba(158,227,110,.65); }
-.join-broadcast { min-width: 8.4rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: .45rem .75rem; border: 0; background: rgba(238,163,35,.92); color: var(--ink); text-align: left; cursor: pointer; }
-.join-broadcast:hover { background: #ffc657; }
-.join-broadcast:disabled { cursor: default; opacity: .72; }
-.join-broadcast:disabled:hover { background: rgba(238,163,35,.92); }
-.join-broadcast strong, .join-broadcast span { display: block; }
-.join-broadcast strong { font: 700 .66rem "Space Mono",monospace; text-transform: uppercase; }
-.join-broadcast span { margin-top: .18rem; opacity: .72; font: .62rem "Space Mono",monospace; text-transform: uppercase; }
-.station-guide.is-manual .join-broadcast { background: rgba(255,245,220,.08); color: var(--marigold); }
-.station-guide.is-manual .join-broadcast:hover { background: rgba(238,163,35,.18); }
 .console-topline { min-height: 1.9rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0 .8rem; border-bottom: 1px solid rgba(255,245,220,.1); background: rgba(0,0,0,.18); color: var(--mist); font: .62rem "Space Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
 .console-topline span:last-child { color: var(--marigold); }
 .console-topline i { display: inline-block; width: .35rem; height: .35rem; margin-right: .35rem; border-radius: 50%; background: #9ee36e; box-shadow: 0 0 .5rem rgba(158,227,110,.7); }
@@ -380,7 +362,6 @@ body.queue-open { overflow: hidden; }
 body.room-open { overflow: hidden; }
 body.room-open .broadcast-console { position: fixed; z-index: 80; top: auto; bottom: 1rem; left: 50%; transform: translateX(-50%); width: min(57rem,calc(100% - 2rem)); border-radius: .7rem; }
 body.room-open .continue-listening { display: none; }
-body.room-open .station-guide { display: none; }
 body.room-open .console-topline { display: none; }
 body.room-open .console-main { min-height: 4.5rem; padding: .55rem .75rem; }
 body.room-open .programme-art { width: 3.45rem; }
@@ -390,7 +371,6 @@ body.room-open .console-controls .console-play { width: 3rem; height: 3rem; }
 body.live-room-open .broadcast-console { display: none; }
 body.live-room-open .station-room { padding-bottom: 3rem !important; }
 body.live-radio-active:not(.live-room-open) .broadcast-console > .continue-listening,
-body.live-radio-active:not(.live-room-open) .broadcast-console > .station-guide,
 body.live-radio-active:not(.live-room-open) .broadcast-console > .console-topline,
 body.live-radio-active:not(.live-room-open) .broadcast-console > .console-main { display: none; }
 .live-broadcast-player { --dial-position: 9%; background: linear-gradient(110deg,rgba(10,18,17,.96),rgba(55,34,30,.9)); }
@@ -673,9 +653,6 @@ body.station-info-open { overflow: hidden; }
 .countdown-clock small,
 .continue-listening > div span,
 .continue-listening button,
-.guide-slot span,
-.join-broadcast strong,
-.join-broadcast span,
 .console-topline,
 .console-track small,
 .console-track > span,
@@ -758,7 +735,6 @@ body.station-info-open { overflow: hidden; }
   .countdown-number { font-size: clamp(3.25rem,5vw,4.25rem); }
   .countdown-clock { min-height: 2.55rem; }
   .continue-listening { min-height: 2.7rem; }
-  .station-guide { min-height: 3rem; }
   .console-topline { min-height: 1.65rem; }
   .console-main { min-height: 5.2rem; padding-block: .55rem; }
   .programme-art { width: 4.35rem; }
@@ -820,13 +796,6 @@ body.station-info-open { overflow: hidden; }
   .continue-listening > div span { font-size: .62rem; }
   .continue-listening > div strong { font-size: .7rem; }
   .continue-listening button { min-height: 1.9rem; padding-inline: .55rem; font-size: .62rem; }
-  .station-guide { min-height: 3rem; }
-  .guide-slot { padding: .42rem .4rem; }
-  .guide-slot span { font-size: .6rem; }
-  .guide-slot strong { font-size: .68rem; }
-  .join-broadcast { min-width: 6.3rem; padding-inline: .5rem; }
-  .join-broadcast strong { font-size: .62rem; }
-  .join-broadcast span { font-size: .6rem; }
   .console-main { min-height: 0; grid-template-columns: minmax(0,1fr) auto; gap: .65rem .8rem; padding: .65rem .7rem .7rem; }
   .now-playing { min-width: 0; grid-column: 1; grid-row: 1; gap: .65rem; }
   .programme-art { width: 3.55rem; border-radius: .55rem; }
@@ -906,9 +875,6 @@ body.station-info-open { overflow: hidden; }
   .countdown-clock small,
   .continue-listening > div span,
   .continue-listening button,
-  .guide-slot span,
-  .join-broadcast strong,
-  .join-broadcast span,
   .console-track small,
   .console-track > span { font-size: .68rem; }
 }
@@ -1101,7 +1067,6 @@ body.station-info-open { overflow: hidden; }
   .mobile-player-expand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .mobile-player-header { display: none; }
   .broadcast-console > .continue-listening,
-  .broadcast-console > .station-guide,
   .broadcast-console > .console-topline { display: none; }
   .broadcast-console .console-main,
   body.room-open .broadcast-console .console-main {
@@ -1183,7 +1148,6 @@ body.station-info-open { overflow: hidden; }
   .mobile-sheet-close { width: 2.75rem; height: 2.75rem; display: grid; place-items: center; padding: 0; border: 1px solid rgba(255,245,220,.2); border-radius: 50%; background: rgba(255,255,255,.05); color: var(--shiuli); cursor: pointer; font-size: 1.35rem; }
   .mobile-player-header button svg { width: 1.25rem; height: 1.25rem; fill: currentColor; }
   .mobile-player-header-mark { width: 2.4rem; height: 2.4rem; display: grid; place-items: center; justify-self: end; border: 1px solid rgba(238,163,35,.36); border-radius: 50%; color: var(--marigold); font: 700 .58rem var(--font-signal); letter-spacing: .04em; }
-  body.mobile-player-open .broadcast-console > .station-guide,
   body.mobile-player-open .broadcast-console > .console-topline { display: none; }
   body.mobile-player-open .broadcast-console .console-main {
     width: min(100%,32rem);
@@ -1213,7 +1177,6 @@ body.station-info-open { overflow: hidden; }
   body.mobile-player-open .broadcast-console .console-controls .queue-inline { min-width: 2.75rem; padding: 0 .35rem; order: 0; }
   body.mobile-player-open .broadcast-console .console-controls .console-play { width: clamp(3.8rem,16vw,4.35rem); height: clamp(3.8rem,16vw,4.35rem); margin: 0; order: 0; }
 
-  body.mobile-player-open.live-radio-active .broadcast-console > .station-guide,
   body.mobile-player-open.live-radio-active .broadcast-console > .console-topline,
   body.mobile-player-open.live-radio-active .broadcast-console > .console-main { display: none; }
   body.mobile-player-open .broadcast-console .live-broadcast-player { min-height: calc(100% - 4.25rem); height: auto; }

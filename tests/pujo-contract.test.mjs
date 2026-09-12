@@ -16,6 +16,7 @@ const catalogueView = readFileSync('pujo-catalogue-view.js', 'utf8');
 const liveRadio = readFileSync('pujo-live-radio.js', 'utf8');
 const persistence = readFileSync('pujo-persistence.js', 'utf8');
 const sceneManager = readFileSync('pujo-scenes.js', 'utf8');
+const schedule = readFileSync('pujo-schedule.js', 'utf8');
 const playlistConfig = JSON.parse(readFileSync('public/data/pujo/playlist-config.json', 'utf8'));
 const catalogueDocument = JSON.parse(readFileSync('public/data/pujo/catalogue.v1.json', 'utf8'));
 
@@ -154,9 +155,15 @@ test('mobile shell provides app navigation, a mini player, and full-screen surfa
   assert.match(pujoCss, /body\.mobile-player-open \.broadcast-console/);
   assert.match(pujoCss, /grid-template-columns: repeat\(5,minmax\(2\.75rem,1fr\)\)/);
   assert.match(pujoCss, /width: min\(72vw,36dvh,20rem\)/);
-  assert.match(player, /mobilePlayerContextLabel\.textContent = 'Today’s programme'/);
   assert.match(player, /mobilePlayerContextLabel\.textContent = 'Your playlist'/);
   assert.match(player, /mobilePlayerContext\.textContent = playlistName/);
+});
+
+test('the synthetic daily programme guide has been removed', () => {
+  assert.doesNotMatch(html, /station-guide|guide-slot|join-broadcast/);
+  assert.doesNotMatch(player, /joinScheduledBroadcast|updateStationGuide|renderGuideAction|renderGuideContent|DAILY_PROGRAMMES/);
+  assert.doesNotMatch(schedule, /DAILY_PROGRAMMES|resolveProgrammeWindow/);
+  assert.doesNotMatch(pujoCss, /station-guide|guide-slot|join-broadcast/);
 });
 
 test('continuity saves and restores queue, position, volume, shuffle and origin without autoplay', () => {

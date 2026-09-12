@@ -17,7 +17,7 @@ This contract records the user-facing behaviour that performance and architectur
 - **Play all** replaces the queue with every playable track in the selected playlist, preserves playlist order and starts the first queued track.
 - **Shuffle** replaces the queue with the same playable tracks in randomized order and starts the first shuffled track.
 - **Add all to queue** adds playable tracks without interrupting the current track.
-- Long programmes are included in Play all, Shuffle, scheduled broadcasts and Add all.
+- Long programmes are included in Play all, Shuffle and Add all.
 
 ## Player and queue
 
