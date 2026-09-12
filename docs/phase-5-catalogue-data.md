@@ -1,6 +1,6 @@
 # Phase 5 — Catalogue data separation
 
-Pujo Vibes starts from a six-item bootstrap catalogue containing playlist metadata and one featured programme per playlist. The complete catalogue is fetched only when the listener opens a playlist, joins the scheduled broadcast, or restores listening continuity; its exact size is enforced by the current build audit rather than frozen in this architecture note.
+Pujo Vibes starts from a six-item bootstrap catalogue containing playlist metadata and one featured programme per playlist. The complete catalogue is fetched only when the listener opens a playlist or restores listening continuity; its exact size is enforced by the current build audit rather than frozen in this architecture note.
 
 ## Data files
 

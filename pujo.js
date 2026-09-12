@@ -19,7 +19,7 @@ import {
 import { personalTrackMarkup, trackListMarkup } from './pujo-catalogue-view.js';
 import { createVersionedStorage } from './pujo-persistence.js';
 import { IMAGE_QUALITY_VALUES, defaultExperiencePreferences, normalizeExperiencePreferences } from './pujo-experience-preferences.js';
-import { getKolkataParts, programmeTimeLabel, resolveProgrammeWindow } from './pujo-schedule.js';
+import { getKolkataParts } from './pujo-schedule.js';
 import { createSceneDelivery, nextSceneForKolkataTime, sceneForKolkataTime, scenes } from './pujo-scenes.js';
 
 const paraAtmosphereUrl = '/assets/audio/para-atmosphere-loop.mp3';
@@ -62,16 +62,6 @@ const continueTitle = document.querySelector('#continue-title');
 const resumeButton = document.querySelector('#resume-listening');
 const resumeTime = document.querySelector('#resume-time');
 const dismissResumeButton = document.querySelector('#dismiss-resume');
-const stationGuide = document.querySelector('#station-guide');
-const guideNowTime = document.querySelector('#guide-now-time');
-const guideNowTitle = document.querySelector('#guide-now-title');
-const guideNextTime = document.querySelector('#guide-next-time');
-const guideNextTitle = document.querySelector('#guide-next-title');
-const guideLaterTime = document.querySelector('#guide-later-time');
-const guideLaterTitle = document.querySelector('#guide-later-title');
-const joinBroadcastButton = document.querySelector('#join-broadcast');
-const joinBroadcastLabel = document.querySelector('#join-broadcast-label');
-const joinBroadcastStatus = document.querySelector('#join-broadcast-status');
 const playerModeLabel = document.querySelector('#player-mode-label');
 const playerConnectionLabel = document.querySelector('#player-connection-label');
 const queueButton = document.querySelector('#open-queue');
@@ -319,47 +309,47 @@ const playlistPresentations = {
 const calendarPresentations = {
   'pre-mahalaya': {
     eyebrow: 'The city is listening for the first dawn', title: 'শহর জুড়ে<br />পুজোর অপেক্ষা', intro: 'The season approaches. Begin with the songs that call Uma home.',
-    programmes: ['agomoni', 'retro', 'mahalaya'], label: 'Mahalaya', targetLabel: 'Mahalaya',
+    label: 'Mahalaya', targetLabel: 'Mahalaya',
   },
   mahalaya: {
     eyebrow: 'Mahalaya · Devi Paksha begins', title: 'ভোরের আগে<br />দেবীপক্ষের প্রথম সুর', intro: 'The invocation that wakes a city before sunrise.',
-    programmes: ['mahalaya', 'agomoni', 'retro'], label: 'Mahalaya', targetLabel: 'Panchami',
+    label: 'Mahalaya', targetLabel: 'Panchami',
   },
   agomoni: {
     eyebrow: 'Devi Paksha · The city waits', title: 'মা আসছেন<br />শহর অপেক্ষায়', intro: 'Shiuli underfoot, dhaak in the distance—the arrival has begun.',
-    programmes: ['agomoni', 'mahalaya', 'retro'], label: 'Agomoni', targetLabel: 'Panchami',
+    label: 'Agomoni', targetLabel: 'Panchami',
   },
   panchami: {
     eyebrow: 'Panchami · The city steps out', title: 'আলো জ্বলে উঠছে<br />পুজো শুরু', intro: 'The first routes are drawn and the pandals begin to glow.',
-    programmes: ['agomoni', 'modern', 'pandal'], label: 'Panchami', targetLabel: 'Shashthi',
+    label: 'Panchami', targetLabel: 'Shashthi',
   },
   shashthi: {
     eyebrow: 'Shashthi · Bodhon', title: 'মা এসেছেন<br />দরজা খুলে যায়', intro: 'The welcome is complete. The city belongs to Pujo now.',
-    programmes: ['agomoni', 'modern', 'pandal'], label: 'Shashthi', targetLabel: 'Saptami',
+    label: 'Shashthi', targetLabel: 'Saptami',
   },
   saptami: {
     eyebrow: 'Saptami · A city in motion', title: 'সকাল থেকে<br />শহর পুজোময়', intro: 'Morning rituals give way to long, luminous pandal trails.',
-    programmes: ['retro', 'modern', 'pandal'], label: 'Saptami', targetLabel: 'Ashtami',
+    label: 'Saptami', targetLabel: 'Ashtami',
   },
   ashtami: {
     eyebrow: 'Ashtami · The heart of Pujo', title: 'অঞ্জলি, ধুনুচি<br />আর চেনা সুর', intro: 'A day of anjali, adda and songs everyone knows by heart.',
-    programmes: ['mahalaya', 'retro', 'pandal'], label: 'Ashtami', targetLabel: 'Navami',
+    label: 'Ashtami', targetLabel: 'Navami',
   },
   navami: {
     eyebrow: 'Navami · One more luminous night', title: 'শেষ রাতটুকু<br />আলোয় থাক', intro: 'Stay out a little longer. Let the last full night keep playing.',
-    programmes: ['modern', 'pandal', 'retro'], label: 'Navami', targetLabel: 'Dashami',
+    label: 'Navami', targetLabel: 'Dashami',
   },
   dashami: {
     eyebrow: 'Dashami · Farewell begins', title: 'ফিরে যাওয়ার সুর<br />থেকে যাওয়ার স্মৃতি', intro: 'Sindoor, embraces and the long procession towards the river.',
-    programmes: ['biday', 'retro', 'modern'], label: 'Dashami', targetLabel: 'Bijoya',
+    label: 'Dashami', targetLabel: 'Bijoya',
   },
   bijoya: {
     eyebrow: 'Bijoya · The promise remains', title: 'শেষ নয়<br />আবার দেখা হবে', intro: 'Every farewell carries next year inside it.',
-    programmes: ['biday', 'retro', 'agomoni'], label: 'Bijoya', targetLabel: 'Season archive',
+    label: 'Bijoya', targetLabel: 'Season archive',
   },
   'off-season': {
     eyebrow: 'Radio Sharodiya · Season archive', title: 'পুজো থাকে<br />গানের ভিতরে', intro: 'The lights rest. The music keeps the season within reach.',
-    programmes: ['retro', 'modern', 'agomoni'], label: 'Season archive', targetLabel: 'Next calendar soon',
+    label: 'Season archive', targetLabel: 'Next calendar soon',
   },
 };
 
@@ -517,8 +507,6 @@ let pendingResumeSeconds = 0;
 let lastMediaPositionSecond = -1;
 let continuitySaveTimer;
 let recentlyPlayed = [];
-let activeScheduledProgramme;
-let scheduledGuideProgrammes = [];
 let playbackOrigin = 'idle';
 let queueRenderLimit = 16;
 let queueContinuationObserver;
@@ -601,8 +589,6 @@ const hydrateCatalogue = (catalogue) => {
   updatePlaylistOverviewCounts();
   renderCatalogueSearch();
   auditCatalogue();
-  updateStationGuide();
-  renderGuideAction();
   updateQueueCount();
 };
 
@@ -700,19 +686,11 @@ const formatPlaybackTime = (seconds = 0) => {
     : `${minutes}:${String(remainder).padStart(2, '0')}`;
 };
 
-const playableProgrammeTracks = (programme) => availableTracks(playlists[programme?.playlistId]?.tracks || []);
-
 const trackCredit = (track) => `${track?.creditType === 'source' ? 'Source · ' : ''}${track?.artist || 'Unknown source'}`;
 
 const renderListeningMode = () => {
   if (liveRadioIsActive) return;
   const playlistName = playlists[currentTrack?.playlistId]?.english || 'Radio Sharodiya';
-  if (playbackOrigin === 'broadcast') {
-    playerModeLabel.textContent = 'Today’s programme';
-    mobilePlayerContextLabel.textContent = 'Today’s programme';
-    mobilePlayerContext.textContent = activeScheduledProgramme?.title || playlistName;
-    return;
-  }
   if (playbackOrigin === 'manual') {
     playerModeLabel.textContent = 'Your playlist';
     mobilePlayerContextLabel.textContent = 'Your playlist';
@@ -724,86 +702,10 @@ const renderListeningMode = () => {
   mobilePlayerContext.textContent = playlistName;
 };
 
-const renderGuideContent = () => {
-  if (!scheduledGuideProgrammes.length) return;
-  const [current, next, later] = scheduledGuideProgrammes;
-  guideNowTime.textContent = programmeTimeLabel(current.startHour);
-  guideNowTitle.textContent = current.title;
-  guideNextTime.textContent = programmeTimeLabel(next.startHour);
-  guideNextTitle.textContent = next.title;
-  guideLaterTime.textContent = programmeTimeLabel(later.startHour);
-  guideLaterTitle.textContent = later.title;
-};
-
-const renderGuideAction = () => {
-  if (!activeScheduledProgramme) return;
-  renderGuideContent();
-  const playableTracks = playableProgrammeTracks(activeScheduledProgramme);
-  const declaredTrackCount = playlists[activeScheduledProgramme.playlistId]?.trackCount || playableTracks.length;
-  const onCurrentProgramme = playbackOrigin === 'broadcast' && currentTrack?.playlistId === activeScheduledProgramme.playlistId;
-  stationGuide.classList.toggle('is-manual', playbackOrigin === 'manual' || (playbackOrigin === 'broadcast' && !onCurrentProgramme));
-  joinBroadcastButton.hidden = declaredTrackCount === 0 || playbackOrigin === 'idle';
-  if (!declaredTrackCount) return;
-  joinBroadcastButton.disabled = false;
-  if (onCurrentProgramme && isPlaying) {
-    joinBroadcastLabel.textContent = 'Today’s programme';
-    joinBroadcastStatus.textContent = 'Playing now';
-    joinBroadcastButton.disabled = true;
-    return;
-  }
-  if (onCurrentProgramme) {
-    joinBroadcastLabel.textContent = 'Resume today’s programme';
-    joinBroadcastStatus.textContent = 'Curated in Kolkata';
-    return;
-  }
-  joinBroadcastLabel.textContent = playbackOrigin === 'manual' ? 'Return to today’s programme' : 'Listen to today’s programme';
-  joinBroadcastStatus.textContent = catalogueIsFull
-    ? `${String(playableTracks.length).padStart(2, '0')} playable tracks`
-    : `${String(declaredTrackCount).padStart(2, '0')} catalogue tracks`;
-};
-
-const updateStationGuide = (date = new Date()) => {
-  const seasonalIds = calendarPresentations[currentCalendarState?.id]?.programmes;
-  const [current, next, later] = resolveProgrammeWindow({ date, seasonalIds, playlists });
-  activeScheduledProgramme = current;
-  scheduledGuideProgrammes = [current, next, later];
-  renderGuideContent();
-  renderGuideAction();
-  renderListeningMode();
-};
-
 const setPlaybackOrigin = (origin) => {
   playbackOrigin = origin;
   renderListeningMode();
-  renderGuideAction();
   scheduleContinuitySave();
-};
-
-const joinScheduledBroadcast = async () => {
-  if (!activeScheduledProgramme) return;
-  joinBroadcastButton.disabled = true;
-  joinBroadcastStatus.textContent = 'Loading programme…';
-  await ensureFullCatalogue();
-  const playableTracks = playableProgrammeTracks(activeScheduledProgramme);
-  if (!playableTracks.length) {
-    joinBroadcastStatus.textContent = 'Programme sources unavailable';
-    return;
-  }
-
-  const kolkata = getKolkataParts();
-  const minutesNow = (Number(kolkata.hour) % 24) * 60 + Number(kolkata.minute);
-  const minutesFromStart = (minutesNow - activeScheduledProgramme.startHour * 60 + 1440) % 1440;
-  const cycleDuration = playableTracks.reduce((total, track) => total + durationToSeconds(track.duration), 0);
-  let programmeOffset = cycleDuration > 0 ? (minutesFromStart * 60) % cycleDuration : 0;
-  let trackIndex = 0;
-  while (trackIndex < playableTracks.length - 1 && programmeOffset >= durationToSeconds(playableTracks[trackIndex].duration)) {
-    programmeOffset -= durationToSeconds(playableTracks[trackIndex].duration);
-    trackIndex += 1;
-  }
-  const liveQueue = [...playableTracks.slice(trackIndex), ...playableTracks.slice(0, trackIndex)];
-  setPlaybackOrigin('broadcast');
-  replaceQueue(liveQueue);
-  setCurrentTrack(liveQueue[0], true, programmeOffset);
 };
 
 const currentPosition = () => {
@@ -1044,7 +946,6 @@ const setPlayerState = (playing, note, state = playing ? 'playing' : 'paused') =
     stopProgressTracking();
     stopPlaybackSceneRotation();
   }
-  renderGuideAction();
   scheduleContinuitySave();
 };
 
@@ -1191,7 +1092,6 @@ const formatKolkata = () => {
     applyScene(sceneForKolkataTime(kolkata, calendarState), activeSceneId === undefined);
     preloadScene(nextSceneForKolkataTime(kolkata, calendarState));
   }
-  updateStationGuide(now);
 };
 
 const updateCountdown = () => {
@@ -1602,7 +1502,6 @@ queueButton.addEventListener('click', () => openQueuePane(queueButton));
 mobileQueueButton.addEventListener('click', () => openQueuePane(mobileQueueButton));
 mobilePlayerExpand.addEventListener('click', () => setMobilePlayerExpanded(true));
 mobilePlayerDismiss.addEventListener('click', () => setMobilePlayerExpanded(false));
-joinBroadcastButton.addEventListener('click', () => void joinScheduledBroadcast());
 queuePaneClose.addEventListener('click', closeQueuePane);
 queueScrim.addEventListener('click', closeQueuePane);
 
