@@ -245,6 +245,30 @@ test('repeated slow loads offer a dismissible, cooldown-limited fewer-visuals nu
   assert.match(html, /Turn on Low-data<\/button>/);
 });
 
+test('iOS Safari gets manual Add to Home Screen instructions and a proper app icon', () => {
+  assert.match(player, /const isIOSDevice = \(\) => \/iP\(hone\|od\|ad\)\/\.test\(navigator\.platform\)/);
+  assert.match(player, /navigator\.platform === 'MacIntel' && navigator\.maxTouchPoints > 1/);
+  assert.match(player, /const isStandaloneDisplay = \(\) => window\.matchMedia\('\(display-mode: standalone\)'\)\.matches \|\| navigator\.standalone === true;/);
+  assert.match(player, /if \(!isIOSDevice\(\) \|\| isStandaloneDisplay\(\) \|\| !updateToast\.hidden \|\| !dataNudge\.hidden\) return;/);
+  assert.match(html, /id="ios-install-banner"[^>]*hidden>/);
+  assert.match(html, /<link rel="apple-touch-icon" href="\/icons\/apple-touch-icon\.png" \/>/);
+  const manifestJson = JSON.parse(manifest);
+  assert.ok(manifestJson.icons.some((icon) => icon.sizes === '192x192' && icon.type === 'image/png'));
+  assert.ok(manifestJson.icons.some((icon) => icon.sizes === '512x512' && icon.type === 'image/png'));
+  assert.ok(existsSync('public/icons/apple-touch-icon.png'));
+  assert.ok(existsSync('public/icons/icon-192.png'));
+  assert.ok(existsSync('public/icons/icon-512.png'));
+});
+
+test('functional UI icons are Material Symbols, not stroke-based glyphs or bare characters', () => {
+  assert.equal((html.match(/stroke="currentColor"/g) || []).length, 0);
+  assert.doesNotMatch(html, />×</);
+  assert.doesNotMatch(html, /<i aria-hidden="true">[✦♥↗⌕‹›↝＋▶]<\/i>/);
+  assert.ok(html.match(/class="icon-glyph"/g).length >= 30);
+  assert.match(player, /class="icon-glyph"/);
+  assert.match(catalogueView, /class="icon-glyph"/);
+});
+
 test('delivery contracts use Radio Sharodiya as the standalone root application', () => {
   assert.match(viteConfig, /app:\s*resolve\([^)]*'index\.html'/);
   assert.doesNotMatch(viteConfig, /hub:|legacyPujo:|pujo\/index\.html/);

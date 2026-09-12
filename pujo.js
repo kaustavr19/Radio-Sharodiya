@@ -156,6 +156,8 @@ const updateLaterButton = document.querySelector('#update-later');
 const dataNudge = document.querySelector('#data-nudge');
 const dataNudgeAcceptButton = document.querySelector('#data-nudge-accept');
 const dataNudgeDismissButton = document.querySelector('#data-nudge-dismiss');
+const iosInstallBanner = document.querySelector('#ios-install-banner');
+const iosInstallDismissButton = document.querySelector('#ios-install-dismiss');
 const stationInfoDialog = document.querySelector('#station-info-dialog');
 const stationInfoScrim = document.querySelector('#station-info-scrim');
 const stationInfoClose = document.querySelector('#station-info-close');
@@ -1254,7 +1256,7 @@ const renderQueuePanel = () => {
 
   const currentMarkup = current ? `<section class="queue-now"><span class="queue-label">Now playing</span><div class="queue-now-card">${queueThumbnail(current)}<div><strong>${escapeMarkup(current.title)}</strong><small>${escapeMarkup(trackCredit(current))} · ${escapeMarkup(playlists[current.playlistId]?.english || 'Radio Sharodiya')}</small></div></div></section>` : '';
   const upcomingMarkup = upcoming.length
-    ? `<section class="queue-up-next"><span class="queue-label">Up next · ${String(upcoming.length).padStart(2, '0')}</span>${visibleUpcoming.map((track, index) => `<div class="queue-item"><button class="queue-item-main" type="button" data-queue-action="play" data-track-id="${escapeMarkup(track.id)}"><span class="queue-item-index">${String(index + 1).padStart(2, '0')}</span>${queueThumbnail(track)}<span class="queue-item-copy"><strong>${escapeMarkup(track.title)}</strong><small>${escapeMarkup(trackCredit(track))}</small></span><span class="queue-item-duration">${escapeMarkup(track.duration)}</span></button><button class="queue-item-remove" type="button" data-queue-action="remove" data-track-id="${escapeMarkup(track.id)}" aria-label="Remove ${escapeMarkup(track.title)} from queue">×</button></div>`).join('')}${remainingCount ? `<button class="queue-more" type="button" data-queue-action="more">Show next ${Math.min(QUEUE_RENDER_BATCH, remainingCount)}<small>${remainingCount} songs remain</small></button>` : ''}</section>`
+    ? `<section class="queue-up-next"><span class="queue-label">Up next · ${String(upcoming.length).padStart(2, '0')}</span>${visibleUpcoming.map((track, index) => `<div class="queue-item"><button class="queue-item-main" type="button" data-queue-action="play" data-track-id="${escapeMarkup(track.id)}"><span class="queue-item-index">${String(index + 1).padStart(2, '0')}</span>${queueThumbnail(track)}<span class="queue-item-copy"><strong>${escapeMarkup(track.title)}</strong><small>${escapeMarkup(trackCredit(track))}</small></span><span class="queue-item-duration">${escapeMarkup(track.duration)}</span></button><button class="queue-item-remove" type="button" data-queue-action="remove" data-track-id="${escapeMarkup(track.id)}" aria-label="Remove ${escapeMarkup(track.title)} from queue"><svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button></div>`).join('')}${remainingCount ? `<button class="queue-more" type="button" data-queue-action="more">Show next ${Math.min(QUEUE_RENDER_BATCH, remainingCount)}<small>${remainingCount} songs remain</small></button>` : ''}</section>`
     : '<div class="queue-empty"><strong>Last song in line</strong><p>There is nothing else queued after this track.</p></div>';
   queuePaneList.innerHTML = currentMarkup + upcomingMarkup;
   const continuation = queuePaneList.querySelector('[data-queue-action="more"]');
@@ -1436,9 +1438,9 @@ const showPlaylist = async (playlistId) => {
     ? `${String(playlist.tracks.length).padStart(2, '0')} songs · ${playlist.duration}${longFormCount ? ` · ${longFormCount} long ${longFormCount === 1 ? 'listen' : 'listens'}` : ''}`
     : `${String(playlist.tracks.length).padStart(2, '0')} songs · ${playableCount ? `${playableCount} ready` : 'sources coming soon'}${longFormCount ? ` · ${longFormCount} long ${longFormCount === 1 ? 'listen' : 'listens'}` : ''}`;
   if (!fullCatalogueAvailable) playlistMeta.textContent = 'Catalogue temporarily unavailable · Featured programme only';
-  playAllButton.textContent = '▶ Play all';
-  shuffleAllButton.textContent = '↝ Shuffle';
-  addAllButton.textContent = '＋ Add all to queue';
+  playAllButton.innerHTML = '<svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg> Play all';
+  shuffleAllButton.innerHTML = '<svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M560-160v-80h104L537-367l57-57 126 126v-102h80v240H560Zm-344 0-56-56 504-504H560v-80h240v240h-80v-104L216-160Zm151-377L160-744l56-56 207 207-56 56Z"/></svg> Shuffle';
+  addAllButton.innerHTML = '<svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg> Add all to queue';
   addAllButton.dataset.mode = 'add';
   playAllButton.disabled = playableCount === 0;
   shuffleAllButton.disabled = playableCount === 0;
@@ -1634,7 +1636,7 @@ shuffleAllButton.addEventListener('click', () => {
 });
 addAllButton.addEventListener('click', () => {
   addToQueue(availableTracks(playlists[activePlaylistId].tracks));
-  addAllButton.textContent = '✓ Added to queue';
+  addAllButton.innerHTML = '<svg class="icon-glyph" viewBox="0 -960 960 960" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg> Added to queue';
 });
 
 const moveTrack = (direction, autoplay = playIntent || isPlaying) => {
@@ -1998,6 +2000,26 @@ installButton.addEventListener('click', async () => {
   installButton.hidden = true;
 });
 window.addEventListener('appinstalled', () => { installButton.hidden = true; experienceStatus.textContent = 'Radio Sharodiya has been installed.'; });
+
+// iOS Safari never fires beforeinstallprompt, so the native Install-station flow above
+// never applies there; offer manual Add to Home Screen instructions instead.
+const isIOSDevice = () => /iP(hone|od|ad)/.test(navigator.platform)
+  || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isStandaloneDisplay = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const IOS_INSTALL_BANNER_KEY = 'pujo-vibes:ios-install-banner:v1';
+const iosInstallBannerStorage = createVersionedStorage({ storage: window.localStorage, key: IOS_INSTALL_BANNER_KEY, version: 1 });
+const IOS_INSTALL_BANNER_COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000;
+
+const maybeShowIOSInstallBanner = () => {
+  if (!isIOSDevice() || isStandaloneDisplay() || !updateToast.hidden || !dataNudge.hidden) return;
+  const cooldown = iosInstallBannerStorage.read();
+  if (cooldown?.dismissedUntil && Date.now() < cooldown.dismissedUntil) return;
+  iosInstallBanner.hidden = false;
+};
+iosInstallDismissButton.addEventListener('click', () => {
+  iosInstallBanner.hidden = true;
+  iosInstallBannerStorage.write({ dismissedUntil: Date.now() + IOS_INSTALL_BANNER_COOLDOWN_MS });
+});
 
 const renderNetworkStatus = () => {
   const offline = !navigator.onLine;
@@ -2509,6 +2531,7 @@ const initializeStation = async () => {
   updateQueueCount();
   applyVolume();
   setupMediaSession();
+  maybeShowIOSInstallBanner();
   window.requestAnimationFrame(focusTVStart);
 };
 
