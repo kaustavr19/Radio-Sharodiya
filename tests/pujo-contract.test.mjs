@@ -476,6 +476,18 @@ test('no live region is nested inside another, so status changes announce exactl
   assert.match(html, /id="beta-form-status"[^>]*role="status"/);
 });
 
+test('forced-colors mode keeps focus rings and toggle switches visible', () => {
+  assert.match(pujoCss, /@media \(forced-colors: active\) \{/);
+  assert.match(pujoCss, /outline-color: Highlight;/);
+  assert.match(pujoCss, /button:not\(\[disabled\]\) \{\s*border: 1px solid ButtonText;/);
+  assert.match(pujoCss, /\.experience-option > i \{ forced-color-adjust: none; border-color: ButtonText; background: Canvas; \}/);
+  assert.match(pujoCss, /\.experience-option\[aria-checked="true"\] > i \{ background: Highlight; \}/);
+});
+
+test('the beta gate never overlaps its header when its centered content grows', () => {
+  assert.match(pujoCss, /\.beta-gate-layout \{ width: min\(86rem,100%\); align-self: safe center;/);
+});
+
 test('large displays scale as a system and TV browsers keep a complete remote interaction model', () => {
   assert.match(pujoCss, /@media \(min-width: 1800px\) and \(min-height: 900px\) \{/);
   assert.match(pujoCss, /:root \{ font-size: clamp\(18px,\.75vw,40px\); \}/);

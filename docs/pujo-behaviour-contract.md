@@ -68,6 +68,8 @@ This contract records the user-facing behaviour that performance and architectur
 - Every interactive element (not just player controls and dialogs) gets a visible keyboard focus ring; a shared baseline rule fills any gap a component-specific style doesn't already cover.
 - Scrollable lists reserve real layout space for the persistent player, so a focused control is never geometrically hidden behind it, on any list length.
 - No live region is nested inside another; each status update is announced exactly once, not once per ancestor and descendant live region that happens to contain it.
+- The interface reflows to a 320px-wide viewport (the standard 400% zoom proxy) without horizontal scrolling or lost content, and survives the WCAG 1.4.12 text-spacing override (1.5 line-height, 0.12em letter-spacing, 0.16em word-spacing, 2em paragraph spacing) without clipping or overlap.
+- Forced-colors mode (Windows High Contrast) keeps focus rings on the system Highlight color and gives every button a visible border and every toggle switch a bordered, filled knob — nothing depends on a custom background color alone to be seen.
 
 ## Performance invariants
 
