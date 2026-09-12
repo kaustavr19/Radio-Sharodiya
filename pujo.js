@@ -798,6 +798,7 @@ const renderCurrentTrack = (track) => {
   playerSource.href = track.videoId ? `https://www.youtube.com/watch?v=${track.videoId}` : 'https://www.youtube.com/';
   const playlistCover = playlists[track.playlistId]?.cover;
   playerArtImage.dataset.playlistCover = playlistCover || '';
+  playerArtImage.alt = `Cover art for ${track.title} by ${trackCredit(track)}`;
   if (track.videoId) {
     playerArtImage.dataset.videoId = track.videoId;
     playerArtImage.src = `https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`;
@@ -1133,9 +1134,9 @@ const queueCurrentIndex = () => queue.findIndex((track) => track.id === currentT
 const queuePaneIsOpen = () => document.body.classList.contains('queue-open');
 
 const queueThumbnail = (track) => track.videoId
-  ? `<img class="queue-thumb" src="https://img.youtube.com/vi/${escapeMarkup(track.videoId)}/mqdefault.jpg" alt="" width="320" height="180" loading="lazy" decoding="async" />`
+  ? `<img class="queue-thumb" src="https://img.youtube.com/vi/${escapeMarkup(track.videoId)}/mqdefault.jpg" alt="Cover art for ${escapeMarkup(track.title)}" width="320" height="180" loading="lazy" decoding="async" />`
   : playlists[track.playlistId]?.cover
-    ? `<img class="queue-thumb" src="${escapeMarkup(playlists[track.playlistId].cover)}" alt="" width="640" height="640" loading="lazy" decoding="async" />`
+    ? `<img class="queue-thumb" src="${escapeMarkup(playlists[track.playlistId].cover)}" alt="Cover art for ${escapeMarkup(track.title)}" width="640" height="640" loading="lazy" decoding="async" />`
     : '<span class="queue-thumb" aria-hidden="true">RS</span>';
 
 const renderQueuePanel = () => {
