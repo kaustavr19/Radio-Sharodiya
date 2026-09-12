@@ -39,6 +39,25 @@ textarea:focus-visible, summary:focus-visible, [role="slider"]:focus-visible,
   outline: 2px solid var(--marigold);
   outline-offset: 2px;
 }
+/* Windows High Contrast / forced-colors mode: the OS strips custom colors and
+   most backgrounds, keeping only a fixed system palette. Nothing here needs
+   the scene photography or gradients to survive — they're atmosphere, not
+   information — but controls that carry meaning purely through background
+   color (no border) would otherwise lose their visible shape entirely. */
+@media (forced-colors: active) {
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+  textarea:focus-visible, summary:focus-visible, [role="slider"]:focus-visible,
+  [tabindex]:focus-visible {
+    outline-color: Highlight;
+  }
+  button:not([disabled]) {
+    border: 1px solid ButtonText;
+  }
+  .experience-option > i { forced-color-adjust: none; border-color: ButtonText; background: Canvas; }
+  .experience-option > i::after { forced-color-adjust: none; background: ButtonText; }
+  .experience-option[aria-checked="true"] > i { background: Highlight; }
+  .experience-option[aria-checked="true"] > i::after { background: HighlightText; }
+}
 html { scroll-behavior: smooth; }
 body { margin: 0; min-width: 320px; background: var(--ink); color: var(--shiuli); font-family: var(--font-ui); }
 body[data-pujo-state="mahalaya"] { --marigold: #d8bd79; }
@@ -59,7 +78,7 @@ button { color: inherit; }
 .beta-gate-brand img { display: block; width: min(15rem,48vw); height: 3.5rem; object-fit: contain; object-position: left center; }
 .beta-gate-brand span,.beta-card-label,.beta-gate-kicker,.beta-signal,.beta-gate-footer { font-family: var(--font-signal); letter-spacing: .1em; text-transform: uppercase; }
 .beta-gate-brand span { color: var(--marigold); font-size: .62rem; }
-.beta-gate-layout { width: min(86rem,100%); align-self: center; justify-self: center; display: grid; grid-template-columns: minmax(0,1.15fr) minmax(22rem,.7fr); gap: clamp(3rem,8vw,9rem); align-items: center; padding: clamp(3rem,7vh,6rem) 0; }
+.beta-gate-layout { width: min(86rem,100%); align-self: safe center; justify-self: center; display: grid; grid-template-columns: minmax(0,1.15fr) minmax(22rem,.7fr); gap: clamp(3rem,8vw,9rem); align-items: center; padding: clamp(3rem,7vh,6rem) 0; }
 .beta-gate-intro { max-width: 50rem; }
 .beta-gate-kicker { margin: 0 0 1.4rem; color: var(--marigold); font-size: .66rem; }
 .beta-gate h2 { margin: 0; font: 500 clamp(3.7rem,7vw,7.25rem)/.86 var(--font-display-en); letter-spacing: -.065em; text-shadow: 0 .08em .25em rgba(0,0,0,.2); }
