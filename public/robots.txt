@@ -3,4 +3,4 @@ Allow: /
 Disallow: /beta-admin
 Disallow: /api/
 
-Sitemap: https://radio-sharodiya.in/sitemap.xml
+Sitemap: https://www.radio-sharodiya.in/sitemap.xml

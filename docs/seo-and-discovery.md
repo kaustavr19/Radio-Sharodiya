@@ -4,7 +4,7 @@ This records the technical foundation for search and social-share discovery, and
 
 ## What's in place
 
-- **Canonical URL** (`https://radio-sharodiya.in/`) declared in `index.html`, so search engines treat it as the single authoritative address regardless of how the link is reached.
+- **Canonical URL** (`https://www.radio-sharodiya.in/`) declared in `index.html`, so search engines treat it as the single authoritative address regardless of how the link is reached.
 - **Open Graph and Twitter Card** meta tags give a real title, description, and a purpose-built 1200×630 share image (`public/assets/social/og-image.jpg`) when the link is pasted into WhatsApp, Facebook, Twitter, or similar — instead of a bare URL.
 - **JSON-LD structured data** (`WebSite` + `Organization`) identifies the station as a named entity to search engines. Deliberately not `RadioStation` schema — this is a curated on-demand experience, not a broadcast frequency, and the closer-fitting schema types are safer than one that doesn't quite match reality.
 - **`robots.txt`** allows crawling of the public site, explicitly excludes `/beta-admin` and `/api/*` (already `noindex`'d via response headers in `vercel.json`), and points to the sitemap.
