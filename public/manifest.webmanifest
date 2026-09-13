@@ -22,14 +22,14 @@
   "screenshots": [
     {
       "src": "/assets/screenshots/desktop-hero.jpg",
-      "sizes": "1280x718",
+      "sizes": "960x538",
       "type": "image/jpeg",
       "form_factor": "wide",
       "label": "The Mahalaya countdown and now-playing broadcast on Radio Sharodiya"
     },
     {
       "src": "/assets/screenshots/desktop-catalogue.jpg",
-      "sizes": "1280x718",
+      "sizes": "960x538",
       "type": "image/jpeg",
       "form_factor": "wide",
       "label": "Browsing the seasonal Pujo catalogue across six broadcasts"
