@@ -429,7 +429,7 @@ test('responsive station art uses AVIF/WebP derivatives with deduplicated scene 
 
   const derivativeRoot = 'public/assets/optimized';
   const sceneDirectories = readdirSync(derivativeRoot, { withFileTypes: true }).filter((entry) => entry.isDirectory());
-  assert.equal(sceneDirectories.length, 14);
+  assert.equal(sceneDirectories.length, 20);
   for (const directory of sceneDirectories) {
     const files = readdirSync(`${derivativeRoot}/${directory.name}`).filter((file) => /\.(?:avif|webp)$/.test(file));
     assert.equal(files.length, 6, `${directory.name} must provide three AVIF and three WebP variants`);
