@@ -298,12 +298,12 @@ const defaultHeroPresentation = {
 };
 
 const playlistPresentations = {
-  mahalaya: { eyebrow: 'Now transmitting · Mahalaya', title: 'ভোরের আগে<br />দেবীপক্ষের প্রথম সুর', intro: 'The invocation that wakes a city before sunrise.', scenes: [scenes.mahalaya, scenes.mahalayaWindow, scenes.mahalayaChandipath, scenes.mahalayaRooftop], rotationSpan: 2 },
-  agomoni: { eyebrow: 'Now transmitting · Agomoni', title: 'মা আসছেন<br />শহর অপেক্ষায়', intro: 'The first dhaak in the distance. Pujo is almost here.', scenes: [scenes.dawn, scenes.morning, scenes.goldenField], rotationSpan: 2 },
-  retro: { eyebrow: 'Now transmitting · Retro Pujo', title: 'পুরনো রেকর্ডে<br />ফিরে আসে পুজো', intro: 'Records, cassettes and radio voices bring the season home.', scenes: [scenes.dawn, scenes.goldenField, scenes.afternoon], rotationSpan: 2 },
-  modern: { eyebrow: 'Now transmitting · Modern Pujo', title: 'এই সময়ের<br />পুজোর নতুন সুর', intro: 'New voices for the memories being made right now.', scenes: [scenes.afternoon, scenes.goldenRooftop, scenes.nightGates], rotationSpan: 2 },
-  pandal: { eyebrow: 'Now transmitting · Pandal Favourites', title: 'আলোয় ভরা পথে<br />প্যান্ডেল থেকে প্যান্ডেলে', intro: 'Crowds, city lights and the songs that follow every route.', scenes: [scenes.nightPandal, scenes.nightGates], rotationSpan: 2 },
-  biday: { eyebrow: 'Now transmitting · Biday Bela', title: 'ফিরে যাওয়ার সুর<br />থেকে যাওয়ার স্মৃতি', intro: 'Farewell begins, while the season lingers a little longer.', scenes: [scenes.dashami], rotationSpan: 2 },
+  mahalaya: { eyebrow: 'Now transmitting · Mahalaya', title: 'ভোরের আগে<br />দেবীপক্ষের প্রথম সুর', intro: 'The invocation that wakes a city before sunrise.', scenes: [scenes.mahalaya, scenes.mahalayaWindow, scenes.durgaPredawn, scenes.mahalayaChandipath, scenes.mahalayaRooftop], rotationSpan: 2 },
+  agomoni: { eyebrow: 'Now transmitting · Agomoni', title: 'মা আসছেন<br />শহর অপেক্ষায়', intro: 'The first dhaak in the distance. Pujo is almost here.', scenes: [scenes.dawn, scenes.morning, scenes.durgaNeighbourhood, scenes.goldenField], rotationSpan: 2 },
+  retro: { eyebrow: 'Now transmitting · Retro Pujo', title: 'পুরনো রেকর্ডে<br />ফিরে আসে পুজো', intro: 'Records, cassettes and radio voices bring the season home.', scenes: [scenes.dawn, scenes.durgaRetro, scenes.goldenField, scenes.afternoon], rotationSpan: 2 },
+  modern: { eyebrow: 'Now transmitting · Modern Pujo', title: 'এই সময়ের<br />পুজোর নতুন সুর', intro: 'New voices for the memories being made right now.', scenes: [scenes.afternoon, scenes.goldenRooftop, scenes.durgaModern, scenes.nightGates], rotationSpan: 2 },
+  pandal: { eyebrow: 'Now transmitting · Pandal Favourites', title: 'আলোয় ভরা পথে<br />প্যান্ডেল থেকে প্যান্ডেলে', intro: 'Crowds, city lights and the songs that follow every route.', scenes: [scenes.nightPandal, scenes.durgaGrandNight, scenes.nightGates], rotationSpan: 2 },
+  biday: { eyebrow: 'Now transmitting · Biday Bela', title: 'ফিরে যাওয়ার সুর<br />থেকে যাওয়ার স্মৃতি', intro: 'Farewell begins, while the season lingers a little longer.', scenes: [scenes.durgaDashami, scenes.dashami], rotationSpan: 2 },
 };
 
 const calendarPresentations = {
