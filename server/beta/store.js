@@ -54,27 +54,3 @@ export const updateTester = async (config, email, patch) => {
 export const listTesters = (config) => dataRequest(config, 'beta_testers', {
   query: { select: selectedTesterFields, order: 'requested_at.desc', limit: 250 },
 });
-
-export const getAdminCode = async (config, email) => {
-  const rows = await dataRequest(config, 'beta_admin_codes', {
-    query: { email: `eq.${email}`, select: '*', limit: 1 },
-  });
-  return rows?.[0];
-};
-
-export const saveAdminCode = async (config, value) => {
-  const rows = await dataRequest(config, 'beta_admin_codes', {
-    method: 'POST',
-    body: value,
-    query: { on_conflict: 'email', select: '*' },
-    prefer: 'resolution=merge-duplicates,return=representation',
-  });
-  return rows?.[0];
-};
-
-export const updateAdminCode = async (config, email, patch) => dataRequest(config, 'beta_admin_codes', {
-  method: 'PATCH',
-  body: patch,
-  query: { email: `eq.${email}` },
-  prefer: 'return=minimal',
-});

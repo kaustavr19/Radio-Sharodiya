@@ -23,25 +23,18 @@
         <div class="desk-auth-copy">
           <p>Administrator frequency</p>
           <h1 id="desk-auth-title">Open the<br />beta desk.</h1>
-          <span>Only the configured Radio Sharodiya administrator can receive a sign-in code.</span>
+          <span>Only the configured Radio Sharodiya administrator email and password can open this desk.</span>
         </div>
         <div class="desk-auth-card">
           <div class="desk-loading" id="desk-loading"><i aria-hidden="true"></i><span>Checking your session…</span></div>
           <form id="admin-login-form" hidden>
             <span class="desk-label">Administrator sign in</span>
-            <h2>Request a private code.</h2>
+            <h2>Sign in.</h2>
             <label for="admin-email">Administrator email</label>
             <input id="admin-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
-            <button type="submit">Send sign-in code <span aria-hidden="true">→</span></button>
-          </form>
-          <form id="admin-verify-form" hidden>
-            <span class="desk-label">Code sent</span>
-            <h2>Confirm it’s you.</h2>
-            <p id="admin-code-destination"></p>
-            <label for="admin-code">Six-digit code</label>
-            <input id="admin-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" minlength="6" maxlength="6" pattern="[0-9]{6}" required placeholder="000000" />
+            <label for="admin-password">Password</label>
+            <input id="admin-password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" />
             <button type="submit">Open beta desk <span aria-hidden="true">→</span></button>
-            <button class="desk-text-button" id="admin-change-email" type="button">Use another email</button>
           </form>
           <p class="desk-message" id="admin-auth-message" role="status" hidden></p>
         </div>
