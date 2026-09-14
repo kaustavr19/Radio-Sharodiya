@@ -2,7 +2,6 @@ const auth = document.querySelector('#desk-auth');
 const dashboard = document.querySelector('#desk-dashboard');
 const loading = document.querySelector('#desk-loading');
 const loginForm = document.querySelector('#admin-login-form');
-const verifyForm = document.querySelector('#admin-verify-form');
 const authMessage = document.querySelector('#admin-auth-message');
 const dashboardMessage = document.querySelector('#dashboard-message');
 const requestList = document.querySelector('#request-list');
@@ -37,16 +36,7 @@ const showLogin = () => {
   auth.hidden = false;
   dashboard.hidden = true;
   loading.hidden = true;
-  verifyForm.hidden = true;
   loginForm.hidden = false;
-};
-
-const showVerification = () => {
-  loading.hidden = true;
-  loginForm.hidden = true;
-  verifyForm.hidden = false;
-  document.querySelector('#admin-code-destination').textContent = `A private sign-in code was requested for ${administratorEmail}.`;
-  document.querySelector('#admin-code').focus();
 };
 
 const formatDate = (value) => value
@@ -137,28 +127,15 @@ const showDashboard = async () => {
 loginForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const button = loginForm.querySelector('button[type="submit"]');
-  administratorEmail = String(new FormData(loginForm).get('email') || '').trim().toLowerCase();
+  const data = new FormData(loginForm);
+  administratorEmail = String(data.get('email') || '').trim().toLowerCase();
+  const password = String(data.get('password') || '');
   button.disabled = true;
-  setMessage(authMessage, 'Requesting your private code…');
+  setMessage(authMessage, 'Signing in…');
   try {
-    const result = await api('/api/beta/admin/login', { method: 'POST', body: JSON.stringify({ email: administratorEmail }) });
-    setMessage(authMessage, result.message);
-    showVerification();
-  } catch (error) {
-    setMessage(authMessage, error.message, 'error');
-  } finally {
-    button.disabled = false;
-  }
-});
-
-verifyForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const button = verifyForm.querySelector('button[type="submit"]');
-  button.disabled = true;
-  setMessage(authMessage, 'Verifying the administrator frequency…');
-  try {
-    await api('/api/beta/admin/verify', { method: 'POST', body: JSON.stringify({ email: administratorEmail, code: new FormData(verifyForm).get('code') }) });
+    await api('/api/beta/admin/login', { method: 'POST', body: JSON.stringify({ email: administratorEmail, password }) });
     setMessage(authMessage);
+    loginForm.reset();
     await showDashboard();
   } catch (error) {
     setMessage(authMessage, error.message, 'error');
@@ -167,7 +144,6 @@ verifyForm.addEventListener('submit', async (event) => {
   }
 });
 
-document.querySelector('#admin-change-email').addEventListener('click', () => { setMessage(authMessage); showLogin(); document.querySelector('#admin-email').focus(); });
 document.querySelector('#refresh-testers').addEventListener('click', loadTesters);
 filterInput.addEventListener('input', renderTesters);
 
@@ -193,7 +169,6 @@ document.querySelector('#admin-logout').addEventListener('click', async () => {
   administratorEmail = '';
   testers = [];
   loginForm.reset();
-  verifyForm.reset();
   setMessage(authMessage);
   showLogin();
 });

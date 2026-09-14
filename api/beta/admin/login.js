@@ -1,38 +1,59 @@
 import { getBetaConfig } from '../../../server/beta/config.js';
-import { sendAdminAccessCode } from '../../../server/beta/email.js';
 import { allowMethod, handleFailure, json, readBody, requestOriginIsValid } from '../../../server/beta/http.js';
-import { createAccessCode, hashAccessCode, normalizeEmail } from '../../../server/beta/security.js';
-import { getAdminCode, saveAdminCode } from '../../../server/beta/store.js';
+import {
+  ATTEMPTS_COOKIE,
+  attemptsCookie,
+  clearAttemptsCookie,
+  createSessionToken,
+  createSignedValue,
+  normalizeEmail,
+  readCookie,
+  requestUsesHttps,
+  sessionCookie,
+  verifyPassword,
+  verifySignedValue,
+} from '../../../server/beta/security.js';
 
-const ADMIN_CODE_MINUTES = 15;
+const ADMIN_SESSION_SECONDS = 60 * 60 * 8;
+const MAX_ATTEMPTS = 5;
+const LOCK_MINUTES = 15;
+const ATTEMPTS_COOKIE_SECONDS = 60 * 60;
 
 export default async function handler(request, response) {
   if (!allowMethod(request, response, 'POST')) return;
   if (!requestOriginIsValid(request)) { json(response, 403, { error: 'Request origin was not accepted.' }); return; }
   try {
     const config = getBetaConfig();
-    const email = normalizeEmail(readBody(request).email);
-    const generic = { message: 'If this is the beta administrator address, a sign-in code is on its way.' };
-    if (email !== config.adminEmail) { json(response, 202, generic); return; }
+    const secure = requestUsesHttps(request);
+    const body = readBody(request);
+    const email = normalizeEmail(body.email);
+    const password = String(body.password || '');
 
-    const previous = await getAdminCode(config, email);
-    if (previous?.last_sent_at && Date.now() - new Date(previous.last_sent_at).getTime() < 60_000) {
-      json(response, 202, generic);
+    const now = Date.now();
+    const attempts = verifySignedValue(readCookie(request, ATTEMPTS_COOKIE), config.sessionSecret) || { count: 0, lockedUntil: 0 };
+    if (attempts.lockedUntil && attempts.lockedUntil > now) {
+      json(response, 429, { error: 'Too many attempts. Please wait 15 minutes and try again.' });
       return;
     }
 
-    const code = createAccessCode();
-    const expiresAt = new Date(Date.now() + ADMIN_CODE_MINUTES * 60_000).toISOString();
-    await saveAdminCode(config, {
-      email,
-      code_hash: hashAccessCode({ email, code, purpose: 'admin', secret: config.sessionSecret }),
-      expires_at: expiresAt,
-      failed_attempts: 0,
-      locked_until: null,
-      last_sent_at: new Date().toISOString(),
+    const valid = email === config.adminEmail && verifyPassword(password, config.adminPasswordHash);
+    if (!valid) {
+      const count = Number(attempts.count || 0) + 1;
+      const locked = count >= MAX_ATTEMPTS;
+      const token = createSignedValue(
+        { count: locked ? 0 : count, lockedUntil: locked ? now + LOCK_MINUTES * 60_000 : 0 },
+        config.sessionSecret,
+      );
+      json(response, 401, { error: 'That email or password is not valid.' }, {
+        'Set-Cookie': attemptsCookie(token, { maxAge: ATTEMPTS_COOKIE_SECONDS, secure }),
+      });
+      return;
+    }
+
+    const sessionToken = createSessionToken({ email, role: 'admin', ttlSeconds: ADMIN_SESSION_SECONDS, secret: config.sessionSecret });
+    json(response, 200, { authenticated: true, role: 'admin' }, {
+      'Set-Cookie': [sessionCookie(sessionToken, { maxAge: ADMIN_SESSION_SECONDS, secure }), clearAttemptsCookie({ secure })],
     });
-    await sendAdminAccessCode(config, { code, expiresAt });
-    json(response, 202, generic);
   } catch (error) {
     handleFailure(response, error);
   }

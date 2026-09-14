@@ -14,6 +14,7 @@ export const getBetaConfig = () => {
 
   return {
     adminEmail: required('BETA_ADMIN_EMAIL').toLowerCase(),
+    adminPasswordHash: required('BETA_ADMIN_PASSWORD_HASH'),
     fromEmail: required('BETA_FROM_EMAIL'),
     replyTo: process.env.BETA_REPLY_TO?.trim() || undefined,
     resendApiKey: required('RESEND_API_KEY'),

@@ -55,17 +55,6 @@ export const sendTesterSignInCode = (config, { email, name, code, expiresAt }) =
   });
 };
 
-export const sendAdminAccessCode = (config, { code, expiresAt }) => {
-  const expiry = new Intl.DateTimeFormat('en-IN', { timeStyle: 'short', timeZone: 'Asia/Kolkata' }).format(new Date(expiresAt));
-  return sendEmail(config, {
-    to: config.adminEmail,
-    subject: 'Radio Sharodiya beta desk sign-in code',
-    idempotencyKey: `beta-admin-${Buffer.from(expiresAt).toString('base64url')}`,
-    text: `Your Radio Sharodiya beta desk code is ${code}. It expires at ${expiry}.`,
-    html: `<div style="max-width:520px;margin:auto;padding:32px;background:#f3ead6;color:#18201e;font:16px/1.6 Georgia,serif"><h1 style="font-size:28px">Beta desk sign-in</h1><p>Use this one-time code to open the private Radio Sharodiya beta desk.</p>${codeMarkup(code)}<p>This code expires at ${escapeHtml(expiry)}.</p></div>`,
-  });
-};
-
 export const sendSignupNotice = (config, { email, name }) => sendEmail(config, {
   to: config.adminEmail,
   subject: 'New Radio Sharodiya beta request',
