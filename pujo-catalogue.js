@@ -43,6 +43,7 @@ const normalizeTrack = (playlistId, track, index, overrides = {}) => {
     title: override.title
       ? plainText(override.title, 'Untitled programme')
       : editorialTitle(source[0], 'Untitled programme'),
+    rawTitle: plainText(source[0]),
     artist: topicArtist || rawCredit,
     creditType,
     duration,
