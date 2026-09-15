@@ -76,18 +76,18 @@ test('catalogue docks the existing player and keeps mobile browsing open during 
   assert.match(pujoCss, /padding: 0 1rem calc\(var\(--mobile-player-height\) \+ 1\.45rem\) !important;/);
 });
 
-test('live radio is a separate four-station Akashvani room with explicit playback', () => {
+test('live radio is a separate three-station Akashvani room with explicit playback', () => {
   for (const id of ['live-radio-room', 'live-radio-audio', 'live-radio-play', 'live-radio-volume', 'live-broadcast-player', 'live-console-play', 'return-to-pujo']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
   assert.match(html, /data-open-room="live-radio"/);
-  assert.equal((html.match(/data-live-station=/g) || []).length, 4);
+  assert.equal((html.match(/data-live-station=/g) || []).length, 3);
   assert.match(html, /class="live-radio-console"[^>]+hidden/);
   assert.match(liveRadio, /stationButtons\.forEach[\s\S]+selectStation[\s\S]+void connect\(\)/);
   assert.match(liveRadio, /Akashvani Bangla/);
   assert.match(liveRadio, /FM Rainbow Kolkata/);
   assert.match(liveRadio, /FM Gold Kolkata/);
-  assert.match(liveRadio, /Akashvani Delhi Indraprastha/);
+  assert.doesNotMatch(liveRadio, /Indraprastha/);
   assert.match(liveRadio, /application\/vnd\.apple\.mpegurl/);
   assert.match(liveRadio, /Hls\.isSupported\(\)/);
   assert.doesNotMatch(liveRadio, /autoplay/);
