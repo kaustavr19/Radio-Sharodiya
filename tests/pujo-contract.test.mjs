@@ -127,7 +127,7 @@ test('queue remains a side pane with explicit open and close state', () => {
 });
 
 test('catalogue search and navigation preserve listening context', () => {
-  for (const id of ['catalogue-search-input', 'catalogue-search-status', 'catalogue-search-results', 'personal-listening', 'player-next-up']) {
+  for (const id of ['catalogue-search-input', 'catalogue-search-status', 'catalogue-search-results', 'personal-listening']) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
   assert.match(player, /const SEARCH_ALIASES = Object\.freeze/);
@@ -138,7 +138,6 @@ test('catalogue search and navigation preserve listening context', () => {
   const queueControls = extractBlock(player, 'const openQueuePane =', 'const showOverview');
   assert.doesNotMatch(queueControls, /if \(!room\.hidden\) closeRoom\(\)/);
   assert.match(queueControls, /queueReturnSurface === 'catalogue'/);
-  assert.match(player, /playerNextUp\.textContent = nextTrack \? `Next · \$\{nextTrack\.title\}`/);
 });
 
 test('mobile shell provides app navigation, a mini player, and full-screen surfaces', () => {
@@ -447,7 +446,7 @@ test('the delivered atmosphere is a compact lazy-loaded loop and no full master 
 });
 
 test('hero typography protects the transmitting label at changing viewport proportions', () => {
-  assert.match(pujoCss, /\.hero-copy \.eyebrow \{ margin-bottom: clamp\(2rem,3vh,2\.75rem\); \}/);
+  assert.match(pujoCss, /\.hero-copy \.eyebrow \{ margin-bottom: clamp\(1rem,1\.8vh,1\.5rem\); \}/);
   assert.match(pujoCss, /h1 \{[^}]*padding-top: \.12em;[^}]*font-size: clamp\(4rem, min\(8\.5vw,13vh\), 8rem\);[^}]*line-height: \.88;/);
 });
 

@@ -36,7 +36,6 @@ const moment = document.querySelector('#listener-moment');
 const playerTitle = document.querySelector('#player-title');
 const playerDescription = document.querySelector('#player-description');
 const playerNote = document.querySelector('#player-note');
-const playerNextUp = document.querySelector('#player-next-up');
 const playButton = document.querySelector('#player-play');
 const previousButton = document.querySelector('#previous-programme');
 const nextButton = document.querySelector('#next-programme');
@@ -1174,12 +1173,9 @@ const renderQueuePanel = () => {
 const updateQueueCount = () => {
   const currentIndex = queueCurrentIndex();
   const upNextCount = currentIndex >= 0 ? Math.max(0, queue.length - currentIndex - 1) : queue.length;
-  const nextTrack = currentIndex >= 0 ? queue[currentIndex + 1] : queue[0];
   const formattedCount = String(upNextCount).padStart(2, '0');
   queueCount.textContent = formattedCount;
   mobileQueueCount.textContent = formattedCount;
-  playerNextUp.hidden = !nextTrack;
-  playerNextUp.textContent = nextTrack ? `Next · ${nextTrack.title}` : '';
   queueButton.setAttribute('aria-label', `Open current queue, ${upNextCount} ${upNextCount === 1 ? 'song' : 'songs'} up next`);
   mobileQueueButton.setAttribute('aria-label', `Open current queue, ${upNextCount} ${upNextCount === 1 ? 'song' : 'songs'} up next`);
   if (queuePaneIsOpen()) renderQueuePanel();
