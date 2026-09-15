@@ -25,14 +25,6 @@ export const liveStations = [
     detail: 'West Bengal · Bengali, Hindi, English',
     streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio057/hlspbaudio057_Auto.m3u8',
   },
-  {
-    id: 'indraprastha',
-    code: 'AIR-04',
-    name: 'Akashvani Delhi Indraprastha',
-    bengali: 'আকাশবাণী ইন্দ্রপ্রস্থ',
-    detail: 'Delhi · Hindi · Regional special broadcasts',
-    streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio006/hlspbaudio006_Auto.m3u8',
-  },
 ];
 
 let hlsPlayerRequest;
