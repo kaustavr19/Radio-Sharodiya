@@ -9,7 +9,7 @@ import {
   uniqueTracks,
 } from './playback-core.js';
 import { createYoutubePlaybackAdapter } from './pujo-youtube-adapter.js';
-import { createLiveRadioController } from './pujo-live-radio.js';
+import { createLiveRadioController, liveStations } from './pujo-live-radio.js';
 import {
   createBootstrapCatalogue,
   createCatalogueLoader,
@@ -89,6 +89,7 @@ const liveRadioVolume = document.querySelector('#live-radio-volume');
 const liveRadioTitle = document.querySelector('#live-radio-title');
 const liveRadioDescription = document.querySelector('#live-radio-description');
 const liveRadioStatus = document.querySelector('#live-radio-status');
+const radioFrequencyScale = document.querySelector('#radio-frequency-scale');
 const liveStationButtons = [...document.querySelectorAll('[data-live-station]')];
 const liveBroadcastPlayer = document.querySelector('#live-broadcast-player');
 const liveConsolePreset = document.querySelector('#live-console-preset');
@@ -1362,6 +1363,26 @@ const closeRoom = () => {
   syncTVBackStop();
 };
 
+const DIAL_START_PERCENT = 9;
+const DIAL_END_PERCENT = 90.75;
+
+const dialPositionForStation = (station) => {
+  const index = liveStations.findIndex((candidate) => candidate.id === station.id);
+  const span = liveStations.length > 1 ? DIAL_END_PERCENT - DIAL_START_PERCENT : 0;
+  const step = liveStations.length > 1 ? span / (liveStations.length - 1) : 0;
+  return DIAL_START_PERCENT + Math.max(0, index) * step;
+};
+
+const renderRadioFrequencyScale = () => {
+  radioFrequencyScale.style.gridTemplateColumns = `auto ${'repeat(3,1fr) auto '.repeat(Math.max(0, liveStations.length - 1))}`.trim();
+  radioFrequencyScale.innerHTML = liveStations.map((station, index) => {
+    const label = `<span>${escapeMarkup(station.code.slice(-2))}</span>`;
+    const ticks = index < liveStations.length - 1 ? '<i></i><i></i><i></i>' : '';
+    return label + ticks;
+  }).join('');
+};
+renderRadioFrequencyScale();
+
 const renderLiveRadioConsole = ({ station, message, state, playing, volume }) => {
   if (!liveRadioIsActive && state !== 'live') return;
   if (state === 'live') {
@@ -1369,7 +1390,7 @@ const renderLiveRadioConsole = ({ station, message, state, playing, volume }) =>
     setMobileTab('radio');
   }
   liveBroadcastPlayer.hidden = false;
-  liveBroadcastPlayer.style.setProperty('--dial-position', `${9 + ((Number(station.code.slice(-2)) - 1) * 27.25)}%`);
+  liveBroadcastPlayer.style.setProperty('--dial-position', `${dialPositionForStation(station)}%`);
   document.body.classList.add('live-radio-active');
   liveConsolePreset.textContent = `Preset · ${station.code}`;
   mobilePlayerContextLabel.textContent = 'Live from Akashvani';
