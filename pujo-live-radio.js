@@ -25,6 +25,30 @@ export const liveStations = [
     detail: 'West Bengal · Bengali, Hindi, English',
     streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio057/hlspbaudio057_Auto.m3u8',
   },
+  {
+    id: 'akashvani-kolkata-geetanjali',
+    code: 'AIR-04',
+    name: 'Akashvani Kolkata Geetanjali',
+    bengali: 'আকাশবাণী কলকাতা গীতাঞ্জলি',
+    detail: 'West Bengal · Bengali',
+    streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio055/hlspbaudio055_Auto.m3u8',
+  },
+  {
+    id: 'akashvani-kolkata-sanchayita',
+    code: 'AIR-05',
+    name: 'Akashvani Kolkata Sanchayita',
+    bengali: 'আকাশবাণী কলকাতা সঞ্চয়িতা',
+    detail: 'West Bengal · Bengali',
+    streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio056/hlspbaudio056_Auto.m3u8',
+  },
+  {
+    id: 'akashvani-maitree',
+    code: 'AIR-06',
+    name: 'Akashvani Maitree',
+    bengali: 'আকাশবাণী মৈত্রী',
+    detail: 'West Bengal · Bengali',
+    streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio245/hlspbaudio245_Auto.m3u8',
+  },
 ];
 
 let hlsPlayerRequest;
