@@ -1,6 +1,8 @@
 {
   "version": 1,
   "overrides": {
+    "H_P255EPc-0": { "exclude": true },
+    "ASiYccbtUtI": { "exclude": true },
     "kvadzdVaTtg": {
       "title": "Coffee Houser Sei Addata Aaj Aar Nei",
       "artist": "Manna Dey",

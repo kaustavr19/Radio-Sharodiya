@@ -186,7 +186,7 @@ test('catalogue data is separated, lazy loaded, cached and safe to render', () =
   assert.ok(Object.values(catalogueDocument.playlists).reduce((total, playlist) => total + playlist.tracks.length, 0) >= 216);
   assert.equal(playlistConfig.playlists.modern.sourceUrl, 'https://www.youtube.com/playlist?list=PLeA5XtLyAORI');
   assert.ok(catalogueDocument.playlists.modern.tracks.length >= 5);
-  assert.match(html, /data-playlist="modern"[^>]*>[\s\S]*?<i data-playlist-count>91 songs<\/i>/);
+  assert.match(html, /data-playlist="modern"[^>]*>[\s\S]*?<i data-playlist-count>145 songs<\/i>/);
   assert.match(player, /const updatePlaylistOverviewCounts =/);
   assert.match(player, /catalogueIsFull \? playlist\.tracks\.length : playlist\.trackCount/);
   assert.match(catalogueLoader, /const CATALOGUE_URL = '\/data\/pujo\/catalogue\.v1\.json'/);

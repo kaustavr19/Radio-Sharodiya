@@ -3,6 +3,7 @@ import test from 'node:test';
 import {
   auditSyncedCatalogue,
   isoDurationToClock,
+  mergeEditorialTracks,
   playlistIdFromUrl,
   trackFromYoutube,
   validateCandidate,
@@ -31,6 +32,18 @@ test('candidate validation rejects empty or unexpectedly reduced playlists', () 
   const result = validateCandidate({ currentDocument, candidateDocument, configuredIds: ['mahalaya'] });
   assert.equal(result.valid, false);
   assert.equal(result.failures.length, 2);
+});
+
+test('editorial additions survive synchronization without repeating source tracks', () => {
+  const source = [{ title: 'Source', artist: 'Channel', duration: '3:00', videoId: 'abcdefghijk' }];
+  const additions = {
+    abcdefghijk: { title: 'Already there', artist: 'Channel', duration: '3:00' },
+    ZYXWVUTSRQP: { title: 'New song', artist: 'Another channel', duration: '4:20' },
+  };
+  assert.deepEqual(mergeEditorialTracks(source, ['ZYXWVUTSRQP', 'abcdefghijk', 'ZYXWVUTSRQP'], additions), [
+    source[0],
+    { ...additions.ZYXWVUTSRQP, videoId: 'ZYXWVUTSRQP' },
+  ]);
 });
 
 test('catalogue audit catches malformed generated metadata', () => {

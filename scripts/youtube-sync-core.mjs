@@ -44,6 +44,19 @@ export const trackFromYoutube = ({ playlistId, index, item, video, overrides = {
   return applyTrackOverride(base, override);
 };
 
+export const mergeEditorialTracks = (sourceTracks, editorialIds = [], editorialTracks = {}) => {
+  const seen = new Set(sourceTracks.map((track) => track.videoId).filter(Boolean));
+  const merged = [...sourceTracks];
+  for (const videoId of editorialIds) {
+    if (seen.has(videoId)) continue;
+    const metadata = editorialTracks[videoId];
+    if (!VIDEO_ID_PATTERN.test(videoId) || !metadata) throw new Error(`Invalid editorial track: ${videoId}`);
+    merged.push(applyTrackOverride({ ...metadata, videoId }));
+    seen.add(videoId);
+  }
+  return merged;
+};
+
 export const validateCandidate = ({ currentDocument, candidateDocument, configuredIds, maximumReductionRatio = 0.35 }) => {
   const failures = [];
   const changes = [];

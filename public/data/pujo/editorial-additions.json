@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "tracks": {
+    "OUdTp_ObDkw": { "title": "Jiya Tui Chara | Biye Bibhrat | Arijit Singh", "artist": "Zee Music Bangla", "duration": "3:24" },
+    "OGj3b6Gw1tI": { "title": "Ore Mon Udashi | Bangali Babu English Mem | Arijit Singh", "artist": "SVF", "duration": "4:18" },
+    "RULG3h5L6V8": { "title": "Ei Bhalo Ei Kharap | Golpo Holeo Shotti | Arijit Singh | Monali Thakur", "artist": "SVF", "duration": "3:03" },
+    "AbluPg_E14k": { "title": "Tor Ek Kothaye | Besh Korechi Prem Korechi | Arijit Singh", "artist": "Surinder Films", "duration": "4:36" },
+    "jKMZZX2YMg0": { "title": "Jodi Bolo | One | Arijit Singh", "artist": "SVF", "duration": "4:23" },
+    "1TW1C96APiI": { "title": "Ureche Mon | Boss 2 | Arijit Singh", "artist": "Grassroot Entertainment", "duration": "5:04" },
+    "x-EeIY3qN4E": { "title": "Egiye De | Shudhu Tomari Jonyo | Arijit Singh | Madhubanti Bagchi", "artist": "SVF Music", "duration": "4:20" },
+    "8O-4UzMF8Kw": { "title": "Aashona | Borbaad | Arijit Singh | Prashmita Paul", "artist": "SVF Music", "duration": "3:55" },
+    "SdyBe7h0h3I": { "title": "Na Re Na | Bojhena Shey Bojhena | Arijit Singh", "artist": "SVF", "duration": "4:16" },
+    "k5seTJGkKuA": { "title": "Tomar Dyakha Naai | Bolo Dugga Maiki | Arijit Singh", "artist": "SVF", "duration": "3:53" },
+    "u_4BBFxp7Rs": { "title": "Aami Tomar Kache | Yoddha | Arijit Singh", "artist": "SVF Music", "duration": "4:03" },
+    "obitXqPnbbE": { "title": "Raja Rani Raji | Borbaad", "artist": "SVF Music", "duration": "4:31" },
+    "TKWBBIibTQc": { "title": "Ar Kono Kotha Na Bole | Shikari | Arijit Singh | Madhubanti Bagchi", "artist": "Eskay Movies", "duration": "4:30" },
+    "72ngi9XZT0U": { "title": "Bhalolaage Tomake | Tomake Chai | Arijit Singh | Anwesshaa", "artist": "SVF Music", "duration": "4:19" },
+    "6SkQ-srIJVM": { "title": "Mon Bojhe Naa | Chirodini Tumi Je Amar 2 | Arijit Singh", "artist": "SVF", "duration": "3:45" },
+    "DbXP1TqLwrs": { "title": "Sharatadin | Yoddha | Arijit Singh | Anwesshaa", "artist": "SVF", "duration": "5:10" },
+    "21jQazRbvVc": { "title": "Tor Sudhu Tor | DeSu7", "artist": "Dev Entertainment Ventures", "duration": "3:46" },
+    "3Y46v1ymdfQ": { "title": "Baundule Ghuri | Dawshom Awbotaar | Shreya Ghoshal | Arijit Singh", "artist": "SVF", "duration": "3:45" }
+  },
+  "playlists": {
+    "modern": ["3Y46v1ymdfQ", "OUdTp_ObDkw", "u_4BBFxp7Rs", "1TW1C96APiI", "obitXqPnbbE", "k5seTJGkKuA", "72ngi9XZT0U", "RULG3h5L6V8", "21jQazRbvVc", "x-EeIY3qN4E", "DbXP1TqLwrs", "jKMZZX2YMg0", "6SkQ-srIJVM", "AbluPg_E14k", "SdyBe7h0h3I", "TKWBBIibTQc", "OGj3b6Gw1tI", "8O-4UzMF8Kw"],
+    "pandal": ["1TW1C96APiI", "OGj3b6Gw1tI", "72ngi9XZT0U", "3Y46v1ymdfQ", "SdyBe7h0h3I", "OUdTp_ObDkw", "obitXqPnbbE", "x-EeIY3qN4E", "TKWBBIibTQc", "k5seTJGkKuA", "jKMZZX2YMg0", "AbluPg_E14k", "21jQazRbvVc", "8O-4UzMF8Kw", "u_4BBFxp7Rs", "RULG3h5L6V8", "DbXP1TqLwrs", "6SkQ-srIJVM"]
+  }
+}

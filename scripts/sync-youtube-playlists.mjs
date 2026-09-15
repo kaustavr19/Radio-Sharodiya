@@ -2,6 +2,7 @@ import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import {
   auditSyncedCatalogue,
+  mergeEditorialTracks,
   playlistIdFromUrl,
   trackFromYoutube,
   validateCandidate,
@@ -11,6 +12,7 @@ const root = resolve(import.meta.dirname, '..');
 const configPath = resolve(root, 'public/data/pujo/playlist-config.json');
 const cataloguePath = resolve(root, 'public/data/pujo/catalogue.v1.json');
 const overridesPath = resolve(root, 'public/data/pujo/track-overrides.json');
+const editorialPath = resolve(root, 'public/data/pujo/editorial-additions.json');
 const reportPath = resolve(root, 'reports/youtube-sync-report.json');
 const shouldWrite = process.argv.includes('--write');
 const apiKey = process.env.YOUTUBE_API_KEY;
@@ -22,10 +24,11 @@ if (!apiKey) {
 
 await mkdir(dirname(reportPath), { recursive: true });
 
-const [config, currentDocument, overrideDocument] = await Promise.all([
+const [config, currentDocument, overrideDocument, editorialDocument] = await Promise.all([
   readFile(configPath, 'utf8').then(JSON.parse),
   readFile(cataloguePath, 'utf8').then(JSON.parse),
   readFile(overridesPath, 'utf8').then(JSON.parse),
+  readFile(editorialPath, 'utf8').then(JSON.parse),
 ]);
 
 const youtubeGet = async (resource, parameters) => {
@@ -86,7 +89,7 @@ for (const playlistId of config.order) {
     video: videos.get(sourceIds[index]),
     overrides: overrideDocument.overrides || {},
   }));
-  const tracks = resolvedTracks.filter(Boolean);
+  const tracks = mergeEditorialTracks(resolvedTracks.filter(Boolean), editorialDocument.playlists?.[playlistId], editorialDocument.tracks);
   candidate.playlists[playlistId] = { tracks };
   const unavailable = resolvedTracks.flatMap((track, index) => !track || track.videoId ? [] : [{
     position: index + 1,
