@@ -43,6 +43,7 @@ const normalizeTrack = (playlistId, track, index, overrides = {}) => {
     title: override.title
       ? plainText(override.title, 'Untitled programme')
       : editorialTitle(source[0], 'Untitled programme'),
+    rawTitle: plainText(source[0]),
     artist: topicArtist || rawCredit,
     creditType,
     duration,
@@ -64,7 +65,7 @@ const normalizePlaylist = (playlistId, metadata, tracks, overrides) => ({
   tracks: tracks.map((track, index) => normalizeTrack(playlistId, track, index, overrides)),
 });
 
-const composeCatalogue = (config, catalogue, overrideDocument = {}) => {
+export const composeCatalogue = (config, catalogue, overrideDocument = {}) => {
   if (config?.version !== 1 || catalogue?.version !== 1 || !Array.isArray(config.order)) throw new Error('Unsupported catalogue version');
   const overrides = overrideDocument?.overrides && typeof overrideDocument.overrides === 'object' ? overrideDocument.overrides : {};
   const playlists = {};

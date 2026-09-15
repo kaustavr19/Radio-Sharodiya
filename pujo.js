@@ -752,7 +752,7 @@ const normalizeSearchText = (value = '') => String(value)
 const searchTextForTrack = (track) => {
   const playlist = playlists[track.playlistId];
   return normalizeSearchText([
-    track.title, track.artist, playlist?.title, playlist?.english,
+    track.title, track.rawTitle, track.artist, playlist?.title, playlist?.english,
     playlist?.kicker, SEARCH_ALIASES[track.playlistId],
   ].filter(Boolean).join(' '));
 };
