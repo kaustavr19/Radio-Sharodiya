@@ -13,6 +13,7 @@
     "sync:youtube": "node scripts/sync-youtube-playlists.mjs --write",
     "sync:youtube:check": "node scripts/sync-youtube-playlists.mjs",
     "audit:build": "node scripts/audit-build.mjs",
+    "audit:artists": "node scripts/audit-artist-attribution.mjs",
     "verify": "node scripts/verify.mjs"
   },
   "engines": {
