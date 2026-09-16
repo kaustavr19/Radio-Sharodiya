@@ -1133,11 +1133,12 @@ const updateCountdown = () => {
 const queueCurrentIndex = () => queue.findIndex((track) => track.id === currentTrack?.id);
 const queuePaneIsOpen = () => document.body.classList.contains('queue-open');
 
-const queueThumbnail = (track) => track.videoId
-  ? `<img class="queue-thumb" src="https://img.youtube.com/vi/${escapeMarkup(track.videoId)}/mqdefault.jpg" alt="Cover art for ${escapeMarkup(track.title)}" width="320" height="180" loading="lazy" decoding="async" />`
-  : playlists[track.playlistId]?.cover
-    ? `<img class="queue-thumb" src="${escapeMarkup(playlists[track.playlistId].cover)}" alt="Cover art for ${escapeMarkup(track.title)}" width="640" height="640" loading="lazy" decoding="async" />`
-    : '<span class="queue-thumb" aria-hidden="true">RS</span>';
+const queueThumbnail = (track) => {
+  const playlistCover = playlists[track.playlistId]?.cover;
+  if (track.videoId) return `<img class="queue-thumb" src="https://img.youtube.com/vi/${escapeMarkup(track.videoId)}/mqdefault.jpg" alt="Cover art for ${escapeMarkup(track.title)}" width="320" height="180" loading="lazy" decoding="async"${playlistCover ? ` data-thumb-fallback="${escapeMarkup(playlistCover)}"` : ''} />`;
+  if (playlistCover) return `<img class="queue-thumb" src="${escapeMarkup(playlistCover)}" alt="Cover art for ${escapeMarkup(track.title)}" width="640" height="640" loading="lazy" decoding="async" />`;
+  return '<span class="queue-thumb" aria-hidden="true">RS</span>';
+};
 
 const renderQueuePanel = () => {
   if (!queuePaneIsOpen()) return;
@@ -2222,6 +2223,21 @@ playerArtImage.addEventListener('error', () => {
   playerArtImage.hidden = true;
   playerArtFallback.hidden = false;
 });
+
+const MISSING_THUMBNAIL_SIZE = { width: 120, height: 90 };
+const swapToThumbnailFallback = (image) => {
+  const fallback = image?.dataset?.thumbFallback;
+  if (!fallback || image.src === new URL(fallback, window.location.href).href) return;
+  delete image.dataset.thumbFallback;
+  image.src = fallback;
+};
+document.addEventListener('error', (event) => swapToThumbnailFallback(event.target), true);
+document.addEventListener('load', (event) => {
+  const image = event.target;
+  if (image.tagName === 'IMG' && image.naturalWidth === MISSING_THUMBNAIL_SIZE.width && image.naturalHeight === MISSING_THUMBNAIL_SIZE.height) {
+    swapToThumbnailFallback(image);
+  }
+}, true);
 
 const restoreContinuity = async () => {
   const saved = continuityStorage.read();
