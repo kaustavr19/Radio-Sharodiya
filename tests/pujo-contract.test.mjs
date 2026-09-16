@@ -55,7 +55,7 @@ test('catalogue discovery stays visible and explains its breadth', () => {
   assert.match(html, /class="hero-choose"[^>]+aria-describedby="hero-catalogue-meta"/);
   assert.match(html, /Browse Pujo music/);
   assert.match(html, /data-catalogue-total/);
-  assert.match(html, /songs · 6 collections/);
+  assert.match(html, /plays across 6 collections/);
   assert.match(html, /data-mobile-tab="catalogue"[^>]+aria-label="Open music catalogue, 6 curated collections"/);
   assert.match(html, /<span>Music<\/span><strong class="mobile-catalogue-count"/);
   assert.match(player, /const updateCatalogueDiscovery =/);
