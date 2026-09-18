@@ -33,6 +33,7 @@ const invoke = async (handler, { method = 'POST', body, token } = {}) => {
 test('tester login and renewal use 90 days without renewing invalid or admin sessions', async (t) => {
   const env = {
     BETA_SESSION_SECRET: secret, BETA_ADMIN_EMAIL: 'admin@example.com',
+    BETA_ADMIN_PASSWORD_HASH: 'test-salt:test-hash',
     BETA_FROM_EMAIL: 'test@example.com', RESEND_API_KEY: 'test',
     SUPABASE_SECRET_KEY: 'test', SUPABASE_URL: 'https://example.invalid',
   };
@@ -96,6 +97,7 @@ test('tester login and renewal use 90 days without renewing invalid or admin ses
 test('active testers can request a fresh code without invalidating other sessions', async (t) => {
   const env = {
     BETA_SESSION_SECRET: secret, BETA_ADMIN_EMAIL: 'admin@example.com',
+    BETA_ADMIN_PASSWORD_HASH: 'test-salt:test-hash',
     BETA_FROM_EMAIL: 'test@example.com', RESEND_API_KEY: 'test',
     SUPABASE_SECRET_KEY: 'test', SUPABASE_URL: 'https://example.invalid',
     BETA_SITE_URL: 'https://radio.example.com',
