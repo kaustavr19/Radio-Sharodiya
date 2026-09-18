@@ -354,48 +354,36 @@ const calendarPresentations = {
 };
 
 const PUJO_PILL_LABELS = {
-  mahalaya: 'MAHALAYA',
-  agomoni: 'AGOMONI',
   panchami: 'PANCHAMI · PANDAL HOPPING BEGINS',
   shashthi: 'SHASHTHI · BODHON TODAY',
   saptami: ['SAPTAMI MORNING', 'SAPTAMI, ONCE MORE'],
   ashtami: 'ASHTAMI · ANJALI HOUR',
   navami: 'NAVAMI NIGHT',
   dashami: 'DASHAMI · SINDOOR KHELA',
-  bijoya: 'BIJOYA',
 };
+const PLAIN_PILL_IDS = ['mahalaya', 'agomoni', 'bijoya'];
 
-const PRE_MAHALAYA_STAGES = [
-  { maxDays: 6, text: 'MAHALAYA THIS WEEK' },
-  { maxDays: 12, text: 'THE CITY IS TUNING UP' },
-  { maxDays: 18, text: 'PANDALS ARE RISING' },
-  { maxDays: 24, text: 'KASH FUL SEASON' },
-  { maxDays: 30, text: 'AUTUMN IS STIRRING' },
-];
+const PRE_MAHALAYA_MAX_DAYS = [6, 12, 18, 24, 30];
+const PRE_MAHALAYA_TEXT = ['MAHALAYA THIS WEEK', 'THE CITY IS TUNING UP', 'PANDALS ARE RISING', 'KASH FUL SEASON', 'AUTUMN IS STIRRING'];
 
-const kolkataDateKeyToUTCDay = (dateKey) => {
-  const [year, month, day] = dateKey.split('-').map(Number);
+const kolkataUTCDay = (date) => {
+  const [year, month, day] = dateKeyAtKolkata(date).split('-').map(Number);
   return Date.UTC(year, month - 1, day);
-};
-
-const dayOffsetWithinState = (state, now) => {
-  const nowDay = kolkataDateKeyToUTCDay(dateKeyAtKolkata(now));
-  const startDay = kolkataDateKeyToUTCDay(dateKeyAtKolkata(new Date(state.stateStart)));
-  return Math.round((nowDay - startDay) / 86400000);
 };
 
 const computeCalendarPillLabel = (now = new Date()) => {
   const state = resolvePujoCalendar(now);
   const label = PUJO_PILL_LABELS[state.id];
   if (Array.isArray(label)) {
-    const offset = Math.max(0, dayOffsetWithinState(state, now));
+    const offset = Math.max(0, Math.round((kolkataUTCDay(now) - kolkataUTCDay(new Date(state.stateStart))) / 86400000));
     return label[Math.min(offset, label.length - 1)];
   }
   if (label) return label;
-  if (state.id === 'pre-mahalaya' && Number.isFinite(state.targetDate)) {
+  if (PLAIN_PILL_IDS.includes(state.id)) return state.id.toUpperCase();
+  if (state.id === 'pre-mahalaya' && state.targetDate) {
     const days = Math.floor(Math.max(0, state.targetDate - now.getTime()) / 86400000);
-    const stage = PRE_MAHALAYA_STAGES.find((candidate) => days <= candidate.maxDays);
-    return stage?.text;
+    const index = PRE_MAHALAYA_MAX_DAYS.findIndex((maxDays) => days <= maxDays);
+    return index === -1 ? undefined : PRE_MAHALAYA_TEXT[index];
   }
   return undefined;
 };
