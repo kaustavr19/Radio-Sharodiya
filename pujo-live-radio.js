@@ -6,7 +6,7 @@ export const liveStations = [
     code: 'AIR-01',
     name: 'Akashvani Bangla',
     bengali: 'আকাশবাণী বাংলা',
-    detail: 'West Bengal · Bengali',
+    detail: "All India Radio's Bengali service, live from Kolkata.",
     streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio137/hlspbaudio137_Auto.m3u8',
   },
   {
@@ -14,7 +14,7 @@ export const liveStations = [
     code: 'AIR-02',
     name: 'FM Rainbow Kolkata',
     bengali: 'এফ এম রেনবো কলকাতা',
-    detail: 'West Bengal · Bengali, Hindi, English',
+    detail: "Kolkata's AIR entertainment FM — Bengali, Hindi and English on one dial.",
     streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio058/hlspbaudio058_Auto.m3u8',
   },
   {
@@ -22,7 +22,7 @@ export const liveStations = [
     code: 'AIR-03',
     name: 'FM Gold Kolkata',
     bengali: 'এফ এম গোল্ড কলকাতা',
-    detail: 'West Bengal · Bengali, Hindi, English',
+    detail: "Kolkata's AIR Gold — old favourites and requests, in Bengali, Hindi and English.",
     streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio057/hlspbaudio057_Auto.m3u8',
   },
   {
@@ -30,7 +30,7 @@ export const liveStations = [
     code: 'AIR-04',
     name: 'Akashvani Kolkata Geetanjali',
     bengali: 'আকাশবাণী কলকাতা গীতাঞ্জলি',
-    detail: 'West Bengal · Bengali',
+    detail: "Kolkata's own AIR music channel — the name means 'an offering of songs.'",
     streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio055/hlspbaudio055_Auto.m3u8',
   },
   {
@@ -38,7 +38,7 @@ export const liveStations = [
     code: 'AIR-05',
     name: 'Akashvani Kolkata Sanchayita',
     bengali: 'আকাশবাণী কলকাতা সঞ্চয়িতা',
-    detail: 'West Bengal · Bengali',
+    detail: "Named after Tagore's own anthology — Kolkata's AIR channel for poetry and song.",
     streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio056/hlspbaudio056_Auto.m3u8',
   },
   {
@@ -46,7 +46,7 @@ export const liveStations = [
     code: 'AIR-06',
     name: 'Akashvani Maitree',
     bengali: 'আকাশবাণী মৈত্রী',
-    detail: 'West Bengal · Bengali',
+    detail: "AIR's Maitree service — Bengali radio built to reach listeners across the border too.",
     streamUrl: 'https://airhlspush.pc.cdn.bitgravity.com/httppush/hlspbaudio245/hlspbaudio245_Auto.m3u8',
   },
 ];

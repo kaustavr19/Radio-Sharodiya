@@ -269,7 +269,7 @@ h1 { margin: 0; padding-top: .12em; font-family: var(--font-display-bn); font-we
 .experience-station-links small { margin-top: .2rem; color: rgba(255,245,220,.58); font-size: .66rem; }
 .experience-station-links i { color: var(--marigold); font-style: normal; }
 .experience-panel > p { margin: 0; padding: .35rem 1rem .9rem; color: rgba(255,245,220,.58); font-size: .67rem; }
-body[data-motion="off"] .hero-art, body[data-motion="off"] .hero-copy { transition: none; transform: none; }
+body[data-motion="off"] .hero-art { transition: none; transform: none; }
 body[data-motion="off"] .hero-grain, body[data-low-data="true"] .hero-grain { display: none; }
 body[data-low-data="true"] .hero-art { transition: none; }
 body[data-low-data="true"] * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }

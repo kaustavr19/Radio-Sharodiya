@@ -158,7 +158,7 @@ test('mobile shell provides app navigation, a mini player, and full-screen surfa
   assert.match(pujoCss, /body\.mobile-player-open \.broadcast-console/);
   assert.match(pujoCss, /grid-template-columns: repeat\(5,minmax\(2\.75rem,1fr\)\)/);
   assert.match(pujoCss, /width: min\(72vw,36dvh,20rem\)/);
-  assert.match(player, /mobilePlayerContextLabel\.textContent = 'Your playlist'/);
+  assert.match(player, /mobilePlayerContextLabel\.textContent = calendarPillLabel \|\| 'Your playlist'/);
   assert.match(player, /mobilePlayerContext\.textContent = playlistName/);
 });
 
