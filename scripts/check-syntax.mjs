@@ -12,6 +12,7 @@ const sourceFiles = [
   'pujo-scenes.js',
   'playback-core.js',
   'pujo-youtube-adapter.js',
+  'pujo-loader.js',
   'beta-access.js',
   'beta-admin.js',
   'pujo.js',

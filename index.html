@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="site-loading">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,7 +52,37 @@
     <link rel="stylesheet" href="/pujo.css" />
     <title>Radio Sharodiya — Bengali Pujo Radio</title>
   </head>
-  <body class="beta-access-pending" data-pujo-state="pre-mahalaya">
+  <body class="beta-access-pending site-loading" data-pujo-state="pre-mahalaya">
+    <div class="site-loader" id="site-loader" role="status" aria-live="polite" aria-label="Tuning into Radio Sharodiya">
+      <div class="site-loader-aura" aria-hidden="true"></div>
+      <div class="site-loader-mark" aria-hidden="true">
+        <svg viewBox="0 0 160 160" focusable="false">
+          <g class="loader-alpana" fill="none">
+            <circle cx="80" cy="80" r="51" />
+            <circle cx="80" cy="80" r="37" />
+            <path d="M80 12c7 10 7 18 0 25-7-7-7-15 0-25Zm0 136c-7-10-7-18 0-25 7 7 7 15 0 25ZM12 80c10-7 18-7 25 0-7 7-15 7-25 0Zm136 0c-10 7-18 7-25 0 7-7 15-7 25 0Z" />
+            <path d="M32 32c12 2 17 7 18 17-10-1-15-6-18-17Zm96 96c-12-2-17-7-18-17 10 1 15 6 18 17Zm0-96c-2 12-7 17-17 18 1-10 6-15 17-18ZM32 128c2-12 7-17 17-18-1 10-6 15-17 18Z" />
+          </g>
+          <g class="loader-signal" fill="currentColor">
+            <rect x="57" y="72" width="5" height="16" rx="2.5" />
+            <rect x="67" y="62" width="5" height="36" rx="2.5" />
+            <rect x="77" y="51" width="6" height="58" rx="3" />
+            <rect x="88" y="65" width="5" height="30" rx="2.5" />
+            <rect x="98" y="73" width="5" height="14" rx="2.5" />
+          </g>
+          <g class="loader-tuning-orbit">
+            <circle class="loader-orbit-line" cx="80" cy="80" r="61" fill="none" />
+            <circle class="loader-orbit-point" cx="80" cy="19" r="4.5" />
+          </g>
+        </svg>
+      </div>
+      <div class="site-loader-copy">
+        <strong lang="bn">শারদীয়ার তরঙ্গ মিলছে…</strong>
+        <span>Tuning into Radio Sharodiya</span>
+      </div>
+    </div>
+    <noscript><style>.site-loader{display:none!important}.site-loading{overflow:auto!important}</style></noscript>
+
     <section class="beta-gate" id="beta-gate" aria-labelledby="beta-gate-title">
       <div class="beta-gate-art" aria-hidden="true"></div>
       <header class="beta-gate-brand">
@@ -69,7 +99,7 @@
 
         <div class="beta-gate-card" id="beta-gate-card">
           <div class="beta-gate-loading" id="beta-gate-loading">
-            <span class="beta-loading-dial" aria-hidden="true"></span>
+            <span class="beta-loading-dial" aria-hidden="true"><i></i></span>
             <strong>Checking your frequency…</strong>
           </div>
 
@@ -532,6 +562,7 @@
     </section>
 
     <div class="media-engine" id="youtube-player" aria-hidden="true"></div>
+    <script type="module" src="/pujo-loader.js"></script>
     <script type="module" src="/beta-access.js"></script>
     <script type="module" src="/pujo.js"></script>
   </body>
