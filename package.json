@@ -17,7 +17,7 @@
     "verify": "node scripts/verify.mjs"
   },
   "engines": {
-    "node": ">=22"
+    "node": "22.x"
   },
   "devDependencies": {
     "vite": "^8.2.0"
