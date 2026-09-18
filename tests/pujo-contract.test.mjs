@@ -479,6 +479,27 @@ test('no live region is nested inside another, so status changes announce exactl
   assert.match(html, /id="beta-form-status"[^>]*role="status"/);
 });
 
+test('the Pujo frequency loader is lightweight, accessible and motion-safe', () => {
+  assert.match(html, /id="site-loader"[^>]*role="status"[^>]*aria-live="polite"/);
+  assert.match(html, /শারদীয়ার তরঙ্গ মিলছে/);
+  assert.match(html, /src="\/pujo-loader\.js"/);
+  assert.match(pujoCss, /\.loader-alpana/);
+  assert.match(pujoCss, /@keyframes loader-dhak/);
+  assert.match(pujoCss, /prefers-reduced-motion: reduce[\s\S]*\.site-loader-aura/);
+  assert.match(player, /radio:station-ready/);
+});
+
+test('the loader appears on every visit with a longer first reveal each Kolkata day', () => {
+  const loader = readFileSync('pujo-loader.js', 'utf8');
+  assert.match(loader, /dateKeyAtKolkata/);
+  assert.match(loader, /localStorage\.getItem\(storageKey\)/);
+  assert.match(loader, /firstDailyRevealMs = 2600/);
+  assert.match(loader, /repeatRevealMs = 1400/);
+  assert.match(loader, /firstLoadToday \? firstDailyRevealMs : repeatRevealMs/);
+  assert.doesNotMatch(loader, /sessionStorage|immediate: true/);
+  assert.doesNotMatch(html, /loader-seen/);
+});
+
 test('forced-colors mode keeps focus rings and toggle switches visible', () => {
   assert.match(pujoCss, /@media \(forced-colors: active\) \{/);
   assert.match(pujoCss, /outline-color: Highlight;/);

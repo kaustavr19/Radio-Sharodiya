@@ -2517,7 +2517,7 @@ const initializeStation = async () => {
   window.requestAnimationFrame(focusTVStart);
 };
 
-void initializeStation();
+void initializeStation().finally(() => window.dispatchEvent(new Event('radio:station-ready')));
 window.addEventListener('pagehide', saveContinuity);
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
