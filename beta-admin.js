@@ -1,3 +1,7 @@
+import { inject as injectAnalytics } from '@vercel/analytics';
+
+injectAnalytics();
+
 const auth = document.querySelector('#desk-auth');
 const dashboard = document.querySelector('#desk-dashboard');
 const loading = document.querySelector('#desk-loading');
