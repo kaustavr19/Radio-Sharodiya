@@ -162,7 +162,7 @@ button { color: inherit; }
 .data-nudge button { min-height: 2.25rem; padding: 0 .7rem; border: 1px solid rgba(255,245,220,.24); border-radius: 99px; background: transparent; color: var(--shiuli); cursor: pointer; font-size: .7rem; }
 .data-nudge .data-nudge-accept { border-color: var(--marigold); background: var(--marigold); color: var(--ink); font-weight: 700; }
 .data-nudge button:focus-visible { outline: 2px solid var(--shiuli); outline-offset: 2px; }
-.suggest-song-fab { position: fixed; z-index: 85; right: max(5rem,calc(env(safe-area-inset-right) + 5rem)); bottom: max(1rem,env(safe-area-inset-bottom)); width: 2.9rem; height: 2.9rem; display: grid; place-items: center; border: 1px solid rgba(255,245,220,.28); border-radius: 50%; background: rgba(12,20,18,.86); color: var(--shiuli); box-shadow: 0 .75rem 2rem rgba(0,0,0,.32); backdrop-filter: blur(18px) saturate(1.1); text-decoration: none; transition: .18s ease; }
+.suggest-song-fab { position: fixed; z-index: 85; right: max(5rem,calc(env(safe-area-inset-right) + 5rem)); bottom: calc(clamp(1rem,3vh,2rem) + env(safe-area-inset-bottom)); width: 2.9rem; height: 2.9rem; display: grid; place-items: center; border: 1px solid rgba(255,245,220,.28); border-radius: 50%; background: rgba(12,20,18,.86); color: var(--shiuli); box-shadow: 0 .75rem 2rem rgba(0,0,0,.32); backdrop-filter: blur(18px) saturate(1.1); text-decoration: none; transition: .18s ease; }
 .suggest-song-fab:hover { color: var(--marigold); border-color: rgba(255,245,220,.4); transform: translateY(-2px); }
 .suggest-song-fab:focus-visible { outline: 2px solid var(--marigold); outline-offset: 2px; }
 .ios-install-banner { position: fixed; z-index: 90; left: max(1rem,env(safe-area-inset-left)); bottom: max(1rem,env(safe-area-inset-bottom)); width: min(27rem,calc(100% - 2rem)); display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: .75rem; padding: .85rem; border: 1px solid rgba(255,245,220,.28); border-radius: 1rem; background: rgba(12,20,18,.86); box-shadow: 0 1.25rem 3.5rem rgba(0,0,0,.32); backdrop-filter: blur(22px) saturate(1.1); }
@@ -421,6 +421,7 @@ body.queue-open { overflow: hidden; }
 
 body.room-open { overflow: hidden; }
 body.room-open .broadcast-console { position: fixed; z-index: 80; top: auto; bottom: 1rem; left: 50%; transform: translateX(-50%); width: min(57rem,calc(100% - 2rem)); border-radius: .7rem; }
+body.room-open .suggest-song-fab { bottom: calc(1rem + env(safe-area-inset-bottom)); }
 body.room-open .continue-listening { display: none; }
 body.room-open .console-topline { display: none; }
 body.room-open .console-main { min-height: 4.5rem; padding: .55rem .75rem; }
