@@ -40,6 +40,7 @@ const playButton = document.querySelector('#player-play');
 const previousButton = document.querySelector('#previous-programme');
 const nextButton = document.querySelector('#next-programme');
 const shuffleButton = document.querySelector('#shuffle-programmes');
+const loopButton = document.querySelector('#loop-programmes');
 const muteButton = document.querySelector('#mute-preview');
 const volumeSlider = document.querySelector('#volume-slider');
 const signalWaveform = document.querySelector('#player-seek');
@@ -526,6 +527,7 @@ let queueCloseTimer;
 let isPlaying = false;
 let isMuted = false;
 let isShuffle = false;
+let loopMode = 'off'; // 'off' | 'all' | 'one'
 let audioContext;
 let masterGain;
 let rhythmTimer;
@@ -771,6 +773,7 @@ const saveContinuity = () => {
     volume: Number(volumeSlider.value),
     muted: isMuted,
     shuffle: isShuffle,
+    loop: loopMode,
     origin: playbackOrigin,
     recent: recentlyPlayed,
   });
@@ -1055,6 +1058,10 @@ function handleSourceState({ state, sourceId, position, duration }) {
     completedRequestRevision = activePlaybackRequest.revision;
     clearBufferingWatchdog();
     setPlaybackStatus('ended', 'Programme complete');
+    if (loopMode === 'one' && currentTrack) {
+      setCurrentTrack(currentTrack, true, 0);
+      return;
+    }
     moveTrack(1, true);
   }
 }
@@ -1616,8 +1623,25 @@ const moveTrack = (direction, autoplay = playIntent || isPlaying) => {
     showPlaybackProgress(0, playbackSource?.getDuration() || durationToSeconds(currentTrack?.duration));
     return;
   }
-  if (nextIndex >= queue.length) { setPlayerState(false, 'End of broadcast', 'ended'); updateQueueCount(); restoreTimePresentation(); return; }
+  if (nextIndex >= queue.length) {
+    if (direction > 0 && loopMode === 'all' && queue.some(isTrackPlayable)) {
+      nextIndex = 0;
+      while (nextIndex < queue.length && !isTrackPlayable(queue[nextIndex])) nextIndex += 1;
+    } else {
+      setPlayerState(false, 'End of broadcast', 'ended'); updateQueueCount(); restoreTimePresentation(); return;
+    }
+  }
   setCurrentTrack(queue[nextIndex], autoplay);
+};
+
+const LOOP_MODE_LABELS = { off: 'Repeat: off', all: 'Repeat: playlist', one: 'Repeat: single track' };
+const LOOP_MODE_SEQUENCE = { off: 'all', all: 'one', one: 'off' };
+
+const applyLoopMode = () => {
+  loopButton.dataset.loopMode = loopMode;
+  loopButton.classList.toggle('active', loopMode !== 'off');
+  loopButton.setAttribute('aria-pressed', String(loopMode !== 'off'));
+  loopButton.setAttribute('aria-label', LOOP_MODE_LABELS[loopMode]);
 };
 
 previousButton.addEventListener('click', () => { if (playbackOrigin === 'broadcast') setPlaybackOrigin('manual'); moveTrack(-1); });
@@ -1632,6 +1656,11 @@ shuffleButton.addEventListener('click', () => {
   const currentIndex = Math.max(0, queueCurrentIndex());
   queue = [...queue.slice(0, currentIndex + 1), ...shuffledTracks(queue.slice(currentIndex + 1))];
   updateQueueCount();
+});
+loopButton.addEventListener('click', () => {
+  loopMode = LOOP_MODE_SEQUENCE[loopMode];
+  applyLoopMode();
+  scheduleContinuitySave();
 });
 
 queuePaneList.addEventListener('click', (event) => {
@@ -2311,11 +2340,13 @@ const restoreContinuity = async () => {
   volumeSlider.value = String(Number.isFinite(restoredVolume) ? Math.min(100, Math.max(0, restoredVolume)) : 80);
   isMuted = Boolean(saved.muted) || Number(volumeSlider.value) === 0;
   isShuffle = Boolean(saved.shuffle);
+  loopMode = LOOP_MODE_LABELS[saved.loop] ? saved.loop : 'off';
   muteButton.classList.toggle('is-muted', isMuted);
   muteButton.setAttribute('aria-pressed', String(isMuted));
   muteButton.setAttribute('aria-label', isMuted ? 'Unmute current track' : 'Mute current track');
   shuffleButton.classList.toggle('active', isShuffle);
   shuffleButton.setAttribute('aria-pressed', String(isShuffle));
+  applyLoopMode();
 
   const duration = durationToSeconds(currentTrack.duration);
   const recentEnough = Date.now() - Number(saved.savedAt || 0) < 30 * 24 * 60 * 60 * 1000;
