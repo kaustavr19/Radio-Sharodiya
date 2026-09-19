@@ -1,4 +1,7 @@
+import { inject as injectAnalytics } from '@vercel/analytics';
 import { dateKeyAtKolkata, formatPujoDate, resolvePujoCalendar } from './pujo-calendar.js';
+
+injectAnalytics();
 import {
   classifyYoutubeError,
   createPlaybackDiagnostics,
