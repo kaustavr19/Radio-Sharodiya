@@ -1,7 +1,8 @@
-import { inject as injectAnalytics } from '@vercel/analytics';
+import { inject as injectAnalytics, track as trackAnalyticsEvent } from '@vercel/analytics';
 import { dateKeyAtKolkata, formatPujoDate, resolvePujoCalendar } from './pujo-calendar.js';
 
 injectAnalytics();
+const trackedPlayIds = new Set();
 import {
   classifyYoutubeError,
   createPlaybackDiagnostics,
@@ -68,6 +69,7 @@ const dismissResumeButton = document.querySelector('#dismiss-resume');
 const playerModeLabel = document.querySelector('#player-mode-label');
 const playerConnectionLabel = document.querySelector('#player-connection-label');
 const queueButton = document.querySelector('#open-queue');
+const suggestSongFab = document.querySelector('#suggest-song-fab');
 const queueCount = document.querySelector('#queue-count');
 const mobileQueueCount = document.querySelector('#mobile-queue-count');
 const catalogueTotalLabels = [...document.querySelectorAll('[data-catalogue-total]')];
@@ -247,6 +249,7 @@ const showStationInfoView = (view) => {
 
 const openStationInfo = (view, opener) => {
   if (!experiencePanel.hidden) setExperiencePanel(false);
+  trackAnalyticsEvent('open_station_info', { view });
   stationInfoReturnTarget = opener;
   showStationInfoView(view);
   stationInfoScrim.hidden = false;
@@ -1034,6 +1037,10 @@ function handleSourceState({ state, sourceId, position, duration }) {
     clearRecoveryTimer();
     recoveryAttempts = 0;
     recoveryTrackId = currentTrack?.id;
+    if (currentTrack?.id && !trackedPlayIds.has(currentTrack.id)) {
+      trackedPlayIds.add(currentTrack.id);
+      trackAnalyticsEvent('play_track', { trackId: currentTrack.id, title: currentTrack.title || '' });
+    }
     playbackDiagnostics.record('playing', {
       trackId: currentTrack?.id,
       startupMs: Number.isFinite(connectionStartedAt) ? Math.round(performance.now() - connectionStartedAt) : undefined,
@@ -1512,6 +1519,7 @@ const openLiveRadio = (opener) => {
   document.body.classList.add('room-open', 'live-room-open');
   setMobilePlayerExpanded(false, { restoreFocus: false });
   setMobileTab('radio');
+  trackAnalyticsEvent('open_live_radio');
   liveRadioController.warm();
   liveRadioRoom.scrollTop = 0;
   window.requestAnimationFrame(() => liveRadioRoom.querySelector('[data-close-live-radio]').focus());
@@ -1534,6 +1542,7 @@ const openCatalogue = (opener) => {
   document.body.classList.add('room-open');
   setMobilePlayerExpanded(false, { restoreFocus: false });
   setMobileTab('catalogue');
+  trackAnalyticsEvent('open_catalogue');
   room.setAttribute('aria-busy', 'true');
   ensureFullCatalogue().finally(() => {
     room.setAttribute('aria-busy', 'false');
@@ -1576,7 +1585,8 @@ catalogueSearchResults.addEventListener('click', (event) => {
   replaceQueue([...playlistTracks.slice(selectedIndex), ...playlistTracks.slice(0, selectedIndex)]);
   setCurrentTrack(track, true);
 });
-queueButton.addEventListener('click', () => openQueuePane(queueButton));
+queueButton.addEventListener('click', () => { trackAnalyticsEvent('open_queue'); openQueuePane(queueButton); });
+suggestSongFab.addEventListener('click', () => trackAnalyticsEvent('suggest_song_click'));
 mobileQueueButton.addEventListener('click', () => openQueuePane(mobileQueueButton));
 mobilePlayerExpand.addEventListener('click', () => setMobilePlayerExpanded(true));
 mobilePlayerDismiss.addEventListener('click', () => setMobilePlayerExpanded(false));
