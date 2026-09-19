@@ -351,6 +351,9 @@ body[data-low-data="true"] * { -webkit-backdrop-filter: none !important; backdro
 .console-controls button { width: 2.2rem; height: 2.2rem; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #e9e1d6; font-size: .65rem; cursor: pointer; transition: .18s ease; }
 .console-controls button:hover { background: rgba(255,255,255,.08); color: var(--shiuli); }
 .console-controls button.active { color: var(--marigold); }
+#loop-programmes .loop-icon-one { display: none; }
+#loop-programmes[data-loop-mode="one"] .loop-icon-all { display: none; }
+#loop-programmes[data-loop-mode="one"] .loop-icon-one { display: block; }
 .volume-group { display: flex; align-items: center; gap: .15rem; }
 .volume-button svg { display: none; }
 .volume-button .volume-up { display: block; }
@@ -1224,7 +1227,7 @@ body.station-info-open { overflow: hidden; }
   body.mobile-player-open .broadcast-console .console-track small { min-height: 1.1rem; display: flex; justify-content: flex-start; margin-top: .35rem; color: var(--marigold); font-size: .6rem; }
   body.mobile-player-open .broadcast-console .console-progress { width: 100%; display: block; grid-column: 1; grid-row: 2; }
   body.mobile-player-open .broadcast-console .signal-waveform { height: clamp(2.4rem,6dvh,3.35rem); }
-  body.mobile-player-open .broadcast-console .console-controls { position: static; width: 100%; display: grid; grid-column: 1; grid-row: 3; grid-template-columns: repeat(5,minmax(2.75rem,1fr)); align-items: center; justify-items: center; gap: .2rem; }
+  body.mobile-player-open .broadcast-console .console-controls { position: static; width: 100%; display: grid; grid-column: 1; grid-row: 3; grid-template-columns: repeat(6,minmax(2.75rem,1fr)); align-items: center; justify-items: center; gap: .2rem; }
   body.mobile-player-open .broadcast-console .console-controls button:not(.console-play) { width: 2.75rem; height: 2.75rem; display: grid; }
   body.mobile-player-open .broadcast-console .console-controls .volume-group { display: none; }
   body.mobile-player-open .broadcast-console .console-controls .queue-inline { min-width: 2.75rem; padding: 0 .35rem; order: 0; }
