@@ -156,7 +156,7 @@ test('mobile shell provides app navigation, a mini player, and full-screen surfa
   assert.match(pujoCss, /overflow-x: clip/);
   assert.match(pujoCss, /env\(safe-area-inset-bottom\)/);
   assert.match(pujoCss, /body\.mobile-player-open \.broadcast-console/);
-  assert.match(pujoCss, /grid-template-columns: repeat\(5,minmax\(2\.75rem,1fr\)\)/);
+  assert.match(pujoCss, /grid-template-columns: repeat\(6,minmax\(2\.75rem,1fr\)\)/);
   assert.match(pujoCss, /width: min\(72vw,36dvh,20rem\)/);
   assert.match(player, /mobilePlayerContextLabel\.textContent = calendarPillLabel \|\| 'Your playlist'/);
   assert.match(player, /mobilePlayerContext\.textContent = playlistName/);
@@ -557,7 +557,7 @@ test('station About and Pujo contributions use one accessible responsive dialog'
   assert.match(html, /class="nav-about nav-pill"[^>]+data-station-open="about"/);
   assert.match(html, /class="nav-donate nav-pill"[^>]+data-station-open="chai"/);
   assert.match(pujoCss, /\.nav-about \{ display: none; \}/);
-  assert.match(pujoCss, /\.nav-experience span \{ display: inline;/);
+  assert.match(pujoCss, /\.nav-experience span \{ display: none;/);
   assert.match(pujoCss, /\.nav-donate span \{ display: none; \}/);
   assert.doesNotMatch(html, /id="kolkata-time"/);
   assert.doesNotMatch(html, /class="station-utilities"/);
