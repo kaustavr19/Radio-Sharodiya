@@ -159,6 +159,18 @@ const stationInfoScrim = document.querySelector('#station-info-scrim');
 const stationInfoClose = document.querySelector('#station-info-close');
 const stationInfoOpeners = [...document.querySelectorAll('[data-station-open]')];
 const stationInfoTabs = [...document.querySelectorAll('[data-station-view]')];
+const onboardingDialog = document.querySelector('#onboarding-dialog');
+const onboardingScrim = document.querySelector('#onboarding-scrim');
+const onboardingClose = document.querySelector('#onboarding-close');
+const onboardingDismiss = document.querySelector('#onboarding-dismiss');
+const onboardingOpeners = [...document.querySelectorAll('[data-onboarding-open]')];
+const onboardingChoices = [...document.querySelectorAll('[data-onboarding-action]')];
+const exploreDialog = document.querySelector('#explore-dialog');
+const exploreScrim = document.querySelector('#explore-scrim');
+const exploreClose = document.querySelector('#explore-close');
+const exploreDone = document.querySelector('#explore-done');
+const exploreOpeners = [...document.querySelectorAll('[data-explore-open]')];
+const exploreActions = [...document.querySelectorAll('[data-explore-action]')];
 const stationAboutPanel = document.querySelector('#station-about-panel');
 const stationChaiPanel = document.querySelector('#station-chai-panel');
 const donationAmountButtons = [...document.querySelectorAll('[data-donation-amount]')];
@@ -197,6 +209,9 @@ let liveRadioReturnTarget;
 let liveRadioIsActive = false;
 let liveRadioController;
 let stationInfoReturnTarget;
+let onboardingReturnTarget;
+let onboardingAutoScheduled = false;
+let exploreReturnTarget;
 const tvPointerQuery = window.matchMedia('(hover: none) and (pointer: coarse), (hover: none) and (pointer: none)');
 const tvModePreference = new URLSearchParams(window.location.search).get('tv');
 const tvUserAgent = /Android TV|GoogleTV|AFT\w*|BRAVIA|SmartTV|SMART-TV|HbbTV|Tizen|WebOS|Web0S/i.test(navigator.userAgent);
@@ -206,7 +221,9 @@ let ignoreNextTVPop = false;
 let handlingTVPop = false;
 let tvBackSyncFrame;
 
-const hasOpenTVLayer = () => !stationInfoDialog.hidden
+const hasOpenTVLayer = () => !exploreDialog.hidden
+  || !onboardingDialog.hidden
+  || !stationInfoDialog.hidden
   || queuePaneIsOpen()
   || document.body.classList.contains('mobile-player-open')
   || !liveRadioRoom.hidden
@@ -575,6 +592,9 @@ let pendingHeroPointer;
 const CONTINUITY_KEY = 'pujo-vibes:continuity:v1';
 const CONTINUITY_VERSION = 1;
 const continuityStorage = createVersionedStorage({ storage: window.localStorage, key: CONTINUITY_KEY, version: CONTINUITY_VERSION });
+const ONBOARDING_KEY = 'radio-sharodiya:onboarding:v1';
+const onboardingStorage = createVersionedStorage({ storage: window.localStorage, key: ONBOARDING_KEY, version: 1 });
+const onboardingPreview = import.meta.env.DEV ? new URLSearchParams(window.location.search).get('onboarding-preview') : '';
 const QUEUE_RENDER_BATCH = 16;
 const SEARCH_RESULT_LIMIT = 12;
 const SEARCH_ALIASES = Object.freeze({
@@ -590,6 +610,77 @@ const MAX_AUTOMATIC_RECOVERIES = 2;
 const RECOVERY_DELAYS = [1500, 4000];
 const BUFFERING_TIMEOUT = 12000;
 const LONG_FORM_BUFFERING_TIMEOUT = 22000;
+
+const openOnboarding = (opener, { firstVisit = false } = {}) => {
+  if (!onboardingDialog.hidden) return;
+  if (!experiencePanel.hidden) setExperiencePanel(false);
+  if (!stationInfoDialog.hidden) closeStationInfo();
+  onboardingReturnTarget = firstVisit ? undefined : opener;
+  onboardingScrim.hidden = false;
+  onboardingDialog.hidden = false;
+  onboardingDialog.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('onboarding-open');
+  trackAnalyticsEvent('open_onboarding', { firstVisit });
+  onboardingChoices[0]?.focus();
+  syncTVBackStop();
+};
+
+const rememberOnboarding = (action) => {
+  if (!onboardingPreview) onboardingStorage.write({ completed: true, action, completedAt: Date.now() });
+  trackAnalyticsEvent('onboarding_choice', { action });
+};
+
+const closeOnboarding = ({ action = 'dismissed', remember = true, restoreFocus = true } = {}) => {
+  if (onboardingDialog.hidden) return;
+  if (remember) rememberOnboarding(action);
+  onboardingScrim.hidden = true;
+  onboardingDialog.hidden = true;
+  onboardingDialog.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('onboarding-open');
+  if (restoreFocus) (onboardingReturnTarget || playButton)?.focus();
+  onboardingReturnTarget = undefined;
+  syncTVBackStop();
+};
+
+const scheduleFirstTimeOnboarding = () => {
+  if (onboardingAutoScheduled || document.body.classList.contains('beta-access-pending')) return;
+  if (onboardingPreview === 'off' || (onboardingPreview !== '1' && onboardingStorage.hasValue())) return;
+  onboardingAutoScheduled = true;
+  const reveal = () => {
+    if (document.querySelector('#site-loader')) return;
+    observer?.disconnect();
+    if (onboardingDialog.hidden && !hasOpenTVLayer()) openOnboarding(undefined, { firstVisit: true });
+  };
+  const observer = document.querySelector('#site-loader') ? new MutationObserver(reveal) : undefined;
+  observer?.observe(document.body, { childList: true });
+  window.requestAnimationFrame(reveal);
+};
+
+const openExplore = (opener) => {
+  if (!exploreDialog.hidden) return;
+  if (!onboardingDialog.hidden) closeOnboarding({ remember: false, restoreFocus: false });
+  if (!stationInfoDialog.hidden) closeStationInfo();
+  exploreReturnTarget = experiencePanel.contains(opener) ? experienceButton : opener;
+  if (!experiencePanel.hidden) setExperiencePanel(false);
+  exploreScrim.hidden = false;
+  exploreDialog.hidden = false;
+  exploreDialog.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('explore-open');
+  trackAnalyticsEvent('open_explore');
+  exploreActions[0]?.focus();
+  syncTVBackStop();
+};
+
+const closeExplore = ({ restoreFocus = true } = {}) => {
+  if (exploreDialog.hidden) return;
+  exploreScrim.hidden = true;
+  exploreDialog.hidden = true;
+  exploreDialog.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('explore-open');
+  if (restoreFocus) exploreReturnTarget?.focus();
+  exploreReturnTarget = undefined;
+  syncTVBackStop();
+};
 
 const updatePlaylistOverviewCounts = () => {
   playlistGrid.querySelectorAll('[data-playlist]').forEach((button) => {
@@ -1561,6 +1652,40 @@ document.addEventListener('click', (event) => {
   if (event.target.closest('[data-close-room]')) closeRoom();
 });
 
+onboardingChoices.forEach((button) => button.addEventListener('click', () => {
+  const action = button.dataset.onboardingAction;
+  closeOnboarding({ action, restoreFocus: false });
+  if (action === 'play') playButton.click();
+  if (action === 'catalogue') openCatalogue(button);
+  if (action === 'live') openLiveRadio(button);
+}));
+onboardingOpeners.forEach((button) => button.addEventListener('click', () => openOnboarding(button)));
+onboardingClose.addEventListener('click', () => closeOnboarding());
+onboardingDismiss.addEventListener('click', () => closeOnboarding());
+onboardingScrim.addEventListener('click', () => closeOnboarding());
+
+exploreOpeners.forEach((button) => button.addEventListener('click', () => openExplore(button)));
+exploreClose.addEventListener('click', () => closeExplore());
+exploreDone.addEventListener('click', () => closeExplore());
+exploreScrim.addEventListener('click', () => closeExplore());
+exploreActions.forEach((button) => button.addEventListener('click', () => {
+  const action = button.dataset.exploreAction;
+  trackAnalyticsEvent('explore_action', { action });
+  closeExplore({ restoreFocus: false });
+  if (action === 'catalogue') openCatalogue(button);
+  if (action === 'search') {
+    openCatalogue(button);
+    window.requestAnimationFrame(() => catalogueSearchInput.focus());
+  }
+  if (action === 'live') openLiveRadio(button);
+  if (action === 'queue') openQueuePane(button);
+  if (action === 'experience') window.requestAnimationFrame(() => setExperiencePanel(true));
+  if (action === 'about' || action === 'chai') openStationInfo(action, button);
+}));
+exploreDialog.querySelectorAll('a[href]').forEach((link) => link.addEventListener('click', () => {
+  trackAnalyticsEvent('explore_external', { destination: link.href.includes('golper-asor') ? 'golper_asor' : 'suggest_song' });
+}));
+
 playlistGrid.addEventListener('click', (event) => {
   const button = event.target.closest('[data-playlist]');
   if (!button) return;
@@ -2405,6 +2530,8 @@ const setupMediaSession = () => {
 };
 
 const closeTopTVLayer = () => {
+  if (document.body.classList.contains('explore-open')) { closeExplore(); return true; }
+  if (document.body.classList.contains('onboarding-open')) { closeOnboarding(); return true; }
   if (document.body.classList.contains('station-info-open')) { closeStationInfo(); return true; }
   if (document.body.classList.contains('queue-open')) { closeQueuePane(); return true; }
   if (document.body.classList.contains('mobile-player-open')) { setMobilePlayerExpanded(false); return true; }
@@ -2437,14 +2564,19 @@ window.addEventListener('popstate', () => {
   if (closed) syncTVBackStop();
 });
 
-window.addEventListener('radio:unlocked', () => window.requestAnimationFrame(focusTVStart));
+window.addEventListener('radio:unlocked', () => {
+  window.requestAnimationFrame(focusTVStart);
+  scheduleFirstTimeOnboarding();
+});
 
 document.addEventListener('keydown', (event) => {
   const editable = ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName) || event.target.isContentEditable;
   const backKey = ['Escape', 'BrowserBack', 'GoBack'].includes(event.key) || (event.key === 'Backspace' && !editable);
   if (backKey && closeTopTVLayer()) { event.preventDefault(); return; }
-  const openDialog = document.body.classList.contains('station-info-open') ? stationInfoDialog
-    : document.body.classList.contains('queue-open') ? queuePane
+  const openDialog = document.body.classList.contains('explore-open') ? exploreDialog
+    : document.body.classList.contains('onboarding-open') ? onboardingDialog
+      : document.body.classList.contains('station-info-open') ? stationInfoDialog
+      : document.body.classList.contains('queue-open') ? queuePane
       : document.body.classList.contains('live-room-open') ? liveRadioRoom
         : document.body.classList.contains('room-open') ? room
           : !experiencePanel.hidden ? experiencePanel : undefined;
@@ -2561,7 +2693,10 @@ const initializeStation = async () => {
   window.requestAnimationFrame(focusTVStart);
 };
 
-void initializeStation().finally(() => window.dispatchEvent(new Event('radio:station-ready')));
+void initializeStation().finally(() => {
+  window.dispatchEvent(new Event('radio:station-ready'));
+  scheduleFirstTimeOnboarding();
+});
 window.addEventListener('pagehide', saveContinuity);
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {

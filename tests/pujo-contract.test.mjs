@@ -565,6 +565,47 @@ test('station About and Pujo contributions use one accessible responsive dialog'
   assert.match(pujoCss, /\.station-info-dialog \{[\s\S]*max-height: calc\(100dvh - max\(\.75rem,env\(safe-area-inset-top\)\)\);/);
 });
 
+test('first-time listening guide offers three explicit starts and remains reopenable', () => {
+  for (const id of ['onboarding-dialog', 'onboarding-scrim', 'onboarding-close', 'onboarding-dismiss']) {
+    assert.equal((html.match(new RegExp(`id="${id}"`, 'g')) || []).length, 1, `${id} must exist exactly once`);
+  }
+  assert.match(html, /id="onboarding-dialog"[^>]+role="dialog"[^>]+aria-modal="true"/);
+  assert.match(html, /data-onboarding-action="play"/);
+  assert.match(html, /data-onboarding-action="catalogue"/);
+  assert.match(html, /data-onboarding-action="live"/);
+  assert.match(html, /data-onboarding-open/);
+  assert.match(html, /Sound begins only after you choose/);
+  assert.match(player, /radio-sharodiya:onboarding:v1/);
+  assert.match(player, /onboardingPreview === 'off'/);
+  assert.match(player, /onboardingStorage\.hasValue\(\)/);
+  assert.match(player, /document\.body\.classList\.contains\('beta-access-pending'\)/);
+  assert.match(player, /if \(action === 'play'\) playButton\.click\(\)/);
+  assert.match(player, /if \(action === 'catalogue'\) openCatalogue\(button\)/);
+  assert.match(player, /if \(action === 'live'\) openLiveRadio\(button\)/);
+  assert.match(pujoCss, /body\.onboarding-open \{ overflow: hidden; \}/);
+  assert.match(pujoCss, /\.onboarding-dialog \{[\s\S]*max-height: calc\(100dvh - max\(\.75rem,env\(safe-area-inset-top\)\)\);/);
+});
+
+test('permanent Explore guide groups deeper discovery and routes into existing station surfaces', () => {
+  for (const id of ['explore-dialog', 'explore-scrim', 'explore-close', 'explore-done']) {
+    assert.equal((html.match(new RegExp(`id="${id}"`, 'g')) || []).length, 1, `${id} must exist exactly once`);
+  }
+  assert.match(html, /id="explore-dialog"[^>]+role="dialog"[^>]+aria-modal="true"/);
+  for (const label of ['Listen', 'Make it yours', 'Around the station']) assert.match(html, new RegExp(`>${label}<`));
+  for (const action of ['catalogue', 'search', 'live', 'queue', 'experience', 'about', 'chai']) {
+    assert.match(html, new RegExp(`data-explore-action="${action}"`));
+  }
+  assert.match(html, /data-explore-open/);
+  assert.match(html, /golper-asor\.vercel\.app/);
+  assert.match(player, /const openExplore = \(opener\)/);
+  assert.match(player, /if \(action === 'search'\)[\s\S]*catalogueSearchInput\.focus\(\)/);
+  assert.match(player, /if \(action === 'experience'\) window\.requestAnimationFrame\(\(\) => setExperiencePanel\(true\)\)/);
+  assert.match(player, /if \(action === 'about' \|\| action === 'chai'\) openStationInfo\(action, button\)/);
+  assert.match(pujoCss, /body\.explore-open \{ overflow: hidden; \}/);
+  assert.match(pujoCss, /\.explore-grid \{ display: grid; grid-template-columns: repeat\(3,minmax\(0,1fr\)\)/);
+  assert.match(pujoCss, /\.explore-dialog \{[\s\S]*max-height: calc\(100dvh - max\(\.75rem,env\(safe-area-inset-top\)\)\);/);
+});
+
 test('About credits the supplied LinkedIn profile without remote image dependency', () => {
   assert.match(html, /Kaustav Roy/);
   assert.match(html, /href="https:\/\/www\.linkedin\.com\/in\/kaustavr19\/"/);
