@@ -5,6 +5,9 @@ This contract records the user-facing behaviour that performance and architectur
 ## Landing and catalogue
 
 - The station is silent when the page opens.
+- A first-time listener sees one concise listening guide only after the application is unlocked and ready. It offers an explicit choice between the opening selection, the six music collections, and live Akashvani, and can be reopened later through “How to listen”.
+- Dismissing or choosing from the listening guide remembers that decision on the current device, while a development-only preview parameter can force the guide open without changing that preference.
+- A permanent “Explore Radio Sharodiya” guide groups deeper discovery into Listen, Make it yours, and Around the station. It stays out of the primary mobile navigation and links directly into existing station surfaces.
 - Opening or browsing the catalogue must not start playback.
 - The landing hero keeps a visible catalogue invitation on larger screens and states the current song and collection breadth. On mobile, the compact tab bar labels the destination as Music without adding another hero action.
 - Catalogue browsing alone must not replace the landing scene or hero copy.
