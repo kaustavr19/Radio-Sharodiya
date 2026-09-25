@@ -35,8 +35,8 @@ jobs:
             echo "Catalogue is already current."
             exit 0
           fi
-          git config user.name "pujo-vibes-bot"
-          git config user.email "actions@users.noreply.github.com"
+          git config user.name "kaustavr19"
+          git config user.email "54073521+kaustavr19@users.noreply.github.com"
           git add public/data/pujo/catalogue.v1.json
           git commit -m "chore: refresh YouTube catalogue"
           git push
