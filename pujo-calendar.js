@@ -29,7 +29,7 @@ export const PUJO_SEASONS = [
 const dateValue = (dateKey) => Date.parse(`${dateKey}T00:00:00+05:30`);
 
 const stateDefinitions = [
-  { id: 'mahalaya', start: 'mahalaya', nextOffset: ['mahalaya', 1] },
+  { id: 'mahalaya', start: 'mahalaya', nextOffset: ['mahalaya', 1], countdownTo: 'panchami' },
   { id: 'agomoni', startOffset: ['mahalaya', 1], next: 'panchami' },
   { id: 'panchami', start: 'panchami', next: 'shashthi' },
   { id: 'shashthi', start: 'shashthi', next: 'saptami' },
@@ -80,8 +80,8 @@ export const resolvePujoCalendar = (date = new Date()) => {
     season: activeSeason,
     stateStart,
     stateEnd,
-    targetKey: definition.next || definition.nextOffset?.[0],
-    targetDate: stateEnd,
+    targetKey: definition.countdownTo || definition.next || definition.nextOffset?.[0],
+    targetDate: definition.countdownTo ? dateValue(activeSeason[definition.countdownTo]) : stateEnd,
   };
 };
 
