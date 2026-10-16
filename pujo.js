@@ -483,7 +483,7 @@ const applyCalendarPresentation = (date = new Date(), force = false) => {
   currentCalendarState = resolvePujoCalendar(date);
   const presentation = calendarPresentations[currentCalendarState.id] || calendarPresentations['off-season'];
   document.body.dataset.pujoState = currentCalendarState.id;
-  if (!playbackPresentationActive && (force || activeCalendarPresentationId !== currentCalendarState.id)) {
+  if (force || activeCalendarPresentationId !== currentCalendarState.id) {
     activeCalendarPresentationId = currentCalendarState.id;
     applyHeroPresentation(presentation);
   }
@@ -510,7 +510,6 @@ const applyPlaybackPresentation = (track, advanceScene = false) => {
   if (advanceScene) playbackSceneOffset += 1;
   activePresentationPlaylistId = track.playlistId;
   playbackPresentationActive = true;
-  if (playlistChanged) applyHeroPresentation(presentation);
   const trackIndex = Math.max(0, playlists[track.playlistId].tracks.findIndex((item) => item.id === track.id));
   const sceneIndex = (Math.floor(trackIndex / presentation.rotationSpan) + playbackSceneOffset) % presentation.scenes.length;
   applyScene(presentation.scenes[sceneIndex]);
@@ -1094,6 +1093,7 @@ const setPlayerState = (playing, note, state = playing ? 'playing' : 'paused') =
   } else {
     stopProgressTracking();
     stopPlaybackSceneRotation();
+    if (state === 'paused' || state === 'ended') restoreTimePresentation();
   }
   scheduleContinuitySave();
 };
