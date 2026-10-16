@@ -62,6 +62,18 @@ test('catalogue discovery stays visible and explains its breadth', () => {
   assert.match(pujoCss, /@media \(max-width: 620px\)[\s\S]*\.hero-actions \{ display: none; \}/);
 });
 
+test('calendar copy owns the hero while playlist playback only changes its artwork', () => {
+  const calendarPresentation = extractBlock(player, 'const applyCalendarPresentation =', 'const catalogueLoader');
+  const playbackPresentation = extractBlock(player, 'const applyPlaybackPresentation =', 'const startPlaybackSceneRotation');
+  const playerState = extractBlock(player, 'const setPlayerState =', 'function updatePlaybackProgress');
+
+  assert.match(calendarPresentation, /applyHeroPresentation\(presentation\)/);
+  assert.doesNotMatch(calendarPresentation, /!playbackPresentationActive/);
+  assert.doesNotMatch(playbackPresentation, /applyHeroPresentation/);
+  assert.match(playbackPresentation, /applyScene\(presentation\.scenes\[sceneIndex\]\)/);
+  assert.match(playerState, /state === 'paused' \|\| state === 'ended'\) restoreTimePresentation\(\)/);
+});
+
 test('catalogue docks the existing player and keeps mobile browsing open during playback', () => {
   assert.match(player, /const broadcastConsoleHome = document\.createComment\('broadcast-console-home'\)/);
   assert.match(player, /const dockBroadcastConsoleInCatalogue = \(\) => \{[\s\S]*room\.append\(broadcastConsole\)/);
